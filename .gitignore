@@ -5,5 +5,4 @@ cmake-build-debug
 *.exe
 */.DS_Store
 minilibx_macos
-libft
 fdf
