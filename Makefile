@@ -13,7 +13,10 @@
 CC = gcc
 NAME = fdf
 FLAGS = -Wall -Wextra -Werror
-SRC = src/main.c
+SRC = src/main.c \
+		src/line.c \
+		src/t_vector.c \
+		src/t_matrix.c
 OPTION = -I. -Ilibft -Iminilibx_macos
 OBJ = $(SRC:.c=.o)
 
