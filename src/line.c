@@ -1,7 +1,6 @@
 #include "mlx.h"
 #include "libft.h"
 #include "fdf.h"
-#include <stdio.h>
 
 int ft_sign(int a)
 {
@@ -10,7 +9,6 @@ int ft_sign(int a)
 
 	b = a > 0;
 	c = a < 0;
-	printf("%d - %d = %d\n", b, c, b - c);
 	return (b - c);
 }
 

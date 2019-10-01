@@ -8,4 +8,6 @@ typedef struct
 	double z;
 } t_vec;
 
+t_vec *t_vec_normalize(t_vec *v);
+
 #endif
