@@ -4,6 +4,7 @@ cmake_minimum_required(VERSION 3.6.2)
 project(libft_run C)
 set(CMAKE_C_STANDARD 90)
 include_directories(.)
+include_directories(libft)
 include_directories(headers)
 
 #--------------LIB LINK EXAMPLE---------------------
