@@ -102,8 +102,6 @@ int loop_hook(void *s)
 	t_mat rot2;
 
 	rot = t_mat_rot_point((t_vec){.1, 1, .3}, 0.04, (t_vec){250, 250, 50});
-//	rot2 = t_mat_rot_point((t_vec){0, 1, 0}, 0.01, (t_vec){250, 250, 0});
-//	rot = t_mat_mul(&rot, &rot2);
 	for (i = 0; i < 12; ++i)
 	{
 		obj = ((t_scene *)s)->objs[i];
@@ -124,7 +122,6 @@ int loop_hook(void *s)
 			 (t_point){v2.x, v2.y}, obj->color);
 	}
 	mlx_pixel_put(((t_scene *)s)->M, ((t_scene *)s)->win, 250, 250, 255*RED);
-//	mlx_pixel_put(((t_scene *)s)->M, ((t_scene *)s)->win, 50, 50, RED);
 	return (0);
 }
 
