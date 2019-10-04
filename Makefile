@@ -14,9 +14,9 @@ CC = gcc
 NAME = fdf
 FLAGS = -Wall -Wextra -Werror
 SRC = src/main.c \
-		src/line.c \
-		src/t_vector.c \
-		src/t_matrix.c
+		src/line.c
+#		src/t_vector.c \
+#		src/t_matrix.c
 OPTION = -I. -Ilibft -Iminilibx_macos
 OBJ = $(SRC:.c=.o)
 
@@ -24,6 +24,9 @@ all : $(NAME)
 
 $(NAME) : libft/libft.a minilibx_macos/libmlx.a $(OBJ)
 	$(CC) -o $(NAME) $(OBJ) $(OPTION) -L minilibx_macos/ -lmlx -L libft/ -lft -framework OpenGL -framework AppKit
+
+run : $(NAME)
+	@./fdf
 
 %.o: %.c libft/libft.a
 	@echo compile $(<) "->" $(<:.c=.o)

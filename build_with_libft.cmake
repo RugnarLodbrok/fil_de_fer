@@ -14,9 +14,7 @@ include_directories(headers)
 
 add_executable(fdf
 		src/main.c
-		src/line.c
-		src/t_matrix.c
-		src/t_vector.c)
+		src/line.c)
 include_directories(headers)
 include_directories(libft)
 include_directories(minilibx_macos)

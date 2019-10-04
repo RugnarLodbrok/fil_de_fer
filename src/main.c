@@ -4,10 +4,9 @@
 //#include "mlx_int.h"
 //#include "mlx_new_window.h"
 #include <stdio.h>
-#include <t_vector.h>
-#include <t_matrix.h>
+#include "ft_linalg.h"
 
-int loop_hook(void *param);
+int loop_hook(void *s);
 int mouse_hook(int button, int x, int y, void *param);
 
 typedef struct
@@ -22,56 +21,110 @@ typedef struct
 {
 	void *M;
 	void *win;
-	void *obj;
+	void **objs;
 } t_scene;
 
 int main(void)
 {
+	int i;
 	void *M;
 	void *win;
 	t_scene s;
-	o_segment o;
+	o_segment *o;
 
 	ft_printf("HELLO\n");
 	M = mlx_init();
 	win = mlx_new_window(M, 800, 600, "fdf");
 	mlx_pixel_put(M, win, 100, 100, 255 * GREEN);
-	mlx_string_put(M, win, 150, 150, 255 * GREEN, "HELLO MLX!");
+	mlx_string_put(M, win, 150, 150, 255 * GREEN, "wake up, Neo!");
 
 	s.M = M;
 	s.win = win;
-	s.obj = &o;
-	o.color = 255 * GREEN;
-	o.p0 = (t_vec){0, 0, 0};
-	o.p1 = (t_vec){100, 100, 0};
-	t_mat_reset(&(o.m));
+	CHECK0RET1(s.objs = malloc(sizeof(o_segment*) * 13));
+	s.objs[12] = 0;
+	for (i = 0; i < 12; ++i)
+	{
+		s.objs[i] = malloc(sizeof(o_segment));
+		o = s.objs[i];
+		o->color = 255 * GREEN;
+		t_mat_reset(&(o->m));
+		o->m.dx = 200;
+		o->m.dy = 200;
+	}
+	((o_segment *)s.objs[0])->p0 = (t_vec){0, 0, 0};
+	((o_segment *)s.objs[0])->p1 = (t_vec){100, 0, 0};
+
+	((o_segment *)s.objs[1])->p0 = (t_vec){0, 0, 0};
+	((o_segment *)s.objs[1])->p1 = (t_vec){0, 100, 0};
+
+	((o_segment *)s.objs[2])->p0 = (t_vec){100, 100, 0};
+	((o_segment *)s.objs[2])->p1 = (t_vec){100, 0, 0};
+
+	((o_segment *)s.objs[3])->p0 = (t_vec){100, 100, 0};
+	((o_segment *)s.objs[3])->p1 = (t_vec){0, 100, 0};
+
+	((o_segment *)s.objs[4])->p0 = (t_vec){0, 0, 100};
+	((o_segment *)s.objs[4])->p1 = (t_vec){100, 0, 100};
+
+	((o_segment *)s.objs[5])->p0 = (t_vec){0, 0, 100};
+	((o_segment *)s.objs[5])->p1 = (t_vec){0, 100, 100};
+
+	((o_segment *)s.objs[6])->p0 = (t_vec){100, 100, 100};
+	((o_segment *)s.objs[6])->p1 = (t_vec){100, 0, 100};
+
+	((o_segment *)s.objs[7])->p0 = (t_vec){100, 100, 100};
+	((o_segment *)s.objs[7])->p1 = (t_vec){0, 100, 100};
+
+	((o_segment *)s.objs[8])->p0 = (t_vec){0, 0, 0};
+	((o_segment *)s.objs[8])->p1 = (t_vec){0, 0, 100};
+
+	((o_segment *)s.objs[9])->p0 = (t_vec){0, 100, 0};
+	((o_segment *)s.objs[9])->p1 = (t_vec){0, 100, 100};
+
+	((o_segment *)s.objs[10])->p0 = (t_vec){100, 100, 0};
+	((o_segment *)s.objs[10])->p1 = (t_vec){100, 100, 100};
+
+	((o_segment *)s.objs[11])->p0 = (t_vec){100, 0, 0};
+	((o_segment *)s.objs[11])->p1 = (t_vec){100, 0, 100};
 
 	mlx_loop_hook(M, loop_hook, &s);
-//	mlx_mouse_hook(win, mouse_hook, 0);
-
 
 	mlx_loop(M);
 }
 
 int loop_hook(void *s)
 {
+	int i;
 	o_segment *obj;
 	t_vec v1;
 	t_vec v2;
-	t_point p1;
-	t_point p2;
 	t_mat rot;
+	t_mat rot2;
 
-	obj = ((t_scene *)s)->obj;
-	rot = t_mat_rot((t_vec){0, 0, 1}, 0.001);
-	obj->m = t_mat_mul(&rot, &(obj->m));
-	v1 = t_vec_transform(obj->p0, obj->m);
-	v2 = t_vec_transform(obj->p1, obj->m);
-	p1.x = (int)v1.x;
-	p1.y = (int)v1.y;
-	p2.x = (int)v2.x;
-	p2.y = (int)v2.y;
-	line(((t_scene *)s)->M, ((t_scene *)s)->win, p1, p2);
+	rot = t_mat_rot_point((t_vec){.1, 1, .3}, 0.04, (t_vec){250, 250, 50});
+//	rot2 = t_mat_rot_point((t_vec){0, 1, 0}, 0.01, (t_vec){250, 250, 0});
+//	rot = t_mat_mul(&rot, &rot2);
+	for (i = 0; i < 12; ++i)
+	{
+		obj = ((t_scene *)s)->objs[i];
+		v1 = t_vec_transform(obj->p0, obj->m);
+		v2 = t_vec_transform(obj->p1, obj->m);
+		line(((t_scene *)s)->M, ((t_scene *)s)->win,
+			 (t_point){v1.x, v1.y},
+			 (t_point){v2.x, v2.y}, 0);
+	}
+	for (i = 0; i < 12; ++i)
+	{
+		obj = ((t_scene *)s)->objs[i];
+		obj->m = t_mat_mul(&rot, &(obj->m));
+		v1 = t_vec_transform(obj->p0, obj->m);
+		v2 = t_vec_transform(obj->p1, obj->m);
+		line(((t_scene *)s)->M, ((t_scene *)s)->win,
+			 (t_point){v1.x, v1.y},
+			 (t_point){v2.x, v2.y}, obj->color);
+	}
+	mlx_pixel_put(((t_scene *)s)->M, ((t_scene *)s)->win, 250, 250, 255*RED);
+//	mlx_pixel_put(((t_scene *)s)->M, ((t_scene *)s)->win, 50, 50, RED);
 	return (0);
 }
 

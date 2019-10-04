@@ -12,7 +12,7 @@ int ft_sign(int a)
 	return (b - c);
 }
 
-void line(void *M, void *win, t_point p1, t_point p2)
+void line(void *M, void *win, t_point p1, t_point p2, int color)
 {
 	int d;
 	double err;
@@ -37,7 +37,7 @@ void line(void *M, void *win, t_point p1, t_point p2)
 		err = 0;
 		while (pp1->x <= pp2->x)
 		{
-			mlx_pixel_put(M, win, pp1->x, pp1->y, WHITE);
+			mlx_pixel_put(M, win, pp1->x, pp1->y, color);
 			err += slope;
 			if (err > 0.5)
 			{
@@ -54,7 +54,7 @@ void line(void *M, void *win, t_point p1, t_point p2)
 		err = 0;
 		while (pp1->y <= pp2->y)
 		{
-			mlx_pixel_put(M, win, pp1->x, pp1->y, WHITE);
+			mlx_pixel_put(M, win, pp1->x, pp1->y, color);
 			err += slope;
 			if (err > 0.5)
 			{
