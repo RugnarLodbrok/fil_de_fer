@@ -14,6 +14,7 @@ CC = gcc
 NAME = fdf
 FLAGS = -Wall -Wextra -Werror
 SRC = src/main.c \
+		src/wireframe.c \
 		src/line.c
 #		src/t_vector.c \
 #		src/t_matrix.c
