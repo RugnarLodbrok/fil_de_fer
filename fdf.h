@@ -6,14 +6,12 @@
 # define RED 256*256
 # define WHITE (255*RED + 255*GREEN + 255*BLUE)
 
-#include "ft_linalg.h"
+# define KEY_LEFT 123
+# define KEY_RIGHT 124
+# define KEY_DOWN 125
+# define KEY_UP 126
 
-typedef struct
-{
-	void *M;
-	void *win;
-	void **objs;
-} t_scene;
+#include "ft_linalg.h"
 
 typedef struct
 {
@@ -29,6 +27,14 @@ typedef struct
 	t_point *edges;
 	t_mat m;
 } t_wireframe;
+
+typedef struct
+{
+	void *M;
+	void *win;
+	void **objs;
+	t_vec momentum;
+} t_scene;
 
 void line(t_scene *s, t_vec p1, t_vec p2, int color);
 void t_wireframe_init(t_wireframe *f);
