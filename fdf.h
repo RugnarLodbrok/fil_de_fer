@@ -10,6 +10,7 @@
 # define KEY_RIGHT 124
 # define KEY_DOWN 125
 # define KEY_UP 126
+# define STEP 0.05
 
 #include "ft_linalg.h"
 

@@ -8,7 +8,7 @@
 
 int loop_hook(void *p);
 int mouse_hook(int button, int x, int y, void *param);
-int key_hook(int keycode, void *param);
+int key_hook(int keycode, void *p);
 
 int main(void)
 {
@@ -26,7 +26,7 @@ int main(void)
 	ft_bzero(&s, sizeof(s));
 	s.momentum = (t_vec){.1, 1, .3};
 	t_vec_normalize(&(s.momentum));
-	s.momentum = t_vec_mul(s.momentum, 0.02);
+	s.momentum = t_vec_mul(s.momentum, 0.2);
 	s.M = M;
 	s.win = win;
 	s.objs = malloc(sizeof(t_wireframe *) * 2);
@@ -47,16 +47,12 @@ int loop_hook(void *p)
 	t_wireframe *obj;
 	t_mat rot;
 	t_scene *s;
-//	t_vec mom_decay;
 
 	s = (t_scene *)p;
-	if (t_vec_len(s->momentum) < 0.00001)
+	if (!t_vec_len(s->momentum))
 		return (0);
 	rot = t_mat_rot_point(s->momentum, t_vec_len(s->momentum), (t_vec){250, 250, 50});
-//	mom_decay = t_vec_mul(s->momentum, -1);
-//	t_vec_normalize(&mom_decay);
-//	mom_decay = t_vec_mul(mom_decay, 0.0001);
-//	s->momentum =t_vec_add(s->momentum, mom_decay);
+	t_vec_decay(&(s->momentum), 0.002);
 	for (i = 0; (obj = s->objs[i]); ++i)
 	{
 		t_wireframe_draw(obj, s, 0);
@@ -67,6 +63,7 @@ int loop_hook(void *p)
 		t_wireframe_draw(obj, s, 255 * GREEN);
 	}
 	mlx_pixel_put(((t_scene *)s)->M, ((t_scene *)s)->win, 250, 250, 255 * RED);
+	mlx_pixel_put(((t_scene *)s)->M, ((t_scene *)s)->win, 350, 350, 255 * RED);
 	return (0);
 }
 
@@ -78,9 +75,26 @@ int mouse_hook(int button, int x, int y, void *param)
 	return (0);
 }
 
-int key_hook(int keycode, void *param)
+int key_hook(int keycode, void *p)
 {
-	(void)param;
-	printf("key pressed: %d\n", keycode);
+	t_scene *s;
+
+	s = (t_scene *)p;
+	if (keycode == KEY_LEFT)
+	{
+		s->momentum = t_vec_add(s->momentum, (t_vec){0, STEP, 0});
+	}
+	else if (keycode == KEY_RIGHT)
+	{
+		s->momentum = t_vec_add(s->momentum, (t_vec){0, -STEP, 0});
+	}
+	else if (keycode == KEY_UP)
+	{
+		s->momentum = t_vec_add(s->momentum, (t_vec){-STEP, 0, 0});
+	}
+	else if (keycode == KEY_DOWN)
+	{
+		s->momentum = t_vec_add(s->momentum, (t_vec){STEP, 0, 0});
+	}
 	return (0);
 }
