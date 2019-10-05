@@ -17,8 +17,14 @@ typedef struct
 
 typedef struct
 {
+	t_vec v;
+	int color;
+} t_vertex;
+
+typedef struct
+{
 	size_t n_vertices;
-	t_vec *vertices;
+	t_vertex *vertices;
 	size_t n_edges;
 	t_point *edges;
 	t_mat m;

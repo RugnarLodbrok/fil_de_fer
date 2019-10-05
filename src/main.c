@@ -6,7 +6,7 @@
 //#include "mlx_int.h"
 //#include "mlx_new_window.h"
 
-int loop_hook(void *s);
+int loop_hook(void *p);
 int mouse_hook(int button, int x, int y, void *param);
 
 int main(void)
@@ -19,7 +19,7 @@ int main(void)
 	ft_printf("HELLO\n");
 	M = mlx_init();
 	win = mlx_new_window(M, 800, 600, "fdf");
-	mlx_pixel_put(M, win, 100, 100, 255 * GREEN);
+	mlx_pixel_put(M, win, 0, 0, 0);  // DO NOT REMOVE THIS LINE
 	mlx_string_put(M, win, 150, 150, 255 * GREEN, "wake up, Neo!");
 
 	s.M = M;
@@ -44,15 +44,14 @@ int loop_hook(void *p)
 
 	s = (t_scene *)p;
 	rot = t_mat_rot_point((t_vec){.1, 1, .3}, 0.04, (t_vec){250, 250, 50});
-	for (i = 0; s->objs[i]; ++i)
+	for (i = 0; (obj = s->objs[i]); ++i)
 	{
-		t_wireframe_draw(s->objs[i], s, 0);
+		t_wireframe_draw(obj, s, 0);
 	}
-	for (i = 0; s->objs[i]; ++i)
+	for (i = 0; (obj = s->objs[i]); ++i)
 	{
-		obj = s->objs[i];
 		obj->m = t_mat_mul(&rot, &(obj->m));
-		t_wireframe_draw(s->objs[i], s, 255 * GREEN);
+		t_wireframe_draw(obj, s, 255 * GREEN);
 	}
 	mlx_pixel_put(((t_scene *)s)->M, ((t_scene *)s)->win, 250, 250, 255 * RED);
 	return (0);

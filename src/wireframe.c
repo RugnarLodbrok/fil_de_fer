@@ -8,15 +8,17 @@ void t_wireframe_init(t_wireframe *f)
 	ft_bzero(f, sizeof(t_wireframe));
 	t_mat_reset(&(f->m));
 	f->n_vertices = 8;
-	f->vertices = malloc(sizeof(t_vec) * 8);
-	f->vertices[0] = (t_vec){0, 0, 0};
-	f->vertices[1] = (t_vec){100, 0, 0};
-	f->vertices[2] = (t_vec){100, 100, 0};
-	f->vertices[3] = (t_vec){0, 100, 0};
-	f->vertices[4] = (t_vec){0, 0, 100};
-	f->vertices[5] = (t_vec){100, 0, 100};
-	f->vertices[6] = (t_vec){100, 100, 100};
-	f->vertices[7] = (t_vec){0, 100, 100};
+
+	f->vertices = malloc(sizeof(t_vertex) * 8);
+	f->vertices[0] = (t_vertex){(t_vec){0, 0, 0}, 255 * GREEN};
+	f->vertices[1] = (t_vertex){(t_vec){100, 0, 0}, 255 * GREEN};
+	f->vertices[2] = (t_vertex){(t_vec){100, 100, 0}, 255 * GREEN};
+	f->vertices[3] = (t_vertex){(t_vec){0, 100, 0}, 255 * GREEN};
+	f->vertices[4] = (t_vertex){(t_vec){0, 0, 100}, 255 * GREEN};
+	f->vertices[5] = (t_vertex){(t_vec){100, 0, 100}, 255 * GREEN};
+	f->vertices[6] = (t_vertex){(t_vec){100, 100, 100}, 255 * GREEN};
+	f->vertices[7] = (t_vertex){(t_vec){0, 100, 100}, 255 * GREEN};
+
 	f->n_edges = 12;
 	f->edges = malloc(sizeof(t_point) * 12);
 	f->edges[0] = (t_point){0, 1};
@@ -44,8 +46,8 @@ void t_wireframe_draw(t_wireframe *f, t_scene *s, int color)
 	i = 0;
 	while (i < f->n_edges)
 	{
-		p1 = f->vertices[f->edges[i].x];
-		p2 = f->vertices[f->edges[i].y];
+		p1 = f->vertices[f->edges[i].x].v;
+		p2 = f->vertices[f->edges[i].y].v;
 		line(s,
 			 t_vec_transform(p1, f->m),
 			 t_vec_transform(p2, f->m),
