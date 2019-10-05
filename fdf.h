@@ -24,7 +24,7 @@ typedef struct
 	t_mat m;
 } t_wireframe;
 
-void line(void *M, void *win, t_vec p1, t_vec p2, int color);
+void line(t_scene *s, t_vec p1, t_vec p2, int color);
 void t_wireframe_init(t_wireframe *f);
 void t_wireframe_draw(t_wireframe *f, t_scene *s, int color);
 

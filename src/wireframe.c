@@ -46,7 +46,7 @@ void t_wireframe_draw(t_wireframe *f, t_scene *s, int color)
 	{
 		p1 = f->vertices[f->edges[i].x];
 		p2 = f->vertices[f->edges[i].y];
-		line(s->M, s->win,
+		line(s,
 			 t_vec_transform(p1, f->m),
 			 t_vec_transform(p2, f->m),
 			 color);
