@@ -6,6 +6,8 @@
 # define RED 256*256
 # define WHITE (255*RED + 255*GREEN + 255*BLUE)
 
-void line(void *M, void *win, t_point p1, t_point p2, int color);
+#include "ft_linalg.h"
+
+void line(void *M, void *win, t_vec p1, t_vec p2, int color);
 
 #endif
