@@ -1,6 +1,8 @@
 #ifndef ASCII_H
 # define ASCII_H
 
+# include "ft_linalg.h"
+
 typedef struct
 {
 	int **data;
@@ -16,6 +18,6 @@ typedef struct
 void ascii_draw_new(t_screen_buff *s, int w, int h);
 void ascii_draw_flush(t_screen_buff *s);
 void ascii_draw_put_pixel(t_screen_buff *s, int x, int y, int v);
-void line(t_screen_buff *s, t_point p1, t_point p2, int v);
+void line(void *p, t_vec p1, t_vec p2, int v);
 
 #endif

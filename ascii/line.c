@@ -12,13 +12,13 @@ int ft_sign(int a)
 	return (b - c);
 }
 
-void line(t_screen_buff *s, t_point p1, t_point p2, int v)
+void line(void *p, t_vec p1, t_vec p2, int v)
 {
 	int d;
 	double err;
 	double slope;
-	t_point *pp1;
-	t_point *pp2;
+	t_vec *pp1;
+	t_vec *pp2;
 
 	if ((p2.x - p1.x) + (p2.y - p1.y) >= 0)
 	{
@@ -37,7 +37,7 @@ void line(t_screen_buff *s, t_point p1, t_point p2, int v)
 		err = 0;
 		while (pp1->x <= pp2->x)
 		{
-			ascii_draw_put_pixel(s, pp1->x, pp1->y, 1);
+			ascii_draw_put_pixel(p, pp1->x, pp1->y, 1);
 			err += slope;
 			if (err > 0.5)
 			{
@@ -54,7 +54,7 @@ void line(t_screen_buff *s, t_point p1, t_point p2, int v)
 		err = 0;
 		while (pp1->y <= pp2->y)
 		{
-			ascii_draw_put_pixel(s, pp1->x, pp1->y, 1);
+			ascii_draw_put_pixel(p, pp1->x, pp1->y, 1);
 			err += slope;
 			if (err > 0.5)
 			{

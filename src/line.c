@@ -12,7 +12,7 @@ int ft_sign(int a)
 	return (b - c);
 }
 
-void line(t_scene *s, t_vec p1, t_vec p2, int color)
+void line(void *p, t_vec p1, t_vec p2, int color)
 {
 	int d;
 	double err;

@@ -1,8 +1,6 @@
 #include "libft.h"
 #include "fdf.h"
 #include <stdio.h>
-#include "t_vector.h"
-#include "t_matrix.h"
 #include "unistd_compat.h"
 #include "ascii.h"
 
