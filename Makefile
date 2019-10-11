@@ -23,8 +23,7 @@ SRC_MLX = \
 		src/line.c
 
 SRC = $(SRC_ASCII) \
-		src/t_vector.c \
-		src/t_matrix.c
+		src/mesh.c
 
 OPTION = -I. -Ilibft #-Iminilibx_macos
 OBJ = $(SRC:.c=.o)
@@ -56,6 +55,6 @@ clean :
 fclean : clean
 	rm -f $(NAME)
 	make -C libft/ fclean
-	make -C minilibx_macos/ clean
+#	make -C minilibx_macos/ clean
 
 re : fclean all

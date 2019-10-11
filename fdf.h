@@ -6,6 +6,16 @@
 # define RED 256*256
 # define WHITE (255*RED + 255*GREEN + 255*BLUE)
 
+#include "ft_linalg.h"
+
+typedef struct
+{
+	t_vec *vertices;
+	int vert_n;
+	t_point *edges;
+	int edge_n;
+} t_mesh;
+
 void line(void *M, void *win, t_point p1, t_point p2);
 
 #endif
