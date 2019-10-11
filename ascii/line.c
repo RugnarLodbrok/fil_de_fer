@@ -12,7 +12,7 @@ int ft_sign(int a)
 	return (b - c);
 }
 
-void line(void *M, void *win, t_point p1, t_point p2)
+void line(t_screen_buff *s, t_point p1, t_point p2, int v)
 {
 	int d;
 	double err;

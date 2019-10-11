@@ -1,4 +1,5 @@
 #include "libft.h"
+#include "ft_linalg.h"
 #include "fdf.h"
 
 int ft_sign(int a)
@@ -11,13 +12,13 @@ int ft_sign(int a)
 	return (b - c);
 }
 
-void line(void *M, void *win, t_point p1, t_point p2)
+void line(t_scene *s, t_vec p1, t_vec p2, int color)
 {
 	int d;
 	double err;
 	double slope;
-	t_point *pp1;
-	t_point *pp2;
+	t_vec *pp1;
+	t_vec *pp2;
 
 	if ((p2.x - p1.x) + (p2.y - p1.y) >= 0)
 	{
@@ -31,12 +32,12 @@ void line(void *M, void *win, t_point p1, t_point p2)
 	}
 	if ((pp2->y - pp1->y) - (pp2->x - pp1->x) < 0)
 	{
-		d = ft_sign(pp2->y - pp1->y);
+		d = ft_sign((int)(pp2->y - pp1->y));
 		slope = ((double)(pp2->y - pp1->y)) / (pp2->x - pp1->x) * d;
 		err = 0;
 		while (pp1->x <= pp2->x)
 		{
-			mlx_pixel_put(M, win, pp1->x, pp1->y, WHITE);
+			mlx_pixel_put(s->M, s->win, (int)pp1->x, (int)pp1->y, color);
 			err += slope;
 			if (err > 0.5)
 			{
@@ -48,12 +49,12 @@ void line(void *M, void *win, t_point p1, t_point p2)
 	}
 	else
 	{
-		d = ft_sign(pp2->x - pp1->x);
+		d = ft_sign((int)(pp2->x - pp1->x));
 		slope = ((double)(pp2->x - pp1->x)) / (pp2->y - pp1->y) * d;
 		err = 0;
 		while (pp1->y <= pp2->y)
 		{
-			mlx_pixel_put(M, win, pp1->x, pp1->y, WHITE);
+			mlx_pixel_put(s->M, s->win, (int)pp1->x, (int)pp1->y, color);
 			err += slope;
 			if (err > 0.5)
 			{

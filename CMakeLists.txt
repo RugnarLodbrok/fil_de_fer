@@ -18,6 +18,94 @@ add_executable(fdf
 		ascii/line.c
 		ascii/ascii.c
 		src/mesh.c
+
+#		src/main.c
+#		src/wireframe.c
+#		src/line.c
+
+		libft/src/string/ft_atoi.c
+		libft/src/string/ft_bzero.c
+		libft/src/string/ft_isalnum.c
+		libft/src/string/ft_isalpha.c
+		libft/src/string/ft_isascii.c
+		libft/src/string/ft_isdigit.c
+		libft/src/string/ft_isprint.c
+		libft/src/string/ft_memalloc.c
+		libft/src/string/ft_memccpy.c
+		libft/src/string/ft_memchr.c
+		libft/src/string/ft_memcmp.c
+		libft/src/string/ft_memcpy.c
+		libft/src/string/ft_memdel.c
+		libft/src/string/ft_memmove.c
+		libft/src/string/ft_memset.c
+		libft/src/string/ft_putchar.c
+		libft/src/string/ft_putchar_fd.c
+		libft/src/string/ft_putendl.c
+		libft/src/string/ft_putendl_fd.c
+		libft/src/string/ft_putnbr.c
+		libft/src/string/ft_putnbr_fd.c
+		libft/src/string/ft_putstr.c
+		libft/src/string/ft_putstr_fd.c
+		libft/src/string/ft_strcat.c
+		libft/src/string/ft_strchr.c
+		libft/src/string/ft_strclr.c
+		libft/src/string/ft_strcmp.c
+		libft/src/string/ft_strcpy.c
+		libft/src/string/ft_strdel.c
+		libft/src/string/ft_strdup.c
+		libft/src/string/ft_strequ.c
+		libft/src/string/ft_striter.c
+		libft/src/string/ft_striteri.c
+		libft/src/string/ft_strjoin.c
+		libft/src/string/ft_strlcat.c
+		libft/src/string/ft_strlen.c
+		libft/src/string/ft_strmap.c
+		libft/src/string/ft_strmapi.c
+		libft/src/string/ft_strncat.c
+		libft/src/string/ft_strncmp.c
+		libft/src/string/ft_strncpy.c
+		libft/src/string/ft_strnequ.c
+		libft/src/string/ft_strnew.c
+		libft/src/string/ft_strnstr.c
+		libft/src/string/ft_strrchr.c
+		libft/src/string/ft_strsplit.c
+		libft/src/string/ft_strstr.c
+		libft/src/string/ft_strsub.c
+		libft/src/string/ft_strtrim.c
+		libft/src/string/ft_tolower.c
+		libft/src/string/ft_toupper.c
+
+		libft/src/format/ft_itoa.c
+		libft/src/format/ft_ultoa.c
+		libft/src/format/ft_ftoa.c
+
+		libft/src/list/ft_lstadd.c
+		libft/src/list/ft_lstaddend.c
+		libft/src/list/ft_lstdel.c
+		libft/src/list/ft_lstdelone.c
+		libft/src/list/ft_lstiter.c
+		libft/src/list/ft_lstmap.c
+		libft/src/list/ft_lstnew.c
+
+		libft/src/math/ft_sqrt.c
+		libft/src/math/ft_pow.c
+		libft/src/math/ft_abs.c
+		libft/src/math/ft_trig.c
+		libft/src/math/ft_log.c
+
+		libft/src/linalg/matrix.c
+		libft/src/linalg/matrix_invert.c
+		libft/src/linalg/vector.c
+
+		libft/src/ft_realloc.c
+		libft/src/ft_swap.c
+		libft/src/get_next_line.c
+		libft/src/t_buff.c
+		libft/src/endian.c
+
+		libft/src/printf/ft_printf.c
+		libft/src/printf/spec_parse.c
+		libft/src/printf/conversion.c
 		)
 include_directories(headers)
 include_directories(libft)
