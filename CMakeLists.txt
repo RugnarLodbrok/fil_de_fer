@@ -14,8 +14,9 @@ include_directories(headers)
 #---------------------------------------------------
 
 add_executable(fdf
-		src/main.c
-		src/line.c
+		ascii/main.c
+		ascii/line.c
+		ascii/ascii.c
 		src/t_matrix.c
 		src/t_vector.c)
 include_directories(headers)

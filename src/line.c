@@ -1,4 +1,3 @@
-#include "mlx.h"
 #include "libft.h"
 #include "fdf.h"
 
