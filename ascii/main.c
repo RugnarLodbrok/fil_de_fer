@@ -10,7 +10,7 @@ void update(double dt, t_screen_buff *s)
 {
 	static int x = 1;
 	static int y = 1;
-	s->data[x][y] = 0;
+	ascii_draw_put_pixel(s, x, y, 0);
 	x++;
 	y++;
 	if (x >= s->w || y >= s->h)
@@ -18,8 +18,7 @@ void update(double dt, t_screen_buff *s)
 		x = 0;
 		y = 0;
 	}
-	s->data[x][y] = 1;
-	ascii_draw_flush(s);
+	ascii_draw_put_pixel(s, x, y, 1);
 }
 
 int main(void)
@@ -27,6 +26,7 @@ int main(void)
 	t_screen_buff s;
 	printf("\033[H\033[J");
 	ascii_draw_new(&s, 100, 100);
+	ascii_draw_flush(&s);
 	while (1)
 	{
 		update(0, &s);

@@ -15,5 +15,6 @@ typedef struct
 
 void ascii_draw_new(t_screen_buff *s, int w, int h);
 void ascii_draw_flush(t_screen_buff *s);
+void ascii_draw_put_pixel(t_screen_buff *s, int x, int y, int v);
 
 #endif

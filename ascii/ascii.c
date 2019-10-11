@@ -51,26 +51,27 @@ void ascii_draw_flush(t_screen_buff *s)
 	}
 }
 
-void ascii_put_pixel(t_screen_buff *s, int x, int y, int v)
+void ascii_draw_put_pixel(t_screen_buff *s, int x, int y, int v)
 {
 	int i;
+	const char *pix = "\033[%d;%dH%s\n";
 
 	if (s->data[x][y] == v)
 		return;
 	s->data[x][y] = v;
 	i = x / 2;
-	if (s->data[i][y])
+	if (s->data[2 * i][y])
 	{
-		if (s->data[i + 1][y])
-			printf("\033[%d;%dH%s", i, y, PIX_11);
+		if (s->data[2 * i + 1][y])
+			printf(pix, i, y, PIX_11);
 		else
-			printf("\033[%d;%dH%s", i, y, PIX_10);
+			printf(pix, i, y, PIX_10);
 	}
 	else
 	{
-		if (s->data[i + 1][y])
-			printf("\033[%d;%dH%s", i, y, PIX_01);
+		if (s->data[2 * i + 1][y])
+			printf(pix, i, y, PIX_01);
 		else
-			printf("\033[%d;%dH%s", i, y, PIX_00);
+			printf(pix, i, y, PIX_00);
 	}
 }
