@@ -2,22 +2,23 @@
 #include "ft_linalg.h"
 #include "fdf.h"
 
-t_mesh t_mesh_cube()
+t_mesh t_mesh_cube(int size)
 {
 	t_mesh m;
+	int i;
+
 	ft_bzero(&m, sizeof(t_wireframe));
 	t_mat_reset(&(m.m));
 	m.n_vertices = 8;
-
 	m.vertices = malloc(sizeof(t_vertex) * 8);
 	m.vertices[0] = (t_vertex) {(t_vec) {0, 0, 0}, 255 * GREEN};
-	m.vertices[1] = (t_vertex) {(t_vec) {100, 0, 0}, 255 * GREEN};
-	m.vertices[2] = (t_vertex) {(t_vec) {100, 100, 0}, 255 * GREEN};
-	m.vertices[3] = (t_vertex) {(t_vec) {0, 100, 0}, 255 * GREEN};
-	m.vertices[4] = (t_vertex) {(t_vec) {0, 0, 100}, 255 * GREEN};
-	m.vertices[5] = (t_vertex) {(t_vec) {100, 0, 100}, 255 * GREEN};
-	m.vertices[6] = (t_vertex) {(t_vec) {100, 100, 100}, 255 * GREEN};
-	m.vertices[7] = (t_vertex) {(t_vec) {0, 100, 100}, 255 * GREEN};
+	m.vertices[1] = (t_vertex) {(t_vec) {1, 0, 0}, 255 * GREEN};
+	m.vertices[2] = (t_vertex) {(t_vec) {1, 1, 0}, 255 * GREEN};
+	m.vertices[3] = (t_vertex) {(t_vec) {0, 1, 0}, 255 * GREEN};
+	m.vertices[4] = (t_vertex) {(t_vec) {0, 0, 1}, 255 * GREEN};
+	m.vertices[5] = (t_vertex) {(t_vec) {1, 0, 1}, 255 * GREEN};
+	m.vertices[6] = (t_vertex) {(t_vec) {1, 1, 1}, 255 * GREEN};
+	m.vertices[7] = (t_vertex) {(t_vec) {0, 1, 1}, 255 * GREEN};
 
 	m.n_edges = 12;
 	m.edges = malloc(sizeof(t_point) * 12);
@@ -36,23 +37,26 @@ t_mesh t_mesh_cube()
 	m.edges[10] = (t_point) {2, 6};
 	m.edges[11] = (t_point) {3, 7};
 
+	for (i = 0; i < m.n_vertices; ++i)
+		t_vec_scale(&m.vertices[i].v, size);
+
 	return (m);
 }
 
-void t_mesh_draw(t_wireframe *f, void *p, int color)
+void t_mesh_draw(t_mesh *m, void *p, int color)
 {
 	uint i;
 	t_vec p1;
 	t_vec p2;
 
 	i = 0;
-	while (i < f->n_edges)
+	while (i < m->n_edges)
 	{
-		p1 = f->vertices[f->edges[i].x].v;
-		p2 = f->vertices[f->edges[i].y].v;
+		p1 = m->vertices[m->edges[i].x].v;
+		p2 = m->vertices[m->edges[i].y].v;
 		line(p,
-			 t_vec_transform(p1, f->m),
-			 t_vec_transform(p2, f->m),
+			 t_vec_transform(p1, m->m),
+			 t_vec_transform(p2, m->m),
 			 color);
 		++i;
 	}

@@ -22,12 +22,21 @@ void update(double dt, t_screen_buff *s)
 int main(void)
 {
 	t_screen_buff s;
+	t_mesh m;
+	t_mat rot;
 	printf("\033[H\033[J");
 	ascii_draw_new(&s, 100, 100);
 	ascii_draw_flush(&s);
+
+//	line(&s, (t_vec){1, 1, 0}, (t_vec){10, 5, 0}, 1);
+	m = t_mesh_cube(20);
+	t_mat_translate(&m.m, (t_vec){20, 20, 0});
+	rot = t_mat_rotation((t_vec) {0, 1, 1}, radians(5), (t_vec) {30, 30, 10});
 	while (1)
 	{
-		update(0, &s);
+		t_mesh_draw(&m, &s, 0);
+		m.m = t_mat_mul(rot, m.m);
+		t_mesh_draw(&m, &s, 1);
 		usleep(40000);
 	}
 }

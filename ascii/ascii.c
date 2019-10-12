@@ -46,7 +46,7 @@ void ascii_draw_flush(t_screen_buff *s)
 			}
 			k += 3;
 		}
-		buff[k + 1] = 0;
+		buff[k] = 0;
 		printf("%s|\n", buff);
 	}
 }
@@ -56,6 +56,8 @@ void ascii_draw_put_pixel(t_screen_buff *s, int x, int y, int v)
 	int i;
 	const char *pix = "\033[%d;%dH%s\n";
 
+	if (x < 0 || y < 0 || x >= s->w || y >= s->h)
+		return;
 	if (s->data[x][y] == v)
 		return;
 	s->data[x][y] = v;

@@ -47,7 +47,7 @@ typedef struct
 	t_vec momentum;
 } t_scene;
 
-t_mesh t_mesh_cube();
-void t_mesh_draw(t_wireframe *f, void *p, int color);
+t_mesh t_mesh_cube(int size);
+void t_mesh_draw(t_mesh *m, void *p, int color);
 
 #endif
