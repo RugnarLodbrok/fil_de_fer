@@ -14,14 +14,15 @@ include_directories(headers)
 #---------------------------------------------------
 
 add_executable(fdf
-		ascii/main.c
-		ascii/line.c
-		ascii/ascii.c
-		src/mesh.c
 
-#		src/main.c
-#		src/wireframe.c
-#		src/line.c
+#		ascii/main.c
+#		ascii/line.c
+#		ascii/ascii.c
+
+		src/main.c
+		src/line.c
+
+		src/mesh.c
 
 		libft/src/string/ft_atoi.c
 		libft/src/string/ft_bzero.c

@@ -11,14 +11,14 @@ t_mesh t_mesh_cube(int size)
 	t_mat_reset(&(m.m));
 	m.n_vertices = 8;
 	m.vertices = malloc(sizeof(t_vertex) * 8);
-	m.vertices[0] = (t_vertex) {(t_vec) {0, 0, 0}, 255 * GREEN};
-	m.vertices[1] = (t_vertex) {(t_vec) {1, 0, 0}, 255 * GREEN};
-	m.vertices[2] = (t_vertex) {(t_vec) {1, 1, 0}, 255 * GREEN};
-	m.vertices[3] = (t_vertex) {(t_vec) {0, 1, 0}, 255 * GREEN};
-	m.vertices[4] = (t_vertex) {(t_vec) {0, 0, 1}, 255 * GREEN};
-	m.vertices[5] = (t_vertex) {(t_vec) {1, 0, 1}, 255 * GREEN};
+	m.vertices[0] = (t_vertex) {(t_vec) {-1, -1, -1}, 255 * GREEN};
+	m.vertices[1] = (t_vertex) {(t_vec) {1, -1, -1}, 255 * GREEN};
+	m.vertices[2] = (t_vertex) {(t_vec) {1, 1, -1}, 255 * GREEN};
+	m.vertices[3] = (t_vertex) {(t_vec) {-1, 1, -1}, 255 * GREEN};
+	m.vertices[4] = (t_vertex) {(t_vec) {-1, -1, 1}, 255 * GREEN};
+	m.vertices[5] = (t_vertex) {(t_vec) {1, -1, 1}, 255 * GREEN};
 	m.vertices[6] = (t_vertex) {(t_vec) {1, 1, 1}, 255 * GREEN};
-	m.vertices[7] = (t_vertex) {(t_vec) {0, 1, 1}, 255 * GREEN};
+	m.vertices[7] = (t_vertex) {(t_vec) {-1, 1, 1}, 255 * GREEN};
 
 	m.n_edges = 12;
 	m.edges = malloc(sizeof(t_point) * 12);

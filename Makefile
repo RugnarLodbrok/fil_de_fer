@@ -22,28 +22,28 @@ SRC_MLX = \
 		src/main.c \
 		src/line.c
 
-SRC = $(SRC_ASCII) \
+SRC = $(SRC_MLX) \
 		src/mesh.c
 
-OPTION = -I. -Ilibft #-Iminilibx_macos
+OPTION = -I. -Ilibft -Iminilibx_macos
 OBJ = $(SRC:.c=.o)
 
 all : $(NAME)
 
 $(NAME) : libft/libft.a minilibx_macos/libmlx.a $(OBJ)
-#	$(CC) -o $(NAME) $(OBJ) $(OPTION) -L minilibx_macos/ -lmlx -L libft/ -lft #-framework OpenGL -framework AppKit
-	@$(CC) -o $(NAME) $(OBJ) $(OPTION) -L minilibx_macos/ -L libft/ -lft
+	$(CC) -o $(NAME) $(OBJ) $(OPTION) -L minilibx_macos/ -lmlx -L libft/ -lft -framework OpenGL -framework AppKit
+#	@$(CC) -o $(NAME) $(OBJ) $(OPTION) -L minilibx_macos/ -L libft/ -lft
 
-%.o: %.c libft/libft.a
+%.o: %.c
 	@echo compile $(<) "->" $(<:.c=.o)
-	@$(CC) $(FLAGS) -c $(<) -o $(<:.c=.o) $(OPTION)
+	$(CC) $(FLAGS) -c $(<) -o $(<:.c=.o) $(OPTION)
 
 libft/libft.a :
 	make -C libft/
 
 minilibx_macos/libmlx.a :
-	@echo skip mac
-#	make -C minilibx_macos
+#	@echo skip mac
+	make -C minilibx_macos
 
 run : $(NAME)
 	@./$(NAME)
@@ -55,6 +55,6 @@ clean :
 fclean : clean
 	rm -f $(NAME)
 	make -C libft/ fclean
-#	make -C minilibx_macos/ clean
+	make -C minilibx_macos/ clean
 
 re : fclean all

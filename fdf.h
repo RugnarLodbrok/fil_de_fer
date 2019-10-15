@@ -13,7 +13,9 @@
 # define STEP 0.05
 
 #include "ft_linalg.h"
-#include "ascii.h"
+//#include "ascii.h"
+#include "fdf_mlx.h"
+
 
 typedef struct
 {

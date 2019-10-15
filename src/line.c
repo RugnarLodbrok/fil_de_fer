@@ -1,6 +1,7 @@
 #include "libft.h"
 #include "ft_linalg.h"
 #include "fdf.h"
+#include "mlx.h"
 
 int ft_sign(int a)
 {
@@ -37,7 +38,7 @@ void line(void *p, t_vec p1, t_vec p2, int color)
 		err = 0;
 		while (pp1->x <= pp2->x)
 		{
-			mlx_pixel_put(s->M, s->win, (int)pp1->x, (int)pp1->y, color);
+			mlx_pixel_put(((t_scene*)p)->M, ((t_scene*)p)->win, (int)pp1->x, (int)pp1->y, color);
 			err += slope;
 			if (err > 0.5)
 			{
@@ -54,7 +55,7 @@ void line(void *p, t_vec p1, t_vec p2, int color)
 		err = 0;
 		while (pp1->y <= pp2->y)
 		{
-			mlx_pixel_put(s->M, s->win, (int)pp1->x, (int)pp1->y, color);
+			mlx_pixel_put(((t_scene*)p)->M, ((t_scene*)p)->win, (int)pp1->x, (int)pp1->y, color);
 			err += slope;
 			if (err > 0.5)
 			{
