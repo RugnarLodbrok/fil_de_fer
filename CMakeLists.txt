@@ -4,6 +4,7 @@ cmake_minimum_required(VERSION 3.6.2)
 project(libft_run C)
 set(CMAKE_C_STANDARD 90)
 include_directories(.)
+include_directories(libft)
 include_directories(headers)
 
 #--------------LIB LINK EXAMPLE---------------------
@@ -13,9 +14,14 @@ include_directories(headers)
 #---------------------------------------------------
 
 add_executable(fdf
-		src/main.c
-		src/wireframe.c
-		src/line.c
+		ascii/main.c
+		ascii/line.c
+		ascii/ascii.c
+		src/mesh.c
+
+#		src/main.c
+#		src/wireframe.c
+#		src/line.c
 
 		libft/src/string/ft_atoi.c
 		libft/src/string/ft_bzero.c
@@ -88,6 +94,7 @@ add_executable(fdf
 		libft/src/math/ft_log.c
 
 		libft/src/linalg/matrix.c
+		libft/src/linalg/matrix_invert.c
 		libft/src/linalg/vector.c
 
 		libft/src/ft_realloc.c
@@ -106,6 +113,7 @@ include_directories(minilibx_macos)
 #add_compile_options(-framework OpenGL -framework AppKit)
 target_link_libraries(fdf
 		LINK_PUBLIC ${CMAKE_SOURCE_DIR}/libft/libft.a
-		LINK_PUBLIC ${CMAKE_SOURCE_DIR}/minilibx_macos/libmlx.a
-		"-framework OpenGL"
-		"-framework AppKit")
+#		LINK_PUBLIC ${CMAKE_SOURCE_DIR}/minilibx_macos/libmlx.a
+#		"-framework OpenGL"
+#		"-framework AppKit"
+		)

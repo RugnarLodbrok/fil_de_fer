@@ -13,12 +13,22 @@
 # define STEP 0.05
 
 #include "ft_linalg.h"
+#include "ascii.h"
 
 typedef struct
 {
 	t_vec v;
 	int color;
 } t_vertex;
+
+typedef struct
+{
+	t_vertex *vertices;
+	int n_vertices;
+	t_point *edges;
+	int n_edges;
+	t_mat m;
+} t_mesh;
 
 typedef struct
 {
@@ -37,8 +47,7 @@ typedef struct
 	t_vec momentum;
 } t_scene;
 
-void line(t_scene *s, t_vec p1, t_vec p2, int color);
-void t_wireframe_init(t_wireframe *f);
-void t_wireframe_draw(t_wireframe *f, t_scene *s, int color);
+t_mesh t_mesh_cube(int size);
+void t_mesh_draw(t_mesh *m, void *p, int color);
 
 #endif
