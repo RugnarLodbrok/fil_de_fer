@@ -34,22 +34,17 @@ typedef struct
 
 typedef struct
 {
-	size_t n_vertices;
-	t_vertex *vertices;
-	size_t n_edges;
-	t_point *edges;
-	t_mat m;
-} t_wireframe;
-
-typedef struct
-{
 	void *M;
 	void *win;
 	void **objs;
 	t_vec momentum;
 } t_app;
 
-t_mesh t_mesh_cube(int size);
-void t_mesh_draw(t_mesh *m, void *p, int color);
+void	t_mesh_init(t_mesh *m);
+t_mesh	t_mesh_cube(int size);
+void	t_mesh_draw(t_mesh *m, void *p, int color);
+t_mesh	t_mesh_landscape_from_file(char *f_name);
+int		t_mesh_push_vertex(t_mesh *m, t_vertex v);
+int		t_mesh_push_edge(t_mesh *m, t_point e);
 
 #endif

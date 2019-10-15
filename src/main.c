@@ -26,10 +26,11 @@ int main(void)
 	s.momentum = t_vec_mul(s.momentum, 0.2);
 	s.M = M;
 	s.win = win;
-	s.objs = malloc(sizeof(t_wireframe *) * 2);
+	s.objs = malloc(sizeof(t_mesh *) * 2);
 	s.objs[0] = &m;
 	s.objs[1] = 0;
-	m = t_mesh_cube(50);
+//	m = t_mesh_cube(50);
+	m = t_mesh_landscape_from_file("../test.txt");
 	t_mat_translate(&m.m, (t_vec){200, 200, 0});
 
 	mlx_loop_hook(M, loop_hook, &s);

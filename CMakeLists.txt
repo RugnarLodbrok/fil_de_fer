@@ -22,6 +22,7 @@ add_executable(fdf
 		src/main.c
 		src/line.c
 
+		src/mesh_read.c
 		src/mesh.c
 
 		libft/src/string/ft_atoi.c
@@ -114,7 +115,7 @@ include_directories(minilibx_macos)
 #add_compile_options(-framework OpenGL -framework AppKit)
 target_link_libraries(fdf
 		LINK_PUBLIC ${CMAKE_SOURCE_DIR}/libft/libft.a
-#		LINK_PUBLIC ${CMAKE_SOURCE_DIR}/minilibx_macos/libmlx.a
-#		"-framework OpenGL"
-#		"-framework AppKit"
+		LINK_PUBLIC ${CMAKE_SOURCE_DIR}/minilibx_macos/libmlx.a
+		"-framework OpenGL"
+		"-framework AppKit"
 		)

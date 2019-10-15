@@ -23,6 +23,7 @@ SRC_MLX = \
 		src/line.c
 
 SRC = $(SRC_MLX) \
+		src/mesh_read.c \
 		src/mesh.c
 
 OPTION = -I. -Ilibft -Iminilibx_macos
