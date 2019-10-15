@@ -47,7 +47,7 @@ typedef struct
 	void *win;
 	void **objs;
 	t_vec momentum;
-} t_scene;
+} t_app;
 
 t_mesh t_mesh_cube(int size);
 void t_mesh_draw(t_mesh *m, void *p, int color);

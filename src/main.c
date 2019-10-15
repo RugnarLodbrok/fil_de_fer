@@ -12,7 +12,7 @@ int main(void)
 {
 	void *M;
 	void *win;
-	t_scene s;
+	t_app s;
 	t_mesh m;
 
 	ft_printf("HELLO\n");
@@ -42,9 +42,9 @@ int loop_hook(void *p)
 	int i;
 	t_mesh *obj;
 	t_mat rot;
-	t_scene *s;
+	t_app *s;
 
-	s = (t_scene *)p;
+	s = (t_app *)p;
 	if (!t_vec_len(s->momentum))
 		return (0);
 	obj = s->objs[0];
@@ -59,7 +59,7 @@ int loop_hook(void *p)
 		obj->m = t_mat_mul(rot, obj->m);
 		t_mesh_draw(obj, s, 255 * GREEN);
 	}
-	mlx_pixel_put(((t_scene *)s)->M, ((t_scene *)s)->win, 200, 200, 255 * RED);
+	mlx_pixel_put(((t_app *)s)->M, ((t_app *)s)->win, 200, 200, 255 * RED);
 	return (0);
 }
 
@@ -73,9 +73,9 @@ int mouse_hook(int button, int x, int y, void *param)
 
 int key_hook(int keycode, void *p)
 {
-	t_scene *s;
+	t_app *s;
 
-	s = (t_scene *)p;
+	s = (t_app *)p;
 	if (keycode == KEY_LEFT)
 	{
 		s->momentum = t_vec_add(s->momentum, (t_vec){0, STEP, 0});
