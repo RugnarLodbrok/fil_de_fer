@@ -15,7 +15,6 @@ int main(void)
 	t_app s;
 	t_mesh m;
 
-	ft_printf("HELLO\n");
 	M = mlx_init();
 	win = mlx_new_window(M, 800, 600, "fdf");
 	mlx_string_put(M, win, 150, 150, 255 * GREEN, "wake up, Neo!");
