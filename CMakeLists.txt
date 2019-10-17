@@ -22,6 +22,7 @@ add_executable(fdf
 		src/main.c
 		src/line.c
 
+		src/camera.c
 		src/mesh_read.c
 		src/mesh.c
 

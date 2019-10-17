@@ -1,5 +1,6 @@
 #include <fcntl.h>
 #include "libft.h"
+#include "ft_linalg.h"
 #include "get_next_line.h"
 #include "fdf.h"
 #include <stdio.h>
@@ -12,7 +13,7 @@ static void error_exit(char *msg)
 	exit(1);
 }
 
-t_point read_landscape_data(int buff[128][128], char *f_name)
+t_vec read_landscape_data(int buff[128][128], char *f_name)
 {
 	t_point r;
 	int status;
@@ -37,24 +38,25 @@ t_point read_landscape_data(int buff[128][128], char *f_name)
 	}
 	if (status < 0)
 		error_exit("can't read file");
-	return (r);
+	return (t_vec){r.x, r.y, 10};
 }
 
 
 t_mesh t_mesh_landscape_from_file(char *f_name)
 {
 	int d[128][128];
-	t_point size;
+	t_vec size;
 	int j;
 	int i;
 	t_mesh m;
+	double scale;
 
 	t_mesh_init(&m);
 	size = read_landscape_data(d, f_name);
 	for (j = 0; j < size.y; ++j)
 		for (i = 0; i < size.x; ++i)
 		{
-			d[i][j] = t_mesh_push_vertex(&m, (t_vertex){(t_vec){i * 10, j * 10, d[i][j]}, 255 * GREEN}) - 1;
+			d[i][j] = t_mesh_push_vertex(&m, (t_vertex){(t_vec){i, j, d[i][j]}, 255 * GREEN}) - 1;
 			if (i > 0)
 				t_mesh_push_edge(&m, (t_point){d[i - 1][j], d[i][j]});
 			if (j > 0)
@@ -68,5 +70,14 @@ t_mesh t_mesh_landscape_from_file(char *f_name)
 		}
 		printf("\n");
 	}*/
+	scale = 100. / (size.x > size.y ? size.x : size.y);
+	t_vec_scale(&size, scale * 2);
+	for (i = 0; i < m.n_vertices; ++i)
+	{
+		t_vec_scale(&m.vertices[i].v, scale);
+		t_vec_scale(&m.vertices[i].v, scale);
+		m.vertices[i].v = t_vec_sub(m.vertices[i].v, size);
+	}
+	printf("center: %f %f %f\n", size.x, size.y, size.z);
 	return (m);
 }

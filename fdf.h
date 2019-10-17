@@ -1,6 +1,9 @@
 #ifndef FDF_H
 # define FDF_H
 
+# define WIN_W 800
+# define WIN_H 600
+
 # define BLUE 1
 # define GREEN 256
 # define RED 256*256
@@ -12,6 +15,7 @@
 # define KEY_UP 126
 # define STEP 0.05
 
+#include "libft.h"
 #include "ft_linalg.h"
 //#include "ascii.h"
 #include "fdf_mlx.h"
@@ -34,9 +38,16 @@ typedef struct
 
 typedef struct
 {
+	t_mat m;
+	t_mat p;
+} t_cam;
+
+typedef struct
+{
 	void *M;
 	void *win;
 	void **objs;
+	t_cam cam;
 	t_vec momentum;
 } t_app;
 

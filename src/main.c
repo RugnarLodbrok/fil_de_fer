@@ -12,28 +12,28 @@ int main(void)
 {
 	void *M;
 	void *win;
-	t_app s;
+	t_app app;
 	t_mesh m;
 
 	M = mlx_init();
-	win = mlx_new_window(M, 800, 600, "fdf");
+	win = mlx_new_window(M, WIN_W, WIN_H, "fdf");
 	mlx_string_put(M, win, 150, 150, 255 * GREEN, "wake up, Neo!");
 
-	ft_bzero(&s, sizeof(s));
-	s.momentum = (t_vec){.1, 1, .3};
-	t_vec_normalize(&(s.momentum));
-	s.momentum = t_vec_mul(s.momentum, 0.2);
-	s.M = M;
-	s.win = win;
-	s.objs = malloc(sizeof(t_mesh *) * 2);
-	s.objs[0] = &m;
-	s.objs[1] = 0;
+	ft_bzero(&app, sizeof(app));
+	app.momentum = (t_vec){.1, 1, .3};
+	t_vec_normalize(&(app.momentum));
+	app.momentum = t_vec_mul(app.momentum, 0.2);
+	app.M = M;
+	app.win = win;
+	app.objs = malloc(sizeof(t_mesh *) * 2);
+	app.objs[0] = &m;
+	app.objs[1] = 0;
 //	m = t_mesh_cube(50);
 	m = t_mesh_landscape_from_file("../test.txt");
-	t_mat_translate(&m.m, (t_vec){200, 200, 0});
-
-	mlx_loop_hook(M, loop_hook, &s);
-	mlx_key_hook(win, key_hook, &s);
+//	t_mat_translate(&m.m, (t_vec){200, 200, 0});
+	t_cam_init(&app.cam);
+	mlx_loop_hook(M, loop_hook, &app);
+	mlx_key_hook(win, key_hook, &app);
 	mlx_loop(M);
 }
 
