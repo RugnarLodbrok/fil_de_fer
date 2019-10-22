@@ -38,8 +38,9 @@ typedef struct
 
 typedef struct
 {
-	t_mat m;
-	t_mat p;
+	t_mat view;
+	t_mat proj;
+	t_mat disp;
 } t_cam;
 
 typedef struct
@@ -51,13 +52,14 @@ typedef struct
 	t_vec momentum;
 } t_app;
 
-void	t_mesh_init(t_mesh *m);
+void	t_cam_init(t_cam *c, t_mat projection, t_point display_res);
+t_mat	projection_isometric(double fov_width, double fov_height);
 t_mesh	t_mesh_cube(int size);
 void	t_mesh_draw(t_mesh *m, void *p, int color);
+void	t_mesh_init(t_mesh *m);
 t_mesh	t_mesh_landscape_from_file(char *f_name);
 int		t_mesh_push_vertex(t_mesh *m, t_vertex v);
 int		t_mesh_push_edge(t_mesh *m, t_point e);
-void	t_cam_init(t_cam *c);
-void	t_cam_draw(t_cam *c, void *p, t_mesh *mesh, int color);
+void	t_cam_draw(t_cam *cam, void *p, t_mesh *mesh, int color);
 
 #endif

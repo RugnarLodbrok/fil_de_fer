@@ -28,10 +28,10 @@ int main(void)
 	app.objs = malloc(sizeof(t_mesh *) * 2);
 	app.objs[0] = &m;
 	app.objs[1] = 0;
-//	m = t_mesh_landscape_from_file("../test.txt");
-	m = t_mesh_cube(50);
-	t_mat_translate(&m.m, (t_vec){100, 100, 0});
-	t_cam_init(&app.cam);
+	m = t_mesh_landscape_from_file("../test.txt");
+	t_cam_init(&app.cam,
+			   projection_isometric((double)WIN_W / 2, (double)WIN_H / 2),
+			   (t_point){WIN_W, WIN_H});
 
 	mlx_loop_hook(M, loop_hook, &app);
 	mlx_key_hook(win, key_hook, &app);
@@ -58,7 +58,7 @@ int loop_hook(void *p)
 	for (i = 0; (obj = s->objs[i]); ++i)
 	{
 		obj->m = t_mat_mul(rot, obj->m);
-		t_cam_draw(&s->cam, p, obj, 255*GREEN);
+		t_cam_draw(&s->cam, p, obj, 255 * GREEN);
 	}
 	mlx_pixel_put(((t_app *)s)->M, ((t_app *)s)->win, 200, 200, 255 * RED);
 	return (0);
