@@ -12,13 +12,13 @@ void t_app_init(t_app *app)
 	t_vec_normalize(&(app->momentum));
 	app->momentum = t_vec_mul(app->momentum, 0.2);
 	app->framebuffer = mlx_new_image(app->M, WIN_W, WIN_H);
-/*	app->objs = malloc(sizeof(t_mesh *) * 2);
-	app->objs[0] = malloc(sizeof(t_mesh *));
+	app->objs = malloc(sizeof(t_mesh *) * 2);
+	app->objs[0] = malloc(sizeof(t_mesh));
 	app->objs[1] = 0;
 	*(app->objs[0]) = t_mesh_landscape_from_file("test.txt");
 //	*(app->objs[0]) = t_mesh_cube(50);
- */
+
 	t_cam_init(&app->cam,
-			   projection_isometric((double)WIN_W / 2, (double)WIN_H / 2),
+			   projection_isometric((double)WIN_W, (double)WIN_H),
 			   (t_point){WIN_W, WIN_H});
 }
