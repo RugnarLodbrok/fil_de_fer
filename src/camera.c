@@ -15,11 +15,11 @@ void t_cam_init(t_cam *c, t_mat projection, t_point display_res)
 
 	w = display_res.x;
 	h = display_res.y;
-	t_mat_reset(&c->view);
-	c->view = (t_mat){1, 0, 0, 0,
-					  0, 0, -1, 0,
-					  0, 1, 0, 0,
-					  0, 0, 0, 1};
+	t_mat_reset(&c->v2);
+	c->v1 = (t_mat){1, 0, 0, 0,
+					0, 0, -1, 0,
+					0, 1, 0, 0,
+					0, 0, 0, 1};
 	c->proj = projection;
 	c->disp = (t_mat){.5 * w, 0, 0, .5 * w,
 					  0, .5 * h, 0, .5 * h,
@@ -37,7 +37,8 @@ void t_cam_draw(t_cam *cam, void *p, t_mesh *mesh)
 	(void)cam;
 	i = 0;
 	m = mesh->m;
-	m = t_mat_mul(cam->view, m);
+	m = t_mat_mul(cam->v1, m);
+	m = t_mat_mul(cam->v2, m);
 	m = t_mat_mul(cam->proj, m);
 	m = t_mat_mul(cam->disp, m);
 	while (i < mesh->n_edges)
@@ -53,13 +54,17 @@ void t_cam_draw(t_cam *cam, void *p, t_mesh *mesh)
 
 void t_cam_move(t_cam *cam, t_controller *ctrl)
 {
-	ft_printf("yaw:%.f\n", ctrl->d_yaw);
 	if (ctrl->d_yaw)
 	{
-		ft_printf("yaw:%.f\n", ctrl->d_yaw);
-		cam->view = t_mat_mul(cam->view, t_mat_rot(
+		cam->v1 = t_mat_mul(cam->v1, t_mat_rot(
 				(t_vec){0, 0, 1},
 				radians(ctrl->d_yaw)));
+	}
+	if (ctrl->d_pitch)
+	{
+		cam->v2 = t_mat_mul(cam->v2, t_mat_rot(
+				(t_vec){1, 0, 0},
+				radians(ctrl->d_pitch)));
 	}
 
 }

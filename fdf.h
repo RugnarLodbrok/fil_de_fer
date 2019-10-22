@@ -60,7 +60,8 @@ typedef struct
 
 typedef struct
 {
-	t_mat view;
+	t_mat v1;
+	t_mat v2;
 	t_mat proj;
 	t_mat disp;
 } t_cam;
