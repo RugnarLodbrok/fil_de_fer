@@ -29,7 +29,7 @@ int main(void)
 	app.objs = malloc(sizeof(t_mesh *) * 2);
 	app.objs[0] = &m;
 	app.objs[1] = 0;
-	m = t_mesh_landscape_from_file("../test.txt");
+	m = t_mesh_landscape_from_file("test.txt");
 	t_cam_init(&app.cam,
 			   projection_isometric((double)WIN_W / 2, (double)WIN_H / 2),
 			   (t_point){WIN_W, WIN_H});
