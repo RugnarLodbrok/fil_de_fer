@@ -2,6 +2,7 @@
 #include "libft.h"
 #include "fdf.h"
 #include <stdio.h>
+#include <time.h>
 #include "ft_linalg.h"
 
 int loop_hook(void *p);
@@ -10,45 +11,27 @@ int key_hook(int keycode, void *p);
 
 int main(void)
 {
-	void *M;
-	void *win;
 	t_app app;
-	t_mesh m;
 
-	M = mlx_init();
-	win = mlx_new_window(M, WIN_W, WIN_H, "fdf");
-	mlx_string_put(M, win, 150, 150, 255 * GREEN, "wake up, Neo!");
-
-	ft_bzero(&app, sizeof(app));
-	app.momentum = (t_vec){.1, 1, .3};
-	t_vec_normalize(&(app.momentum));
-	app.momentum = t_vec_mul(app.momentum, 0.2);
-	app.M = M;
-	app.win = win;
-	app.framebuffer = mlx_new_image(M, WIN_W, WIN_H);
-	app.objs = malloc(sizeof(t_mesh *) * 2);
-	app.objs[0] = &m;
-	app.objs[1] = 0;
-	m = t_mesh_landscape_from_file("../test.txt");
-	t_cam_init(&app.cam,
-			   projection_isometric((double)WIN_W / 2, (double)WIN_H / 2),
-			   (t_point){WIN_W, WIN_H});
-
-	mlx_loop_hook(M, loop_hook, &app);
-	mlx_bind_keys(win, &app.controller);
-	mlx_loop(M);
+	t_app_init(&app);
+	app.time = clock();
+	app.frame_time = clock();
+	mlx_loop_hook(app.M, loop_hook, &app);
+	mlx_bind_keys(app.win, &app.controller);
+	mlx_loop(app.M);
 }
 
-int loop_hook(void *p)
+void update(t_app *app, double dt)
 {
 	int i;
 	t_mesh *obj;
 	t_mat rot;
-	t_app *app;
+	static int n = 0;
 
-	app = (t_app *)p;
+	(void)dt;
+	printf("loop %d\n", n++);
 	if (!t_vec_len(app->momentum))
-		return (0);
+		return;
 	t_vec_decay(&app->momentum, 0.003);
 	mlx_put_image_to_window(app->M, app->win, app->framebuffer, 0, 0);
 	if (t_vec_len(app->momentum))
@@ -57,11 +40,28 @@ int loop_hook(void *p)
 		rot = t_mat_rotation(app->momentum, t_vec_len(app->momentum), (t_vec){obj->m.data[0][3], obj->m.data[1][3], 0});
 		obj->m = t_mat_mul(rot, obj->m);
 	}
+	t_cam_move(&app->cam, &app->controller);
 	for (i = 0; (obj = app->objs[i]); ++i)
 	{
-		t_cam_draw(&app->cam, p, obj);
+		t_cam_draw(&app->cam, app, obj);
 	}
 	mlx_pixel_put(app->M, app->win, 200, 200, 255 * RED);
+}
+
+int loop_hook(void *p)
+{
+	t_app *app;
+	double dt;
+
+	app = p;
+	app->time = clock();
+	dt = (double)(app->time - app->frame_time) / CLOCKS_PER_SEC;
+//	dt = 100;
+	if (dt > FRAME_TIME)
+	{
+		app->frame_time = app->time;
+		update(app, dt);
+	}
 	return (0);
 }
 

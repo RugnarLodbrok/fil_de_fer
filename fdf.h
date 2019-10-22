@@ -23,9 +23,12 @@
 # define KEY_Q 12
 # define KEY_E 14
 
+# define FRAME_RATE 60
+# define FRAME_TIME 1./FRAME_RATE
 
 # define STEP 0.05
 
+#include <time.h>
 #include "libft.h"
 #include "ft_linalg.h"
 //#include "ascii.h"
@@ -67,14 +70,18 @@ typedef struct
 	void *M;
 	void *win;
 	void *framebuffer;
-	void **objs;
+	t_mesh **objs;
+	time_t time;
+	time_t frame_time;
 	t_controller controller;
 	t_cam cam;
 	t_vec momentum;
 } t_app;
 
+void t_app_init(t_app *app);
 void t_cam_init(t_cam *c, t_mat projection, t_point display_res);
 void t_cam_draw(t_cam *cam, void *p, t_mesh *mesh);
+void t_cam_move(t_cam *cam, t_controller *ctrl);
 t_mat projection_isometric(double fov_width, double fov_height);
 t_mesh t_mesh_cube(int size);
 void t_mesh_init(t_mesh *m);

@@ -70,6 +70,7 @@ t_mesh t_mesh_landscape_from_file(char *f_name)
 		}
 		printf("\n");
 	}*/
+	ft_printf("n_edges:%d", m.n_edges);
 	scale = 100. / (size.x > size.y ? size.x : size.y);
 	t_vec_scale(&size, scale * 2);
 	for (i = 0; i < m.n_vertices; ++i)

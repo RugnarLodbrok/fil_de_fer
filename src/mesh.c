@@ -55,9 +55,9 @@ int t_mesh_push_vertex(t_mesh *m, t_vertex v)
 	size_t mem_len;
 
 	old_vetices = m->vertices;
-	m->n_vertices++;
 	mem_len = sizeof(t_vertex) * m->n_vertices;
-	m->vertices = malloc(mem_len);
+	m->n_vertices++;
+	m->vertices = malloc(mem_len + sizeof(t_vertex));
 	if (old_vetices)
 	{
 		ft_memcpy(m->vertices, old_vetices, mem_len);
@@ -70,15 +70,17 @@ int t_mesh_push_vertex(t_mesh *m, t_vertex v)
 int t_mesh_push_edge(t_mesh *m, t_point e)
 {
 	t_point *old_edges;
+	size_t mem_len;
 
 	old_edges = m->edges;
+	mem_len = sizeof(t_point) * m->n_edges;
+	m->edges = malloc(mem_len + sizeof(t_point));
+	m->edges[m->n_edges] = e;
 	m->n_edges++;
-	m->edges = malloc(sizeof(t_vertex) * m->n_edges);
 	if (old_edges)
 	{
-		ft_memcpy(m->edges, old_edges, sizeof(t_vertex) * m->n_edges);
+		ft_memcpy(m->edges, old_edges, mem_len);
 		free(old_edges);
 	}
-	m->edges[m->n_edges - 1] = e;
 	return (m->n_edges);
 }

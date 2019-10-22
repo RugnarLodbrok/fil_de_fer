@@ -48,3 +48,16 @@ void t_cam_draw(t_cam *cam, void *p, t_mesh *mesh)
 		++i;
 	}
 }
+
+void t_cam_move(t_cam *cam, t_controller *ctrl)
+{
+	ft_printf("yaw:%.f\n", ctrl->d_yaw);
+	if (ctrl->d_yaw)
+	{
+		ft_printf("yaw:%.f\n", ctrl->d_yaw);
+		cam->view = t_mat_mul(cam->view, t_mat_rot(
+				(t_vec){0, 0, 1},
+				radians(ctrl->d_yaw)));
+	}
+
+}
