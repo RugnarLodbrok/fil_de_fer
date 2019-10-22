@@ -34,7 +34,7 @@ int main(void)
 			   (t_point){WIN_W, WIN_H});
 
 	mlx_loop_hook(M, loop_hook, &app);
-	mlx_key_hook(win, key_hook, &app);
+	mlx_bind_keys(win, &app.controller);
 	mlx_loop(M);
 }
 
@@ -43,24 +43,27 @@ int loop_hook(void *p)
 	int i;
 	t_mesh *obj;
 	t_mat rot;
-	t_app *s;
+	t_app *app;
 
-	s = (t_app *)p;
-	if (!t_vec_len(s->momentum))
+	app = (t_app *)p;
+	if (!t_vec_len(app->momentum))
 		return (0);
-	obj = s->objs[0];
-	rot = t_mat_rotation(s->momentum, t_vec_len(s->momentum), (t_vec){obj->m.data[0][3], obj->m.data[1][3], 0});
-	t_vec_decay(&(s->momentum), 0.003);
-	for (i = 0; (obj = s->objs[i]); ++i)
+	t_vec_decay(&app->momentum, 0.003);
+	for (i = 0; (obj = app->objs[i]); ++i)
 	{
-		t_cam_draw(&s->cam, p, obj, 0);
+		t_cam_draw(&app->cam, p, obj, 0);
 	}
-	for (i = 0; (obj = s->objs[i]); ++i)
+	if (t_vec_len(app->momentum))
 	{
+		obj = app->objs[0];
+		rot = t_mat_rotation(app->momentum, t_vec_len(app->momentum), (t_vec){obj->m.data[0][3], obj->m.data[1][3], 0});
 		obj->m = t_mat_mul(rot, obj->m);
-		t_cam_draw(&s->cam, p, obj, 255 * GREEN);
 	}
-	mlx_pixel_put(((t_app *)s)->M, ((t_app *)s)->win, 200, 200, 255 * RED);
+	for (i = 0; (obj = app->objs[i]); ++i)
+	{
+		t_cam_draw(&app->cam, p, obj, 255 * GREEN);
+	}
+	mlx_pixel_put(app->M, app->win, 200, 200, 255 * RED);
 	return (0);
 }
 
