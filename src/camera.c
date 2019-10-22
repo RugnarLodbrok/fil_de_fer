@@ -2,10 +2,24 @@
 
 t_mat projection_isometric(double fov_width, double fov_height)
 {
-	return ((t_mat){2. / fov_width, 0, 0, 0,
-					0, 2. / fov_height, 0, 0,
+	return ((t_mat){-2. / fov_width, 0, 0, 0,
+					0, -2. / fov_height, 0, 0,
 					0, 0, 1, 0,
 					0, 0, 0, 1});
+}
+
+t_mat projection_perspective(double n, double w, double h, double f)
+{
+	double l = -w / 2;
+	double r = w / 2;
+	double b = -h / 2;
+	double t = h / 2;
+
+	return (t_mat){
+			2 * n / (r - l), 0, (r + l) / (r - l), 0,
+			0, 2 * n / (t - b), (t + b) / (t - b), 0,
+			0, 0, -(f + n) / (f - n), -2 * f * n / (f - n),
+			0, 0, -1, 0};
 }
 
 void t_cam_init(t_cam *c, t_mat projection, t_point display_res)
@@ -22,7 +36,7 @@ void t_cam_init(t_cam *c, t_mat projection, t_point display_res)
 					0, 0, 0, 1};
 	c->proj = projection;
 	c->disp = (t_mat){.5 * w, 0, 0, .5 * w,
-					  0, .5 * h, 0, .5 * h,
+					  0, -.5 * h, 0, .5 * h,
 					  0, 0, 0, 0,
 					  0, 0, 0, 1};
 }
@@ -39,14 +53,20 @@ void t_cam_draw(t_cam *cam, void *p, t_mesh *mesh)
 	m = mesh->m;
 	m = t_mat_mul(cam->v1, m);
 	m = t_mat_mul(cam->v2, m);
-	m = t_mat_mul(cam->proj, m);
-	m = t_mat_mul(cam->disp, m);
+//	m = t_mat_mul(cam->proj, m);
+//	m = t_mat_mul(cam->disp, m);
 	while (i < mesh->n_edges)
 	{
 		p1 = mesh->vertices[mesh->edges[i].x].v;
 		p2 = mesh->vertices[mesh->edges[i].y].v;
+
 		p1 = t_vec_transform(p1, m);
+		p1 = t_vec_transform4(p1, cam->proj);
+		p1 = t_vec_transform(p1, cam->disp);
+
 		p2 = t_vec_transform(p2, m);
+		p2 = t_vec_transform4(p2, cam->proj);
+		p2 = t_vec_transform(p2, cam->disp);
 		line(p, p1, p2, 255 * GREEN);
 		++i;
 	}

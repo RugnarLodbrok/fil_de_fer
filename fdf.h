@@ -3,6 +3,7 @@
 
 # define WIN_W 800
 # define WIN_H 600
+# define FOV 90.
 
 # define MLX_EVEN_KEY_PRESS 2
 # define MLX_EVEN_KEY_RELEASE 3
@@ -84,6 +85,7 @@ void t_cam_init(t_cam *c, t_mat projection, t_point display_res);
 void t_cam_draw(t_cam *cam, void *p, t_mesh *mesh);
 void t_cam_move(t_cam *cam, t_controller *ctrl);
 t_mat projection_isometric(double fov_width, double fov_height);
+t_mat projection_perspective(double n, double w, double h, double f);
 t_mesh t_mesh_cube(int size);
 void t_mesh_init(t_mesh *m);
 t_mesh t_mesh_landscape_from_file(char *f_name);

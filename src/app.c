@@ -3,6 +3,8 @@
 
 void t_app_init(t_app *app)
 {
+	const double tg = ft_sin(radians(FOV / 2)) / ft_cos(radians(FOV / 2));
+	const double near = 10.;
 	ft_bzero(app, sizeof(t_app));
 
 	app->M = mlx_init();
@@ -19,6 +21,8 @@ void t_app_init(t_app *app)
 //	*(app->objs[0]) = t_mesh_cube(50);
 
 	t_cam_init(&app->cam,
-			   projection_isometric((double)WIN_W, (double)WIN_H),
+//			   projection_isometric((double)WIN_W, (double)WIN_H),
+			   projection_perspective(near, tg * near, tg * near * WIN_H / WIN_W, 999.),
 			   (t_point){WIN_W, WIN_H});
+	app->cam.v2.data[2][3] = 900.;
 }
