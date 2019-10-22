@@ -66,6 +66,7 @@ typedef struct
 {
 	void *M;
 	void *win;
+	void *framebuffer;
 	void **objs;
 	t_controller controller;
 	t_cam cam;
@@ -73,14 +74,13 @@ typedef struct
 } t_app;
 
 void t_cam_init(t_cam *c, t_mat projection, t_point display_res);
+void t_cam_draw(t_cam *cam, void *p, t_mesh *mesh);
 t_mat projection_isometric(double fov_width, double fov_height);
 t_mesh t_mesh_cube(int size);
-void t_mesh_draw(t_mesh *m, void *p, int color);
 void t_mesh_init(t_mesh *m);
 t_mesh t_mesh_landscape_from_file(char *f_name);
 int t_mesh_push_vertex(t_mesh *m, t_vertex v);
 int t_mesh_push_edge(t_mesh *m, t_point e);
-void t_cam_draw(t_cam *cam, void *p, t_mesh *mesh, int color);
 void mlx_bind_keys(void *win, t_controller *c);
 
 #endif

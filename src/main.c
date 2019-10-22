@@ -25,6 +25,7 @@ int main(void)
 	app.momentum = t_vec_mul(app.momentum, 0.2);
 	app.M = M;
 	app.win = win;
+	app.framebuffer = mlx_new_image(M, WIN_W, WIN_H);
 	app.objs = malloc(sizeof(t_mesh *) * 2);
 	app.objs[0] = &m;
 	app.objs[1] = 0;
@@ -49,10 +50,7 @@ int loop_hook(void *p)
 	if (!t_vec_len(app->momentum))
 		return (0);
 	t_vec_decay(&app->momentum, 0.003);
-	for (i = 0; (obj = app->objs[i]); ++i)
-	{
-		t_cam_draw(&app->cam, p, obj, 0);
-	}
+	mlx_put_image_to_window(app->M, app->win, app->framebuffer, 0, 0);
 	if (t_vec_len(app->momentum))
 	{
 		obj = app->objs[0];
@@ -61,7 +59,7 @@ int loop_hook(void *p)
 	}
 	for (i = 0; (obj = app->objs[i]); ++i)
 	{
-		t_cam_draw(&app->cam, p, obj, 255 * GREEN);
+		t_cam_draw(&app->cam, p, obj);
 	}
 	mlx_pixel_put(app->M, app->win, 200, 200, 255 * RED);
 	return (0);

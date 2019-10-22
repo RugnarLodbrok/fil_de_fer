@@ -82,22 +82,3 @@ int t_mesh_push_edge(t_mesh *m, t_point e)
 	m->edges[m->n_edges - 1] = e;
 	return (m->n_edges);
 }
-
-void t_mesh_draw(t_mesh *m, void *p, int color)
-{
-	uint i;
-	t_vec p1;
-	t_vec p2;
-
-	i = 0;
-	while (i < m->n_edges)
-	{
-		p1 = m->vertices[m->edges[i].x].v;
-		p2 = m->vertices[m->edges[i].y].v;
-		line(p,
-			 t_vec_transform(p1, m->m),
-			 t_vec_transform(p2, m->m),
-			 color);
-		++i;
-	}
-}

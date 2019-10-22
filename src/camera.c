@@ -25,7 +25,7 @@ void t_cam_init(t_cam *c, t_mat projection, t_point display_res)
 			0, 0, 0, 1};
 }
 
-void t_cam_draw(t_cam *cam, void *p, t_mesh *mesh, int color)
+void t_cam_draw(t_cam *cam, void *p, t_mesh *mesh)
 {
 	uint i;
 	t_vec p1;
@@ -44,7 +44,7 @@ void t_cam_draw(t_cam *cam, void *p, t_mesh *mesh, int color)
 		p2 = mesh->vertices[mesh->edges[i].y].v;
 		p1 = t_vec_transform(p1, m);
 		p2 = t_vec_transform(p2, m);
-		line(p, p1, p2, color);
+		line(p, p1, p2, 255 * GREEN);
 		++i;
 	}
 }
