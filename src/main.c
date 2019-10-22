@@ -31,6 +31,7 @@ void update(t_app *app, double dt)
 	(void)dt;
 	printf("loop %d\n", n++);
 	mlx_put_image_to_window(app->M, app->win, app->framebuffer, 0, 0);
+	//todo: https://github.com/keuhdall/images_example
 	t_cam_move(&app->cam, &app->controller);
 	for (i = 0; (obj = app->objs[i]); ++i)
 	{
