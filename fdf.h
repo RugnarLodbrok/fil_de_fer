@@ -57,5 +57,7 @@ void	t_mesh_draw(t_mesh *m, void *p, int color);
 t_mesh	t_mesh_landscape_from_file(char *f_name);
 int		t_mesh_push_vertex(t_mesh *m, t_vertex v);
 int		t_mesh_push_edge(t_mesh *m, t_point e);
+void	t_cam_init(t_cam *c);
+void	t_cam_draw(t_cam *c, void *p, t_mesh *mesh, int color);
 
 #endif
