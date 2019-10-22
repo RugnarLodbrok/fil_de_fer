@@ -12,10 +12,17 @@ int key_hook(int keycode, void *p);
 int main(void)
 {
 	t_app app;
+	t_mesh m;
 
 	t_app_init(&app);
 	app.time = clock();
 	app.frame_time = clock();
+
+	app.objs = malloc(sizeof(t_mesh *) * 2);
+	app.objs[0] = &m;
+	app.objs[1] = 0;
+	m = t_mesh_landscape_from_file("test.txt");
+
 	mlx_loop_hook(app.M, loop_hook, &app);
 	mlx_bind_keys(app.win, &app.controller);
 	mlx_loop(app.M);
