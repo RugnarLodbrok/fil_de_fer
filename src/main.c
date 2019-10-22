@@ -26,7 +26,6 @@ void update(t_app *app, double dt)
 {
 	int i;
 	t_mesh *obj;
-	t_mat rot;
 	static int n = 0;
 
 	(void)dt;
@@ -37,7 +36,6 @@ void update(t_app *app, double dt)
 	{
 		t_cam_draw(&app->cam, app, obj);
 	}
-	mlx_pixel_put(app->M, app->win, 200, 200, 255 * RED);
 }
 
 int loop_hook(void *p)
@@ -48,7 +46,6 @@ int loop_hook(void *p)
 	app = p;
 	app->time = clock();
 	dt = (double)(app->time - app->frame_time) / CLOCKS_PER_SEC;
-//	dt = 100;
 	if (dt > FRAME_TIME)
 	{
 		app->frame_time = app->time;
