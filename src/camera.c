@@ -53,20 +53,14 @@ void t_cam_draw(t_cam *cam, void *p, t_mesh *mesh)
 	m = mesh->m;
 	m = t_mat_mul(cam->v1, m);
 	m = t_mat_mul(cam->v2, m);
-//	m = t_mat_mul(cam->proj, m);
-//	m = t_mat_mul(cam->disp, m);
+	m = t_mat_mul(cam->proj, m);
+	m = t_mat_mul(cam->disp, m);
 	while (i < mesh->n_edges)
 	{
 		p1 = mesh->vertices[mesh->edges[i].x].v;
 		p2 = mesh->vertices[mesh->edges[i].y].v;
-
-		p1 = t_vec_transform(p1, m);
-		p1 = t_vec_transform4(p1, cam->proj);
-		p1 = t_vec_transform(p1, cam->disp);
-
-		p2 = t_vec_transform(p2, m);
-		p2 = t_vec_transform4(p2, cam->proj);
-		p2 = t_vec_transform(p2, cam->disp);
+		p1 = t_vec_transform4(p1, m);
+		p2 = t_vec_transform4(p2, m);
 		line(p, p1, p2, 255 * GREEN);
 		++i;
 	}
