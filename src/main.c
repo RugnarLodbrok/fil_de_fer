@@ -14,6 +14,7 @@ int main(void)
 	t_app app;
 
 	t_app_init(&app);
+	line(&app, (t_vec){0, 0, 0}, (t_vec){50, 200, 0}, RED * 255);
 	app.time = clock();
 	app.frame_time = clock();
 
@@ -26,17 +27,16 @@ void update(t_app *app, double dt)
 {
 	int i;
 	t_mesh *obj;
-	static int n = 0;
 
 	(void)dt;
-	printf("loop %d\n", n++);
-	mlx_put_image_to_window(app->M, app->win, app->framebuffer, 0, 0);
+	t_framebuffer_clear(&app->framebuffer);
 	//todo: https://github.com/keuhdall/images_example
 	t_cam_move(&app->cam, &app->controller);
 	for (i = 0; (obj = app->objs[i]); ++i)
 	{
 		t_cam_draw(&app->cam, app, obj);
 	}
+	mlx_put_image_to_window(app->M, app->win, app->framebuffer.image, 0, 0);
 }
 
 int loop_hook(void *p)

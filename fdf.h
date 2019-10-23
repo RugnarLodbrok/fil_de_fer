@@ -24,7 +24,7 @@
 # define KEY_Q 12
 # define KEY_E 14
 
-# define FRAME_RATE 60
+# define FRAME_RATE 120
 # define FRAME_TIME 1./FRAME_RATE
 
 # define STEP 0.05
@@ -33,8 +33,15 @@
 #include "libft.h"
 #include "ft_linalg.h"
 //#include "ascii.h"
-#include "fdf_mlx.h"
 
+typedef struct
+{
+	void *image;
+	int *data;
+	int bpp;
+	int endian;
+	int row_len;
+} t_framebuffer;
 
 typedef struct
 {
@@ -71,7 +78,7 @@ typedef struct
 {
 	void *M;
 	void *win;
-	void *framebuffer;
+	t_framebuffer framebuffer;
 	t_mesh **objs;
 	time_t time;
 	time_t frame_time;
@@ -92,5 +99,7 @@ t_mesh t_mesh_landscape_from_file(char *f_name);
 int t_mesh_push_vertex(t_mesh *m, t_vertex v);
 int t_mesh_push_edge(t_mesh *m, t_point e);
 void mlx_bind_keys(void *win, t_controller *c);
+void line(t_app *app, t_vec p1, t_vec p2, int v);
+void t_framebuffer_clear(t_framebuffer *fb);
 
 #endif
