@@ -72,6 +72,7 @@ typedef struct
 {
 	t_mat v1;
 	t_mat v2;
+	t_mat v3;
 	t_mat proj;
 	t_mat disp;
 } t_cam;

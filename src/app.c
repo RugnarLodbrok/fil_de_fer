@@ -42,5 +42,4 @@ void t_app_init(t_app *app)
 			   projection_perspective(near, tg * near,
 									  tg * near * WIN_H / WIN_W, 999.),
 			   (t_point){WIN_W, WIN_H});
-	app->cam.v2.data[2][3] = 400.;
 }

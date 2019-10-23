@@ -1,7 +1,5 @@
-#include "libft.h"
 #include "ft_linalg.h"
 #include "fdf.h"
-#include "mlx.h"
 
 int ft_sign(int a)
 {

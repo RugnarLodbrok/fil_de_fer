@@ -7,13 +7,13 @@ int t_controller_key_press(int keycode, void *p)
 
 	c = p;
 	if (keycode == KEY_W)
-		c->v.z = -1;
+		c->v.z = -10;
 	else if (keycode == KEY_S)
-		c->v.z = 1;
-	else if (keycode == KEY_A)
-		c->v.x = -1;
-	else if (keycode == KEY_D)
-		c->v.x = 1;
+		c->v.z = 10;
+//	else if (keycode == KEY_A)
+//		c->v.x = -1;
+//	else if (keycode == KEY_D)
+//		c->v.x = 1;
 	else if (keycode == KEY_Q)
 		c->d_roll = 1;
 	else if (keycode == KEY_E)
