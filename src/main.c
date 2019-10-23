@@ -6,8 +6,12 @@
 #include "ft_linalg.h"
 
 int loop_hook(void *p);
-int mouse_hook(int button, int x, int y, void *param);
-int key_hook(int keycode, void *p);
+
+int close_hook(void *param)
+{
+	(void)param;
+	exit(0);
+}
 
 int main(void)
 {
@@ -20,6 +24,7 @@ int main(void)
 
 	mlx_loop_hook(app.M, loop_hook, &app);
 	mlx_bind_keys(app.win, &app.controller);
+	mlx_hook(app.win, MLX_EVENT_EXIT, 0, &close_hook, 0);
 	mlx_loop(app.M);
 }
 

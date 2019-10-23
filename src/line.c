@@ -13,6 +13,14 @@ int ft_sign(int a)
 	return (b - c);
 }
 
+static void put_pixel(t_app *app, int x, int y, int color)
+{
+
+	if (x < 0 || y < 0 || x >= app->w || y >= app->h)
+		return;
+	app->framebuffer.data[y * app->framebuffer.row_len + x] = color;
+}
+
 void line(t_app *app, t_vec p1, t_vec p2, int color)
 {
 	int d;
@@ -38,7 +46,7 @@ void line(t_app *app, t_vec p1, t_vec p2, int color)
 		err = 0;
 		while (pp1->x <= pp2->x)
 		{
-			app->framebuffer.data[(int)pp1->y * app->framebuffer.row_len + (int)pp1->x] = color;
+			put_pixel(app, (int)pp1->x, (int)pp1->y, color);
 			err += slope;
 			if (err > 0.5)
 			{
@@ -55,7 +63,7 @@ void line(t_app *app, t_vec p1, t_vec p2, int color)
 		err = 0;
 		while (pp1->y <= pp2->y)
 		{
-			app->framebuffer.data[(int)pp1->y * app->framebuffer.row_len + (int)pp1->x] = color;
+			put_pixel(app, (int)pp1->x, (int)pp1->y, color);
 			err += slope;
 			if (err > 0.5)
 			{

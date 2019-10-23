@@ -24,7 +24,8 @@ void t_app_init(t_app *app)
 	const double tg = ft_sin(radians(FOV / 2)) / ft_cos(radians(FOV / 2));
 	const double near = 10.;
 	ft_bzero(app, sizeof(t_app));
-
+	app->w = WIN_W;
+	app->h = WIN_H;
 	app->M = mlx_init();
 	app->win = mlx_new_window(app->M, WIN_W, WIN_H, "fdf");
 	mlx_string_put(app->M, app->win, 150, 150, 255 * GREEN, "wake up, Neo!");
@@ -41,5 +42,5 @@ void t_app_init(t_app *app)
 			   projection_perspective(near, tg * near,
 									  tg * near * WIN_H / WIN_W, 999.),
 			   (t_point){WIN_W, WIN_H});
-	app->cam.v2.data[2][3] = 900.;
+	app->cam.v2.data[2][3] = 400.;
 }

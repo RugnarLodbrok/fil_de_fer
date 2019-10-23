@@ -3,10 +3,11 @@
 
 # define WIN_W 800
 # define WIN_H 600
-# define FOV 90.
+# define FOV 120.
 
 # define MLX_EVEN_KEY_PRESS 2
 # define MLX_EVEN_KEY_RELEASE 3
+# define MLX_EVENT_EXIT 17
 
 # define BLUE 1
 # define GREEN 256
@@ -23,6 +24,7 @@
 # define KEY_D 2
 # define KEY_Q 12
 # define KEY_E 14
+# define KEY_ESC 53
 
 # define FRAME_RATE 120
 # define FRAME_TIME 1./FRAME_RATE
@@ -76,6 +78,8 @@ typedef struct
 
 typedef struct
 {
+	int w;
+	int h;
 	void *M;
 	void *win;
 	t_framebuffer framebuffer;

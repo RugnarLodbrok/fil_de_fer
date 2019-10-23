@@ -26,6 +26,8 @@ int t_controller_key_press(int keycode, void *p)
 		c->d_pitch = -1;
 	else if (keycode == KEY_DOWN)
 		c->d_pitch = 1;
+	else if (keycode == KEY_ESC)
+		exit(0);
 	return 0;
 }
 
