@@ -13,7 +13,7 @@ static void error_exit(char *msg)
 	exit(1);
 }
 
-#define SIZE 1200
+#define SIZE 1024
 
 t_vec read_landscape_data(int buff[SIZE][SIZE], const char *f_name)
 {
