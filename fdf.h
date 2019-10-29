@@ -62,6 +62,8 @@ typedef struct
 typedef struct
 {
 	t_vertex *vertices;
+	t_array arr_veritces;
+	t_array arr_edges;
 	int n_vertices;
 	t_point *edges;
 	int n_edges;
@@ -100,7 +102,7 @@ t_mat projection_isometric(double fov_width, double fov_height);
 t_mat projection_perspective(double n, double w, double h, double f);
 t_mesh t_mesh_cube(int size);
 void t_mesh_init(t_mesh *m);
-t_mesh t_mesh_landscape_from_file(char *f_name);
+t_mesh t_mesh_landscape_from_file(const char *f_name);
 int t_mesh_push_vertex(t_mesh *m, t_vertex v);
 int t_mesh_push_edge(t_mesh *m, t_point e);
 void mlx_bind_keys(void *win, t_controller *c);

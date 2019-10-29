@@ -102,7 +102,7 @@ add_executable(fdf
 		libft/src/linalg/matrix_invert.c
 		libft/src/linalg/vector.c
 
-		libft/src/ft_realloc.c
+		libft/src/ft_alloc.c
 		libft/src/ft_swap.c
 		libft/src/get_next_line.c
 		libft/src/t_buff.c

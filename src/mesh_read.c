@@ -13,7 +13,9 @@ static void error_exit(char *msg)
 	exit(1);
 }
 
-t_vec read_landscape_data(int buff[128][128], char *f_name)
+#define SIZE 1200
+
+t_vec read_landscape_data(int buff[SIZE][SIZE], const char *f_name)
 {
 	t_point r;
 	int status;
@@ -42,9 +44,9 @@ t_vec read_landscape_data(int buff[128][128], char *f_name)
 }
 
 
-t_mesh t_mesh_landscape_from_file(char *f_name)
+t_mesh t_mesh_landscape_from_file(const char *f_name)
 {
-	int d[128][128];
+	int d[SIZE][SIZE];
 	t_vec size;
 	int j;
 	int i;

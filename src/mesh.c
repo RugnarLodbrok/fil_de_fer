@@ -46,41 +46,25 @@ t_mesh t_mesh_cube(int size)
 void t_mesh_init(t_mesh *m)
 {
 	ft_bzero(m, sizeof(t_mesh));
+	t_array_init(&m->arr_veritces, sizeof(t_vertex));
+	t_array_init(&m->arr_edges, sizeof(t_point));
+	m->edges = m->arr_edges.data;
+	m->vertices = m->arr_veritces.data;
 	t_mat_reset(&m->m);
 }
 
 int t_mesh_push_vertex(t_mesh *m, t_vertex v)
 {
-	t_vertex *old_vetices;
-	size_t mem_len;
-
-	old_vetices = m->vertices;
-	mem_len = sizeof(t_vertex) * m->n_vertices;
-	m->n_vertices++;
-	m->vertices = malloc(mem_len + sizeof(t_vertex));
-	if (old_vetices)
-	{
-		ft_memcpy(m->vertices, old_vetices, mem_len);
-		free(old_vetices);
-	}
-	m->vertices[m->n_vertices - 1] = v;
+	t_array_push(&m->arr_veritces, &v);
+	m->vertices = m->arr_veritces.data;
+	m->n_vertices = m->arr_veritces.count;
 	return (m->n_vertices);
 }
 
 int t_mesh_push_edge(t_mesh *m, t_point e)
 {
-	t_point *old_edges;
-	size_t mem_len;
-
-	old_edges = m->edges;
-	mem_len = sizeof(t_point) * m->n_edges;
-	m->edges = malloc(mem_len + sizeof(t_point));
-	m->edges[m->n_edges] = e;
-	m->n_edges++;
-	if (old_edges)
-	{
-		ft_memcpy(m->edges, old_edges, mem_len);
-		free(old_edges);
-	}
+	t_array_push(&m->arr_edges, &e);
+	m->edges = m->arr_edges.data;
+	m->n_edges = m->arr_edges.count;
 	return (m->n_edges);
 }
