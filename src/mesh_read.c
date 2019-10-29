@@ -65,11 +65,11 @@ t_mesh t_mesh_landscape_from_file(const char *f_name)
 		}
 	for (i = 0; i < m.n_vertices; ++i)
 	{
-		m.vertices[i].v.x /= size.x;
-		m.vertices[i].v.y /= size.y;
+		m.vertices[i].v.x /= size.x - 1;
+		m.vertices[i].v.y /= size.y - 1;
 		m.vertices[i].v = t_vec_sub(m.vertices[i].v, (t_vec){.5, .5});
-		m.vertices[i].v.y *= size.y;
-		m.vertices[i].v.y /= size.x;
+		m.vertices[i].v.y *= size.y - 1;
+		m.vertices[i].v.y /= size.x - 1;
 		m.vertices[i].v.x *= 500;
 		m.vertices[i].v.y *= 500;
 		m.vertices[i].v.z *= 10;
