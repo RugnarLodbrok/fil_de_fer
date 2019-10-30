@@ -4,7 +4,7 @@
 void t_controller_update_state(t_controller *c)
 {
 	c->v.z = -10 * (c->keyboard[KEY_W] - c->keyboard[KEY_S]);
-	c->d_roll = 1 * (c->keyboard[KEY_Q] - c->keyboard[KEY_E]);
+	c->d_tilt = 1 * (c->keyboard[KEY_Q] - c->keyboard[KEY_E]);
 	c->d_yaw = 1 * (c->keyboard[KEY_RIGHT] - c->keyboard[KEY_LEFT]);
 	c->d_pitch = -1 * (c->keyboard[KEY_UP] - c->keyboard[KEY_DOWN]);
 }

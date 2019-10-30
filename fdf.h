@@ -50,7 +50,7 @@ typedef struct
 	int keyboard[128];
 	double d_yaw;
 	double d_pitch;
-	double d_roll;
+	double d_tilt;
 	t_vec v;
 } t_controller;
 
