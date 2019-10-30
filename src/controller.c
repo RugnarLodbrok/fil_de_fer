@@ -1,33 +1,23 @@
 #include "mlx.h"
 #include "fdf.h"
 
+void t_controller_update_state(t_controller *c)
+{
+	c->v.z = -10 * (c->keyboard[KEY_W] - c->keyboard[KEY_S]);
+	c->d_roll = 1 * (c->keyboard[KEY_Q] - c->keyboard[KEY_E]);
+	c->d_yaw = 1 * (c->keyboard[KEY_RIGHT] - c->keyboard[KEY_LEFT]);
+	c->d_pitch = -1 * (c->keyboard[KEY_UP] - c->keyboard[KEY_DOWN]);
+}
+
 int t_controller_key_press(int keycode, void *p)
 {
 	t_controller *c;
 
 	c = p;
-	if (keycode == KEY_W)
-		c->v.z = -10;
-	else if (keycode == KEY_S)
-		c->v.z = 10;
-//	else if (keycode == KEY_A)
-//		c->v.x = -1;
-//	else if (keycode == KEY_D)
-//		c->v.x = 1;
-	else if (keycode == KEY_Q)
-		c->d_roll = 1;
-	else if (keycode == KEY_E)
-		c->d_roll = -1;
-	else if (keycode == KEY_LEFT)
-		c->d_yaw = -1;
-	else if (keycode == KEY_RIGHT)
-		c->d_yaw = 1;
-	else if (keycode == KEY_UP)
-		c->d_pitch = -1;
-	else if (keycode == KEY_DOWN)
-		c->d_pitch = 1;
-	else if (keycode == KEY_ESC)
+	if (keycode == KEY_ESC)
 		exit(0);
+	c->keyboard[keycode] = 1;
+	t_controller_update_state(c);
 	return 0;
 }
 
@@ -36,16 +26,8 @@ int t_controller_key_release(int keycode, void *p)
 	t_controller *c;
 
 	c = p;
-	if (keycode == KEY_W || keycode == KEY_S)
-		c->v.z = 0;
-	else if (keycode == KEY_A || keycode == KEY_D)
-		c->v.x = 0;
-	else if (keycode == KEY_Q || keycode == KEY_E)
-		c->d_roll = 0;
-	else if (keycode == KEY_LEFT || keycode == KEY_RIGHT)
-		c->d_yaw = 0;
-	else if (keycode == KEY_UP || keycode == KEY_DOWN)
-		c->d_pitch = 0;
+	c->keyboard[keycode] = 0;
+	t_controller_update_state(c);
 	return 0;
 }
 

@@ -47,6 +47,7 @@ typedef struct
 
 typedef struct
 {
+	int keyboard[128];
 	double d_yaw;
 	double d_pitch;
 	double d_roll;
