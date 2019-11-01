@@ -4,7 +4,7 @@
 void t_framebuffer_init(t_framebuffer *fb, void *mlx)
 {
 	fb->image = mlx_new_image(mlx, WIN_W, WIN_H);
-	fb->data = (int *)mlx_get_data_addr(
+	fb->data = (uint *)mlx_get_data_addr(
 			fb->image,
 			&fb->bpp,
 			&fb->row_len,

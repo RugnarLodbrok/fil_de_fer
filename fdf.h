@@ -11,8 +11,10 @@
 
 # define BLUE 1
 # define GREEN 256
-# define RED 256*256
-# define WHITE (255*RED + 255*GREEN + 255*BLUE)
+# define RED (256*256)
+# define ALPHA (256*256*256)
+# define GRAYSCALE (RED + GREEN + BLUE)
+# define WHITE (255 * GRAYSCALE)
 
 # define KEY_LEFT 123
 # define KEY_RIGHT 124
@@ -38,8 +40,15 @@
 
 typedef struct
 {
+	int x;
+	double y;
+	int flip;
+} t_wu_pixel;
+
+typedef struct
+{
 	void *image;
-	int *data;
+	uint *data;
 	int bpp;
 	int endian;
 	int row_len;
@@ -107,7 +116,8 @@ t_mesh t_mesh_landscape_from_file(const char *f_name);
 int t_mesh_push_vertex(t_mesh *m, t_vertex v);
 int t_mesh_push_edge(t_mesh *m, t_point e);
 void mlx_bind_keys(void *win, t_controller *c);
-void line(t_app *app, t_vec p1, t_vec p2, int v);
+void line(t_app *app, t_vec p1, t_vec p2, uint color);
+//void line_wu(t_app *app, t_vec p1, t_vec p2, uint color);
 void t_framebuffer_clear(t_framebuffer *fb);
 
 #endif

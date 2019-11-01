@@ -18,7 +18,7 @@ int main(void)
 	t_app app;
 
 	t_app_init(&app);
-	line(&app, (t_vec){0, 0, 0}, (t_vec){50, 200, 0}, RED * 255);
+	line(&app, (t_vec){0, 0, 0}, (t_vec){50, 200, 0}, (RED * 255));
 	app.time = clock();
 	app.frame_time = clock();
 
@@ -65,29 +65,5 @@ int mouse_hook(int button, int x, int y, void *param)
 	(void)param;
 	(void)button;
 	ft_printf("mouse: %d %d\n", x, y);
-	return (0);
-}
-
-int key_hook(int keycode, void *p)
-{
-	t_app *s;
-
-	s = (t_app *)p;
-	if (keycode == KEY_LEFT)
-	{
-		s->momentum = t_vec_add(s->momentum, (t_vec){0, STEP, 0});
-	}
-	else if (keycode == KEY_RIGHT)
-	{
-		s->momentum = t_vec_add(s->momentum, (t_vec){0, -STEP, 0});
-	}
-	else if (keycode == KEY_UP)
-	{
-		s->momentum = t_vec_add(s->momentum, (t_vec){-STEP, 0, 0});
-	}
-	else if (keycode == KEY_DOWN)
-	{
-		s->momentum = t_vec_add(s->momentum, (t_vec){STEP, 0, 0});
-	}
 	return (0);
 }
