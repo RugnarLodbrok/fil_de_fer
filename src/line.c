@@ -18,6 +18,15 @@ static uint blend(uint c1, uint c2, uint a)
 	return (rb & 0xFF00FF) + (g & 0x00FF00);
 }
 
+uint blend_alpha(uint c1, uint c2, uint a)
+{
+	uint rb1 = ((0x100 - a) * (c1 & 0xFF00FF)) >> 8;
+	uint rb2 = (a * (c2 & 0xFF00FF)) >> 8;
+	uint g1  = ((0x100 - a) * (c1 & 0x00FF00)) >> 8;
+	uint g2  = (a * (c2 & 0x00FF00)) >> 8;
+	return ((rb1 | rb2) & 0xFF00FF) + ((g1 | g2) & 0x00FF00);
+}
+
 static void put_pixel(t_app *app, int x, int y, uint color)
 {
 	unsigned char a;
@@ -27,7 +36,7 @@ static void put_pixel(t_app *app, int x, int y, uint color)
 		return;
 	a = color >> 24;
 	d = &app->framebuffer.data[y * app->framebuffer.row_len + x];
-	*d = blend(*d, color, a);
+	*d = blend_alpha(*d, color, a);
 }
 
 static void t_vec_swap(t_vec *v1, t_vec *v2)
