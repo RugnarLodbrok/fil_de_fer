@@ -4,7 +4,7 @@ t_mat projection_isometric(double fov_width, double fov_height)
 {
 	return ((t_mat){-2. / fov_width, 0, 0, 0,
 					0, -2. / fov_height, 0, 0,
-					0, 0, 1, 0,
+					0, 0, 0, 0,
 					0, 0, 0, 1});
 }
 
@@ -30,7 +30,7 @@ void t_cam_init(t_cam *c, t_mat projection, t_point display_res)
 	w = display_res.x;
 	h = display_res.y;
 	t_mat_reset(&c->v3);
-	t_mat_translate(&c->v3, (t_vec){0, 0, 400});
+	t_mat_translate(&c->v3, (t_vec){0, 0, -400});
 	c->v1 = (t_mat){1, 0, 0, 0,
 					0, 0, -1, 0,
 					0, 1, 0, 0,
@@ -49,9 +49,7 @@ void t_cam_draw(t_cam *cam, void *p, t_mesh *mesh)
 	t_vec p1;
 	t_vec p2;
 	t_mat m;
-	double w;
 
-	(void)cam;
 	i = 0;
 	m = mesh->m;
 	m = t_mat_mul(cam->v1, m);
@@ -63,17 +61,15 @@ void t_cam_draw(t_cam *cam, void *p, t_mesh *mesh)
 		p1 = mesh->vertices[mesh->edges[i].x].v;
 		p2 = mesh->vertices[mesh->edges[i].y].v;
 		++i;
-		if ((p1 = t_vec_transform4(p1, m, &w)).z > -20.)
+		p1 = t_vec_transform4(p1, m);
+		if (p1.z < -1. || p1.z > 1.)
 			continue;
-		if (i == 10)
-			ft_printf("%.2f\n", p1.z);
-		t_vec_scale(&p1, 1/w);
-		if ((p2 = t_vec_transform4(p2, m, &w)).z > -20.)
+		p2 = t_vec_transform4(p2, m);
+		if (p2.z < -1. || p2.z > 1.)
 			continue;
-		t_vec_scale(&p2, 1/w);
 		p1 = t_vec_transform(p1, cam->disp);
 		p2 = t_vec_transform(p2, cam->disp);
-		line(p, p1, p2, 255 * GREEN);
+		line(p, p1, p2, (uint)(uint)(255 * GREEN));
 	}
 }
 

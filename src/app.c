@@ -34,12 +34,13 @@ void t_app_init(t_app *app)
 	app->objs = malloc(sizeof(t_mesh *) * 2);
 	app->objs[0] = malloc(sizeof(t_mesh));
 	app->objs[1] = 0;
-	*(app->objs[0]) = t_mesh_landscape_from_file("test.txt");
+	*(app->objs[0]) = t_mesh_landscape_from_file("maps/mars.fdf");
+//	*(app->objs[0]) = t_mesh_landscape_from_file("test.txt");
 //	*(app->objs[0]) = t_mesh_cube(50);
 
 	t_cam_init(&app->cam,
-//			   projection_isometric((double)WIN_W, (double)WIN_H),
+//			   projection_isometric((double)WIN_W/10, (double)WIN_H/10),
 			   projection_perspective(near, tg * near,
-									  tg * near * WIN_H / WIN_W, 999.),
+									  tg * near * WIN_H / WIN_W, 9999.),
 			   (t_point){WIN_W, WIN_H});
 }

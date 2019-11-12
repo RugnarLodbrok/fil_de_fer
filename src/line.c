@@ -20,10 +20,15 @@ static uint blend(uint c1, uint c2, uint a)
 
 uint blend_alpha(uint c1, uint c2, uint a)
 {
-	uint rb1 = ((0x100 - a) * (c1 & 0xFF00FF)) >> 8;
-	uint rb2 = (a * (c2 & 0xFF00FF)) >> 8;
-	uint g1  = ((0x100 - a) * (c1 & 0x00FF00)) >> 8;
-	uint g2  = (a * (c2 & 0x00FF00)) >> 8;
+	uint rb1;
+	uint rb2;
+	uint g1;
+	uint g2;
+
+	rb1 = ((0x100 - a) * (c1 & 0xFF00FF)) >> 8;
+	rb2 = (a * (c2 & 0xFF00FF)) >> 8;
+	g1 = ((0x100 - a) * (c1 & 0x00FF00)) >> 8;
+	g2 = (a * (c2 & 0x00FF00)) >> 8;
 	return ((rb1 | rb2) & 0xFF00FF) + ((g1 | g2) & 0x00FF00);
 }
 
@@ -72,8 +77,7 @@ void line_(t_app *app, t_vec p1, t_vec p2, uint color)
 			}
 			p1.x++;
 		}
-	}
-	else
+	} else
 	{
 		d = ft_sign((int)(p2.x - p1.x));
 		slope = ((double)(p2.x - p1.x)) / (p2.y - p1.y) * d;
@@ -103,8 +107,7 @@ void put_wu_pixel(t_app *app, t_wu_pixel p, double alpha, uint color)
 	{
 		put_pixel(app, int_y, p.x, color + (255 - z) * ALPHA);
 		put_pixel(app, int_y + 1, p.x, color + z * ALPHA);
-	}
-	else
+	} else
 	{
 		put_pixel(app, p.x, int_y, color + (255 - z) * ALPHA);
 		put_pixel(app, p.x, int_y + 1, color + z * ALPHA);
@@ -116,6 +119,9 @@ void line(t_app *app, t_vec p1, t_vec p2, uint color)
 	double slope;
 	t_wu_pixel p;
 
+	if ((p1.x < 0 || p1.y < 0 || p1.x >= app->w || p1.y >= app->h) &&
+		(p2.x < 0 || p2.y < 0 || p2.x >= app->w || p2.y >= app->h))
+		return;
 	if ((p.flip = ft_fabs(p2.y - p1.y) > ft_fabs(p2.x - p1.x)))
 	{
 		ft_swap_double(&p1.x, &p1.y);
