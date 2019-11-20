@@ -13,7 +13,9 @@ static void error_exit(char *msg)
 	exit(1);
 }
 
-t_vec read_landscape_data(int buff[128][128], char *f_name)
+#define SIZE 1024
+
+t_vec read_landscape_data(int buff[SIZE][SIZE], const char *f_name)
 {
 	t_point r;
 	int status;
@@ -42,14 +44,13 @@ t_vec read_landscape_data(int buff[128][128], char *f_name)
 }
 
 
-t_mesh t_mesh_landscape_from_file(char *f_name)
+t_mesh t_mesh_landscape_from_file(const char *f_name)
 {
-	int d[128][128];
+	int d[SIZE][SIZE];
 	t_vec size;
 	int j;
 	int i;
 	t_mesh m;
-	double scale;
 
 	t_mesh_init(&m);
 	size = read_landscape_data(d, f_name);
@@ -62,22 +63,16 @@ t_mesh t_mesh_landscape_from_file(char *f_name)
 			if (j > 0)
 				t_mesh_push_edge(&m, (t_point){d[i][j - 1], d[i][j]});
 		}
-/*	for (j = 0; j < size.y; ++j)
-	{
-		for (i = 0; i < size.x; ++i)
-		{
-			printf("%d\t", d[i][j]);
-		}
-		printf("\n");
-	}*/
-	scale = 100. / (size.x > size.y ? size.x : size.y);
-	t_vec_scale(&size, scale * 2);
 	for (i = 0; i < m.n_vertices; ++i)
 	{
-		t_vec_scale(&m.vertices[i].v, scale);
-		t_vec_scale(&m.vertices[i].v, scale);
-		m.vertices[i].v = t_vec_sub(m.vertices[i].v, size);
+		m.vertices[i].v.x /= size.x - 1;
+		m.vertices[i].v.y /= size.y - 1;
+		m.vertices[i].v = t_vec_sub(m.vertices[i].v, (t_vec){.5, .5});
+		m.vertices[i].v.y *= size.y - 1;
+		m.vertices[i].v.y /= size.x - 1;
+		m.vertices[i].v.x *= 500;
+		m.vertices[i].v.y *= 500;
+		m.vertices[i].v.z *= 10;
 	}
-	printf("center: %f %f %f\n", size.x, size.y, size.z);
 	return (m);
 }
