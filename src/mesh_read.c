@@ -5,7 +5,7 @@
 #include "fdf.h"
 #include <stdio.h>
 
-static void error_exit(char *msg)
+static void	error_exit(char *msg)
 {
 	if (!msg)
 		msg = "error";
@@ -15,13 +15,13 @@ static void error_exit(char *msg)
 
 #define SIZE 1024
 
-t_vec read_landscape_data(int buff[SIZE][SIZE], const char *f_name)
+t_vec		read_landscape_data(int buff[SIZE][SIZE], const char *f_name)
 {
-	t_point r;
-	int status;
-	char *line;
-	int fd;
-	char **split_values;
+	t_point	r;
+	int		status;
+	char	*line;
+	int		fd;
+	char	**split_values;
 
 	ft_bzero(&r, sizeof(r));
 	if ((fd = open(f_name, O_RDONLY)) <= 0)
@@ -43,14 +43,13 @@ t_vec read_landscape_data(int buff[SIZE][SIZE], const char *f_name)
 	return (t_vec){r.x, r.y, 10};
 }
 
-
-t_mesh t_mesh_landscape_from_file(const char *f_name)
+t_mesh		t_mesh_landscape_from_file(const char *f_name)
 {
-	int d[SIZE][SIZE];
-	t_vec size;
-	int j;
-	int i;
-	t_mesh m;
+	int		d[SIZE][SIZE];
+	t_vec	size;
+	int		j;
+	int		i;
+	t_mesh	m;
 
 	t_mesh_init(&m);
 	size = read_landscape_data(d, f_name);

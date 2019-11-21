@@ -13,8 +13,11 @@ int ft_sign(int a)
 
 static uint blend(uint c1, uint c2, uint a)
 {
-	uint rb = (c1 & 0xFF00FF) + ((a * (c2 & 0xFF00FF)) >> 8);
-	uint g = (c1 & 0x00FF00) + ((a * (c2 & 0x00FF00)) >> 8);
+	uint rb;
+	uint g;
+
+	rb = (c1 & 0xFF00FF) + ((a * (c2 & 0xFF00FF)) >> 8);
+	g = (c1 & 0x00FF00) + ((a * (c2 & 0x00FF00)) >> 8);
 	return (rb & 0xFF00FF) + (g & 0x00FF00);
 }
 /*

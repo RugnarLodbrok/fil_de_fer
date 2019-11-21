@@ -1,6 +1,6 @@
 #include "fdf.h"
 
-t_mat projection_isometric(double fov_width, double fov_height)
+t_mat	projection_isometric(double fov_width, double fov_height)
 {
 	return ((t_mat){-2. / fov_width, 0, 0, 0,
 					0, -2. / fov_height, 0, 0,
@@ -8,13 +8,17 @@ t_mat projection_isometric(double fov_width, double fov_height)
 					0, 0, 0, 1});
 }
 
-t_mat projection_perspective(double n, double w, double h, double f)
+t_mat	projection_perspective(double n, double w, double h, double f)
 {
-	double l = -w / 2;
-	double r = w / 2;
-	double b = -h / 2;
-	double t = h / 2;
+	double	l;
+	double	r;
+	double	b;
+	double	t;
 
+	l = -w / 2;
+	r = w / 2;
+	b = -h / 2;
+	t = h / 2;
 	return (t_mat){
 			2 * n / (r - l), 0, (r + l) / (r - l), 0,
 			0, 2 * n / (t - b), (t + b) / (t - b), 0,
@@ -22,7 +26,7 @@ t_mat projection_perspective(double n, double w, double h, double f)
 			0, 0, -1, 0};
 }
 
-void t_cam_init(t_cam *c, t_mat projection, t_point display_res)
+void	t_cam_init(t_cam *c, t_mat projection, t_point display_res)
 {
 	int w;
 	int h;
@@ -38,17 +42,17 @@ void t_cam_init(t_cam *c, t_mat projection, t_point display_res)
 	t_mat_reset(&c->v2);
 	c->proj = projection;
 	c->disp = (t_mat){.5 * w, 0, 0, .5 * w,
-					  0, -.5 * h, 0, .5 * h,
-					  0, 0, 0, 0,
-					  0, 0, 0, 1};
+					0, -.5 * h, 0, .5 * h,
+					0, 0, 0, 0,
+					0, 0, 0, 1};
 }
 
-void t_cam_draw(t_cam *cam, void *p, t_mesh *mesh)
+void	t_cam_draw(t_cam *cam, void *p, t_mesh *mesh)
 {
-	uint i;
-	t_vec p1;
-	t_vec p2;
-	t_mat m;
+	uint	i;
+	t_vec	p1;
+	t_vec	p2;
+	t_mat	m;
 
 	i = 0;
 	m = mesh->m;
@@ -73,7 +77,7 @@ void t_cam_draw(t_cam *cam, void *p, t_mesh *mesh)
 	}
 }
 
-void t_cam_move(t_cam *cam, t_controller *ctrl)
+void	t_cam_move(t_cam *cam, t_controller *ctrl)
 {
 	if (ctrl->d_yaw)
 	{
@@ -91,5 +95,4 @@ void t_cam_move(t_cam *cam, t_controller *ctrl)
 	{
 		t_mat_translate(&cam->v3, ctrl->v);
 	}
-
 }
