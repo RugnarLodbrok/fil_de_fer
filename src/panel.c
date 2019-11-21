@@ -1,11 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   panel.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rpoetess <rpoetess@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/11/21 21:02:29 by rpoetess          #+#    #+#             */
+/*   Updated: 2019/11/21 21:21:11 by rpoetess         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "mlx.h"
 #include "libft.h"
 #include "fdf.h"
 
-void ft_free_area(t_app *app, int x_s, int y_s, int x_e, int y_e)
+void	ft_free_area(t_app *app, int x_s, int y_s, int x_e, int y_e)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = x_s;
 	j = y_s;
@@ -13,7 +25,7 @@ void ft_free_area(t_app *app, int x_s, int y_s, int x_e, int y_e)
 	{
 		while (i < x_e)
 		{
-			mlx_pixel_put(app->M, app->win, i, j, GRAYSCALE*64);
+			mlx_pixel_put(app->M, app->win, i, j, GRAYSCALE * 64);
 			i++;
 		}
 		i = x_s;
@@ -23,11 +35,11 @@ void ft_free_area(t_app *app, int x_s, int y_s, int x_e, int y_e)
 
 void print_info(t_app *app)
 {
-	void *mlx;
-	void *win;
-	int y;
-	char *pers;
-	uint c1;
+	void	*mlx;
+	void	*win;
+	int		y;
+	char	*pers;
+	uint	c1;
 
 	c1 = GRAYSCALE * 192;
 	ft_free_area(app, 0, 0, 200, WIN_H);
@@ -41,7 +53,6 @@ void print_info(t_app *app)
 	else
 		pers = "isometic";
 	mlx_string_put(mlx, win, 10, y += 15, c1, pers);
-//	printf("%d\n", y);
 	mlx_string_put(mlx, win, 10, y += 45, 0xab4444, "controls:");
 	mlx_string_put(mlx, win, 10, y += 20, c1, "  exit:    ESC");
 	mlx_string_put(mlx, win, 10, y += 25, c1, "isometric:   [I]");
