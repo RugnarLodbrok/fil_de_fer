@@ -126,10 +126,16 @@ void line(t_app *app, t_vec p1, t_vec p2, uint color)
 {
 	double slope;
 	t_wu_pixel p;
+	int q = 0;
 
 	if ((p1.x < 0 || p1.y < 0 || p1.x >= app->w || p1.y >= app->h) &&
 		(p2.x < 0 || p2.y < 0 || p2.x >= app->w || p2.y >= app->h))
 		return;
+	if (p2.x > p1.x && ft_fabs(p2.y - p1.y) / (p2.x - p1.x) < .045)
+	{
+		q = 1;
+//		color = 255 * RED;
+	}
 	if ((p.flip = ft_fabs(p2.y - p1.y) > ft_fabs(p2.x - p1.x)))
 	{
 		ft_swap_double(&p1.x, &p1.y);
@@ -140,14 +146,18 @@ void line(t_app *app, t_vec p1, t_vec p2, uint color)
 	slope = (p2.y - p1.y) / (p2.x - p1.x);
 	p.x = (int)(p1.x + 2.) - 2; //math.floor(p1.x)
 	p.y = p1.y - (p1.x - p.x) * slope;
-	put_wu_pixel(app, p, ft_fpow(1. - p1.x + p.x, 2), color);
+	if (q)
+		ft_printf("x = %f-%f, endpoint %d -> ", p1.x, p2.x, p.x);
+	put_wu_pixel(app, p, ft_fpow(1. - p1.x + p.x, 1), color);
 	p.x++;
 	p.y += slope;
-	while (p.x < p2.x)
+	while (p.x < p2.x - 1)
 	{
 		put_wu_pixel(app, p, 1, color);
 		p.x++;
 		p.y += slope;
 	}
-	put_wu_pixel(app, p, ft_fpow(1. - p.x + p2.x, 2), color);
+	put_wu_pixel(app, p, ft_fpow(0. - p.x + p2.x, 1), color);
+	if (q)
+		ft_printf("%d\n", p.x);
 }
