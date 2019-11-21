@@ -83,6 +83,15 @@ typedef struct
 
 typedef struct
 {
+	int		start_x;
+	int		start_y;
+	int		end_x;
+	int		end_y;
+}			t_se;
+
+
+typedef struct
+{
 	t_vertex	*vertices;
 	t_array		arr_veritces;
 	t_array		arr_edges;
