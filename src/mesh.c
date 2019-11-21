@@ -2,10 +2,10 @@
 #include "ft_linalg.h"
 #include "fdf.h"
 
-t_mesh t_mesh_cube(int size)
+t_mesh	t_mesh_cube(int size)
 {
-	t_mesh m;
-	int i;
+	t_mesh	m;
+	int		i;
 
 	t_mesh_init(&m);
 	t_mesh_push_vertex(&m, (t_vertex){(t_vec){-1, -1, -1}, 255 * GREEN});
@@ -37,7 +37,7 @@ t_mesh t_mesh_cube(int size)
 	return (m);
 }
 
-void t_mesh_init(t_mesh *m)
+void	t_mesh_init(t_mesh *m)
 {
 	ft_bzero(m, sizeof(t_mesh));
 	t_array_init(&m->arr_veritces, sizeof(t_vertex));
@@ -47,7 +47,7 @@ void t_mesh_init(t_mesh *m)
 	t_mat_reset(&m->m);
 }
 
-int t_mesh_push_vertex(t_mesh *m, t_vertex v)
+int		t_mesh_push_vertex(t_mesh *m, t_vertex v)
 {
 	t_array_push(&m->arr_veritces, &v);
 	m->vertices = m->arr_veritces.data;
@@ -55,7 +55,7 @@ int t_mesh_push_vertex(t_mesh *m, t_vertex v)
 	return (m->n_vertices);
 }
 
-int t_mesh_push_edge(t_mesh *m, t_point e)
+int		t_mesh_push_edge(t_mesh *m, t_point e)
 {
 	t_array_push(&m->arr_edges, &e);
 	m->edges = m->arr_edges.data;
