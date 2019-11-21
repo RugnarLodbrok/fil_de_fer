@@ -45,8 +45,7 @@ void	ft_free_area(t_app *app, int x_s, int y_s, int x_e, int y_e)
 	{
 		while (i < x_e)
 		{
-			
-			app->framebuffer.data[i * sizeof(uint) + j * WIN_W * sizeof(uint)] = 0;
+			mlx_pixel_put(app->M, app->win, i, j, 0x000000);
 			i++;
 		}
 		i = x_s;
@@ -67,7 +66,7 @@ void	ft_change_projection(t_app *app)
 		if (app->controller.status_prj != app->controller.projection)
 		{
 			(line) ? free(line) : 0;
-			//ft_free_area(app, 10, 55, 30, 100);
+			ft_free_area(app, 10, 60, 150, 100);
 			//ft_bzero(&app->framebuffer.data[10 * 4 + 55 * WIN_W * 4], 100000);
 			(app->controller.status_prj == 1) ?
 			(line = ft_strdup("perspective")) : (line = ft_strdup("isometric"));
@@ -79,7 +78,7 @@ void	ft_change_projection(t_app *app)
 					tg * near * WIN_H / WIN_W, 9999.), (t_point){WIN_W, WIN_H});
 			else
 				t_cam_init(&app->cam,
-					projection_isometric((double)WIN_W / 5, (double)WIN_H / 5),
+					projection_isometric((double)WIN_W / 1, (double)WIN_H / 1),
 					(t_point){WIN_W, WIN_H});
 		}
 	free(line);
