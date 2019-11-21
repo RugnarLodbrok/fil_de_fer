@@ -1,7 +1,6 @@
 #include "mlx.h"
 #include "libft.h"
 #include "fdf.h"
-#include <stdio.h>
 #include <time.h>
 #include "ft_linalg.h"
 
@@ -18,7 +17,6 @@ int main(void)
 	t_app app;
 
 	t_app_init(&app);
-	line(&app, (t_vec){0, 0, 0}, (t_vec){50, 200, 0}, (RED * 255));
 	app.time = clock();
 	app.frame_time = clock();
 
@@ -26,6 +24,34 @@ int main(void)
 	mlx_bind_keys(app.win, &app.controller);
 	mlx_hook(app.win, MLX_EVENT_EXIT, 0, &close_hook, 0);
 	mlx_loop(app.M);
+}
+
+void update_debug(t_app *app, double dt)
+{
+	int i;
+	static double a = 0;
+	double dx;
+	double dy;
+
+	a += 0.0002;
+	(void)dt;
+	t_framebuffer_clear(&app->framebuffer);
+	line(app,
+		 (t_vec){1., 1., 0},
+		 (t_vec){3., 1, 0}, WHITE);
+	for (i = 0; i < 360; i += 5)
+	{
+		dx = 34. * ft_cos(a + radians(1. * i));
+		dy = 34. * ft_sin(a + radians(1. * i));
+		line(app,
+			 (t_vec){50., 50., 0},
+			 (t_vec){50. + dx, 50. + dy, 0}, WHITE);
+		line(app,
+			 (t_vec){50. + dx, 50. + dy, 0},
+			 (t_vec){50. + 1.4 * dx, 50. + 1.4 * dy, 0}, WHITE);
+	}
+	t_framebuffer_upscale(&app->framebuffer, 8);
+	mlx_put_image_to_window(app->M, app->win, app->framebuffer.image, 0, 0);
 }
 
 void update(t_app *app, double dt)
