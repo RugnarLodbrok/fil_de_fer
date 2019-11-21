@@ -8,6 +8,7 @@ void	t_controller_update_state(t_controller *c)
 	c->d_yaw = 1 * (c->keyboard[KEY_RIGHT] - c->keyboard[KEY_LEFT]);
 	c->d_pitch = -1 * (c->keyboard[KEY_UP] - c->keyboard[KEY_DOWN]);
 	c->status_prj = c->keyboard[KEY_P] - c->keyboard[KEY_I];
+	c->status_zoom = c->keyboard[KEY_PLUS] - c->keyboard[KEY_MINUS];
 }
 
 int		t_controller_key_press(int keycode, void *p)

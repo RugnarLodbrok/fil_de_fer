@@ -79,6 +79,31 @@ void	ft_change_projection(t_app *app)
 	free(line);
 }
 
+void	t_zoom(t_app *app)
+{
+	double near; 
+	double tg;
+
+	near = 10.;
+	tg = ft_sin(radians(FOV / 2)) / ft_cos(radians(FOV / 2));
+	if (app->controller.status_zoom != 0)
+	{
+		
+		if (app->controller.status_zoom == 1)
+		{
+			app->cam.proj.data[0][0] += 0.05;
+			app->cam.proj.data[1][1] += 0.05;
+		}
+		if (app->controller.status_zoom == -1)
+		{
+			app->cam.proj.data[0][0] -= 0.05;
+			app->cam.proj.data[1][1] -= 0.05;
+		}
+		
+		//app->cam.proj = projection_isometric((double)WIN_W / 5, (double)WIN_H / 5);
+	}
+}
+
 void	update(t_app *app, double dt)
 {
 	int		i;
@@ -87,6 +112,7 @@ void	update(t_app *app, double dt)
 	(void)dt;
 	t_framebuffer_clear(&app->framebuffer);
 	ft_change_projection(app);
+	t_zoom(app);
 	//todo: https://github.com/keuhdall/images_example
 	t_cam_move(&app->cam, &app->controller);
 	for (i = 0; (obj = app->objs[i]); ++i)

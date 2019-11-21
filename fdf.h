@@ -29,6 +29,8 @@
 # define KEY_ESC 53
 # define KEY_I 34
 # define KEY_P 35
+# define KEY_PLUS 69
+# define KEY_MINUS 78
 
 # define FRAME_RATE 120
 # define FRAME_TIME 1./FRAME_RATE
@@ -63,6 +65,7 @@ typedef struct
 	double	d_pitch;
 	double	d_tilt;
 	int		status_prj;
+	int		status_zoom;
 	int		projection;
 	t_vec	v;
 }			t_controller;
@@ -82,7 +85,7 @@ typedef struct
 	t_point		*edges;
 	int			n_edges;
 	t_mat		m;
-} 				t_mesh;
+}				t_mesh;
 
 typedef struct
 {
@@ -104,6 +107,7 @@ typedef struct
 	time_t			time;
 	time_t			frame_time;
 	t_controller	controller;
+	float			size;
 	t_cam			cam;
 	t_cam			cam_iso;
 	t_cam			cam_prspctv;
