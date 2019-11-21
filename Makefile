@@ -6,7 +6,7 @@
 #    By: rpoetess <rpoetess@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/05 20:27:05 by ksticks           #+#    #+#              #
-#    Updated: 2019/11/21 20:45:28 by rpoetess         ###   ########.fr        #
+#    Updated: 2019/11/21 22:00:31 by rpoetess         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,9 @@ SRC = $(SRC_MLX) \
 		src/camera.c \
 		src/mesh_read.c \
 		src/mesh.c \
-		src/panel.c
+		src/panel.c \
+		src/loop_hook.c \
+		src/init_projection.c \
 
 OPTION = -I. -Ilibft -Iminilibx_macos
 OBJ = $(SRC:.c=.o)

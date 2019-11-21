@@ -136,6 +136,8 @@ void	line(t_app *app, t_vec p1, t_vec p2, uint color);
 void	t_framebuffer_clear(t_framebuffer *fb);
 void	t_framebuffer_upscale(t_framebuffer *fb, int scale);
 void	print_info(t_app *app);
-void	 ft_change_projection(t_app *app);
+void	ft_change_projection(t_app *app);
+int		loop_hook(void *p);
+int		close_hook(void *param);
 
 #endif

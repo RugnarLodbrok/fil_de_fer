@@ -6,7 +6,7 @@
 /*   By: rpoetess <rpoetess@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 21:41:50 by rpoetess          #+#    #+#             */
-/*   Updated: 2019/11/21 21:43:32 by rpoetess         ###   ########.fr       */
+/*   Updated: 2019/11/21 21:49:25 by rpoetess         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ void	t_framebuffer_upscale(t_framebuffer *fb, int scale)
 		j = fb->h;
 		while (--j >= 0)
 		{
-			fb->data[fb->row_len * j + i] = fb->data[fb->row_len * (j / scale) + i / scale];
+			fb->data[fb->row_len * j + i] =
+				fb->data[fb->row_len * (j / scale) + i / scale];
 		}
 	}
 }
