@@ -27,7 +27,8 @@ SRC = $(SRC_MLX) \
 		src/controller.c \
 		src/camera.c \
 		src/mesh_read.c \
-		src/mesh.c
+		src/mesh.c \
+		src/panel.c
 
 OPTION = -I. -Ilibft -Iminilibx_macos
 OBJ = $(SRC:.c=.o)
