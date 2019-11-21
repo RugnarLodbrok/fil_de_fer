@@ -23,6 +23,7 @@ add_executable(fdf
 		src/line.c
 
 		src/camera.c
+		src/panel.c
 		src/app.c
 		src/controller.c
 		src/mesh_read.c

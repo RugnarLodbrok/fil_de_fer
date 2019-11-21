@@ -1,4 +1,5 @@
 #include "fdf.h"
+#include "math.h"
 
 t_mat	projection_isometric(double fov_width, double fov_height)
 {
@@ -30,11 +31,10 @@ void t_cam_init_projection(t_cam *c)
 {
 	double tg;
 	double near;
-	double fov;
+	double ze;
 
-	fov = FOV;
-	fov = fov * c->zoom / 100;
-	tg = ft_sin(radians(fov / 2)) / ft_cos(radians(fov / 2));
+	ze = exp(c->zoom/100);
+	tg = ft_sin(radians(FOV / 2)) / ft_cos(radians(FOV / 2)) * ze;
 	near = 10.;
 
 	if (c->projection_type == PROJ_PERSPECTIVE)
@@ -42,8 +42,8 @@ void t_cam_init_projection(t_cam *c)
 							   tg * near * WIN_H / WIN_W,
 							   9999.);
 	else
-		c->proj = projection_isometric((double)WIN_W * fov / 200,
-							 (double)WIN_H * fov / 200);
+		c->proj = projection_isometric((double)WIN_W * ze,
+							 (double)WIN_H * ze);
 }
 
 void	t_cam_init(t_cam *c, t_point display_res)
@@ -64,7 +64,7 @@ void	t_cam_init(t_cam *c, t_point display_res)
 					0, -.5 * h, 0, .5 * h,
 					0, 0, 0, 0,
 					0, 0, 0, 1};
-	c->zoom = 100.;
+	c->zoom = 0;
 	c->projection_type = PROJ_PERSPECTIVE;
 	t_cam_init_projection(c);
 }
