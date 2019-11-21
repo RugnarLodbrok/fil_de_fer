@@ -113,14 +113,13 @@ void update(t_app *app, double dt)
 	if (app->controller.status_prj &&
 		app->controller.status_prj != app->controller.projection)
 		ft_change_projection(app);
-//	t_zoom(app);
-	//todo: https://github.com/keuhdall/images_example
 	t_cam_move(&app->cam, &app->controller);
 	for (i = 0; (obj = app->objs[i]); ++i)
 	{
 		t_cam_draw(&app->cam, app, obj);
 	}
-	mlx_put_image_to_window(app->M, app->win, app->framebuffer.image, 200, 0);
+	mlx_put_image_to_window(app->M, app->win,
+			app->framebuffer.image, app->sidebar_w, 0);
 }
 
 int loop_hook(void *p)
@@ -153,7 +152,6 @@ int main(int argc, char **argv)
 
 	t_app_init(&app);
 	print_info(&app);
-	line(&app, (t_vec){0, 0, 0}, (t_vec){50, 200, 0}, (RED * 255));
 	app.time = clock();
 	app.frame_time = clock();
 	mlx_loop_hook(app.M, loop_hook, &app);
