@@ -1,7 +1,7 @@
 #include "fdf.h"
 #include "mlx.h"
 
-void t_framebuffer_init(t_framebuffer *fb, void *mlx)
+void t_framebuffer_init(t_framebuffer *fb, void *mlx, int w, int h)
 {
 	fb->image = mlx_new_image(mlx, WIN_W, WIN_H);
 	fb->data = (uint *)mlx_get_data_addr(
@@ -11,12 +11,30 @@ void t_framebuffer_init(t_framebuffer *fb, void *mlx)
 			&fb->endian);
 	fb->bpp /= 8;
 	fb->row_len /= fb->bpp;
+	fb->w = w;
+	fb->h = h;
 }
 
 void t_framebuffer_clear(t_framebuffer *fb)
 {
 	(void)fb;
 	ft_bzero(fb->data, fb->row_len * WIN_H * sizeof(int));
+}
+
+void t_framebuffer_upscale(t_framebuffer *fb, int scale)
+{
+	int i;
+	int j;
+
+	i = fb->w;
+	while(--i >= 0)
+	{
+		j = fb->h;
+		while(--j >= 0)
+		{
+			fb->data[fb->row_len*j + i] = fb->data[fb->row_len*(j/scale) + i/scale];
+		}
+	}
 }
 
 void t_app_init(t_app *app)
@@ -30,7 +48,7 @@ void t_app_init(t_app *app)
 	app->win = mlx_new_window(app->M, WIN_W, WIN_H, "fdf");
 	mlx_string_put(app->M, app->win, 150, 150, 255 * GREEN, "wake up, Neo!");
 	t_vec_normalize(&(app->momentum));
-	t_framebuffer_init(&app->framebuffer, app->M);
+	t_framebuffer_init(&app->framebuffer, app->M, app->w, app->h);
 	app->objs = malloc(sizeof(t_mesh *) * 2);
 	app->objs[0] = malloc(sizeof(t_mesh));
 	app->objs[1] = 0;

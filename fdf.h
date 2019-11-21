@@ -47,6 +47,8 @@ typedef struct
 
 typedef struct
 {
+	int w;
+	int h;
 	void *image;
 	uint *data;
 	int bpp;
@@ -119,5 +121,6 @@ void mlx_bind_keys(void *win, t_controller *c);
 void line(t_app *app, t_vec p1, t_vec p2, uint color);
 //void line_wu(t_app *app, t_vec p1, t_vec p2, uint color);
 void t_framebuffer_clear(t_framebuffer *fb);
+void t_framebuffer_upscale(t_framebuffer *fb, int scale);
 
 #endif
