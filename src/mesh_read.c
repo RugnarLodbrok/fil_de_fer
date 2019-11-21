@@ -41,8 +41,8 @@ t_vec		read_landscape_data(int buff[SIZE][SIZE], const char *f_name)
 	while ((status = get_next_line(fd, &line)) > 0)
 	{
 		split_values = ft_strsplit(line, ' ');
-		r.x = 0;
-		while (split_values[r.x++])
+		r.x = -1;
+		while (split_values[++r.x])
 		{
 			buff[r.x][r.y] = ft_atoi(split_values[r.x]);
 			free(split_values[r.x]);
