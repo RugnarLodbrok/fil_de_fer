@@ -66,13 +66,6 @@ void print_info(t_app *app)
 
 void ft_change_projection(t_app *app)
 {
-	char *line;
-
-	if (app->controller.status_prj == 1)
-		line = "perspective";
-	else
-		line = "isometric";
-	mlx_string_put(app->M, app->win, 10, 55, 0xFFFFFF, line);
 	app->controller.projection = app->controller.status_prj;
 	if (app->controller.status_prj == 1)
 		app->cam.projection_type = PROJ_PERSPECTIVE;
