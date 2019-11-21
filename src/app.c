@@ -39,9 +39,12 @@ void t_framebuffer_upscale(t_framebuffer *fb, int scale)
 
 void	t_app_init(t_app *app)
 {
+	char *map_name = "maps/pylone.fdf";
 	const double tg = ft_sin(radians(FOV / 2)) / ft_cos(radians(FOV / 2));
 	const double near = 10.;
+
 	ft_bzero(app, sizeof(t_app));
+	app->map_name = map_name;
 	app->w = WIN_W;
 	app->h = WIN_H;
 	app->M = mlx_init();
@@ -52,16 +55,11 @@ void	t_app_init(t_app *app)
 	app->objs = malloc(sizeof(t_mesh *) * 2);
 	app->objs[0] = malloc(sizeof(t_mesh));
 	app->objs[1] = 0;
-	*(app->objs[0]) = t_mesh_landscape_from_file("maps/pylone.fdf");
+	*(app->objs[0]) = t_mesh_landscape_from_file(map_name);
 //	*(app->objs[0]) = t_mesh_landscape_from_file("test.txt");
 //	*(app->objs[0]) = t_mesh_cube(50);
 	app->controller.projection = 1;
-	t_cam_init(&app->cam_prspctv,
-			projection_perspective(near, tg * near,
-						tg * near * WIN_H / WIN_W, 9999.),
-				(t_point){WIN_W, WIN_H});
-	t_cam_init(&app->cam_iso,
-			projection_isometric((double)WIN_W / 1, (double)WIN_H / 1),
-				(t_point){WIN_W, WIN_H});
+	t_cam_init(&app->cam_prspctv, (t_point){WIN_W, WIN_H});
+	t_cam_init(&app->cam_iso, (t_point){WIN_W, WIN_H});
 	app->cam = app->cam_prspctv;
 }

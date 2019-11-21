@@ -26,7 +26,27 @@ t_mat	projection_perspective(double n, double w, double h, double f)
 			0, 0, -1, 0};
 }
 
-void	t_cam_init(t_cam *c, t_mat projection, t_point display_res)
+void t_cam_init_projection(t_cam *c)
+{
+	double tg;
+	double near;
+	double fov;
+
+	fov = FOV;
+	fov = fov * c->zoom / 100;
+	tg = ft_sin(radians(fov / 2)) / ft_cos(radians(fov / 2));
+	near = 10.;
+
+	if (c->projection_type == PROJ_PERSPECTIVE)
+		c->proj = projection_perspective(near, tg * near,
+							   tg * near * WIN_H / WIN_W,
+							   9999.);
+	else
+		c->proj = projection_isometric((double)WIN_W * fov / 200,
+							 (double)WIN_H * fov / 200);
+}
+
+void	t_cam_init(t_cam *c, t_point display_res)
 {
 	int w;
 	int h;
@@ -40,11 +60,13 @@ void	t_cam_init(t_cam *c, t_mat projection, t_point display_res)
 					0, 1, 0, 0,
 					0, 0, 0, 1};
 	t_mat_reset(&c->v2);
-	c->proj = projection;
 	c->disp = (t_mat){.5 * w, 0, 0, .5 * w,
 					0, -.5 * h, 0, .5 * h,
 					0, 0, 0, 0,
 					0, 0, 0, 1};
+	c->zoom = 100.;
+	c->projection_type = PROJ_PERSPECTIVE;
+	t_cam_init_projection(c);
 }
 
 void	t_cam_draw(t_cam *cam, void *p, t_mesh *mesh)
@@ -94,5 +116,10 @@ void	t_cam_move(t_cam *cam, t_controller *ctrl)
 	if (ctrl->v.x || ctrl->v.z)
 	{
 		t_mat_translate(&cam->v3, ctrl->v);
+	}
+	if (ctrl->d_zoom)
+	{
+		cam->zoom += ctrl->d_zoom;
+		t_cam_init_projection(cam);
 	}
 }

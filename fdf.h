@@ -35,6 +35,9 @@
 # define FRAME_RATE 120
 # define FRAME_TIME 1./FRAME_RATE
 
+# define PROJ_PERSPECTIVE 1
+# define PROJ_ISOMETRIC 0
+
 # define STEP 0.05
 
 #include <time.h>
@@ -67,7 +70,7 @@ typedef struct
 	double	d_pitch;
 	double	d_tilt;
 	int		status_prj;
-	int		status_zoom;
+	int		d_zoom;
 	int		projection;
 	t_vec	v;
 }			t_controller;
@@ -91,6 +94,8 @@ typedef struct
 
 typedef struct
 {
+	double	zoom;
+	int		projection_type;
 	t_mat	v1;
 	t_mat	v2;
 	t_mat	v3;
@@ -100,7 +105,7 @@ typedef struct
 
 typedef struct
 {
-
+	char			*map_name;
 	int				w;
 	int				h;
 	void			*M;
@@ -118,7 +123,8 @@ typedef struct
 }					t_app;
 
 void	t_app_init(t_app *app);
-void	t_cam_init(t_cam *c, t_mat projection, t_point display_res);
+void	t_cam_init(t_cam *c, t_point display_res);
+void	t_cam_init_projection(t_cam *c);
 void	t_cam_draw(t_cam *cam, void *p, t_mesh *mesh);
 void	t_cam_move(t_cam *cam, t_controller *ctrl);
 t_mat	projection_isometric(double fov_width, double fov_height);
@@ -132,6 +138,6 @@ void	mlx_bind_keys(void *win, t_controller *c);
 void	line(t_app *app, t_vec p1, t_vec p2, uint color);
 void	t_framebuffer_clear(t_framebuffer *fb);
 void	t_framebuffer_upscale(t_framebuffer *fb, int scale);
-void	print_info(t_app *app, char *name);
+void	print_info(t_app *app);
 
 #endif

@@ -4,39 +4,18 @@
 #include <time.h>
 #include "ft_linalg.h"
 
-int		loop_hook(void *p);
+int loop_hook(void *p);
 
-int		close_hook(void *param)
+int close_hook(void *param)
 {
 	(void)param;
 	exit(0);
 }
 
-void	print_info(t_app *app, char *name)
+void ft_free_area(t_app *app, int x_s, int y_s, int x_e, int y_e)
 {
-	void	*mlx;
-	void	*win;
-	int		y;
-
-	y = 0;
-	mlx = app->M;
-	win = app->win;
-	mlx_string_put(mlx, win, 10, y += 15, 0xa140c7, name);
-	mlx_string_put(mlx, win, 10, y += 25, 0xFFFFFF, "projection:");
-	mlx_string_put(mlx, win, 10, y += 15, 0xFFFFFF, "perspective");
-//	printf("%d\n", y);
-	mlx_string_put(mlx, win, 10, y += 45, 0xab4444, "FAQ:");
-	mlx_string_put(mlx, win, 10, y += 25, 0xFFFFFF, "isometric:   i");
-	mlx_string_put(mlx, win, 10, y += 20, 0xFFFFFF, "perspective: p");
-	mlx_string_put(mlx, win, 10, y += 20, 0xFFFFFF, "x-axis:    L/R");
-	mlx_string_put(mlx, win, 10, y += 20, 0xFFFFFF, "y-axis:    U/D");
-	mlx_string_put(mlx, win, 10, y += 20, 0xFFFFFF, "  exit:    ESC");
-}
-
-void	ft_free_area(t_app *app, int x_s, int y_s, int x_e, int y_e)
-{
-	int	i;
-	int	j;
+	int i;
+	int j;
 
 	i = x_s;
 	j = y_s;
@@ -52,30 +31,51 @@ void	ft_free_area(t_app *app, int x_s, int y_s, int x_e, int y_e)
 	}
 }
 
-void	ft_change_projection(t_app *app)
+void print_info(t_app *app)
 {
-	char	*line;
-	double	near;
-	double	tg;
+	void *mlx;
+	void *win;
+	int y;
+	char *pers;
 
-	tg = ft_sin(radians(FOV / 2)) / ft_cos(radians(FOV / 2));
-	near = 10.;
-	line = 0;
-	if (app->controller.status_prj == 1 || app->controller.status_prj == -1)
-		if (app->controller.status_prj != app->controller.projection)
-		{
-			(line) ? free(line) : 0;
-			ft_free_area(app, 10, 60, 150, 100);
-			(app->controller.status_prj == 1) ?
-			(line = ft_strdup("perspective")) : (line = ft_strdup("isometric"));
-			mlx_string_put(app->M, app->win, 10, 55, 0xFFFFFF, line);
-			app->controller.projection = app->controller.status_prj;
-			if (app->controller.status_prj == 1)
-				app->cam = app->cam_prspctv;
-			else
-				app->cam = app->cam_iso;
-		}
-	free(line);
+//	ft_free_area(app, 10, 60, 150, 100);
+	ft_free_area(app, 0, 0, 150, WIN_H);
+	y = 0;
+	mlx = app->M;
+	win = app->win;
+	mlx_string_put(mlx, win, 10, y += 15, 0xa140c7, app->map_name);
+	mlx_string_put(mlx, win, 10, y += 25, 0xFFFFFF, "projection:");
+	if (app->cam.projection_type == PROJ_PERSPECTIVE)
+		pers = "perspective";
+	else
+		pers = "isometic";
+	mlx_string_put(mlx, win, 10, y += 15, 0xFFFFFF, pers);
+//	printf("%d\n", y);
+	mlx_string_put(mlx, win, 10, y += 45, 0xab4444, "FAQ:");
+	mlx_string_put(mlx, win, 10, y += 25, 0xFFFFFF, "isometric:   i");
+	mlx_string_put(mlx, win, 10, y += 20, 0xFFFFFF, "perspective: p");
+	mlx_string_put(mlx, win, 10, y += 20, 0xFFFFFF, "x-axis:    L/R");
+	mlx_string_put(mlx, win, 10, y += 20, 0xFFFFFF, "y-axis:    U/D");
+	mlx_string_put(mlx, win, 10, y += 20, 0xFFFFFF, "  exit:    ESC");
+}
+
+
+void ft_change_projection(t_app *app)
+{
+	char *line;
+
+	if (app->controller.status_prj == 1)
+		line = "perspective";
+	else
+		line = "isometric";
+	mlx_string_put(app->M, app->win, 10, 55, 0xFFFFFF, line);
+	app->controller.projection = app->controller.status_prj;
+	if (app->controller.status_prj == 1)
+		app->cam.projection_type = PROJ_PERSPECTIVE;
+	else
+		app->cam.projection_type = PROJ_ISOMETRIC;
+	t_cam_init_projection(&app->cam);
+	print_info(app);
 }
 
 void update_debug(t_app *app, double dt)
@@ -106,40 +106,17 @@ void update_debug(t_app *app, double dt)
 	mlx_put_image_to_window(app->M, app->win, app->framebuffer.image, 0, 0);
 }
 
-void	t_zoom(t_app *app)
+void update(t_app *app, double dt)
 {
-	double near; 
-	double tg;
-
-	near = 10.;
-	tg = ft_sin(radians(FOV / 2)) / ft_cos(radians(FOV / 2));
-	if (app->controller.status_zoom != 0)
-	{
-		
-		if (app->controller.status_zoom == 1)
-		{
-			app->cam.proj.data[0][0] += 0.05;
-			app->cam.proj.data[1][1] += 0.05;
-		}
-		if (app->controller.status_zoom == -1)
-		{
-			app->cam.proj.data[0][0] -= 0.05;
-			app->cam.proj.data[1][1] -= 0.05;
-		}
-		
-		//app->cam.proj = projection_isometric((double)WIN_W / 5, (double)WIN_H / 5);
-	}
-}
-
-void	update(t_app *app, double dt)
-{
-	int		i;
-	t_mesh	*obj;
+	int i;
+	t_mesh *obj;
 
 	(void)dt;
 	t_framebuffer_clear(&app->framebuffer);
-	ft_change_projection(app);
-	t_zoom(app);
+	if (app->controller.status_prj &&
+		app->controller.status_prj != app->controller.projection)
+		ft_change_projection(app);
+//	t_zoom(app);
 	//todo: https://github.com/keuhdall/images_example
 	t_cam_move(&app->cam, &app->controller);
 	for (i = 0; (obj = app->objs[i]); ++i)
@@ -149,7 +126,7 @@ void	update(t_app *app, double dt)
 	mlx_put_image_to_window(app->M, app->win, app->framebuffer.image, 150, 0);
 }
 
-int		loop_hook(void *p)
+int loop_hook(void *p)
 {
 	t_app *app;
 	double dt;
@@ -165,7 +142,7 @@ int		loop_hook(void *p)
 	return (0);
 }
 
-int		mouse_hook(int button, int x, int y, void *param)
+int mouse_hook(int button, int x, int y, void *param)
 {
 	(void)param;
 	(void)button;
@@ -173,13 +150,12 @@ int		mouse_hook(int button, int x, int y, void *param)
 	return (0);
 }
 
-int		main(int argc, char **argv)
+int main(int argc, char **argv)
 {
 	t_app app;
 
 	t_app_init(&app);
-	if (argc > 1)
-		print_info(&app, argv[1]);
+	print_info(&app);
 	line(&app, (t_vec){0, 0, 0}, (t_vec){50, 200, 0}, (RED * 255));
 	app.time = clock();
 	app.frame_time = clock();
