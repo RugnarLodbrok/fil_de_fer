@@ -6,7 +6,7 @@
 /*   By: rpoetess <rpoetess@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 21:02:29 by rpoetess          #+#    #+#             */
-/*   Updated: 2019/11/21 21:21:11 by rpoetess         ###   ########.fr       */
+/*   Updated: 2019/11/21 21:28:17 by rpoetess         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	ft_free_area(t_app *app, int x_s, int y_s, int x_e, int y_e)
 	}
 }
 
-void print_info(t_app *app)
+void	print_info(t_app *app)
 {
 	void	*mlx;
 	void	*win;
@@ -54,17 +54,17 @@ void print_info(t_app *app)
 		pers = "isometic";
 	mlx_string_put(mlx, win, 10, y += 15, c1, pers);
 	mlx_string_put(mlx, win, 10, y += 45, 0xab4444, "controls:");
-	mlx_string_put(mlx, win, 10, y += 20, c1, "  exit:    ESC");
-	mlx_string_put(mlx, win, 10, y += 25, c1, "isometric:   [I]");
+	mlx_string_put(mlx, win, 10, y += 20, c1, "  exit:     [ESC]");
+	mlx_string_put(mlx, win, 10, y += 20, c1, "isometric:   [I]");
 	mlx_string_put(mlx, win, 10, y += 20, c1, "perspective: [P]");
 	mlx_string_put(mlx, win, 10, y += 20, c1, "");
 	mlx_string_put(mlx, win, 10, y += 20, c1, "      look:");
 	mlx_string_put(mlx, win, 10, y += 20, c1, "      [up]");
-	mlx_string_put(mlx, win, 10, y += 20, c1, "[left]    [right]");
-	mlx_string_put(mlx, win, 10, y += 20, c1, "     [down]");
+	mlx_string_put(mlx, win, 10, y += 35, c1, "[left]    [right]");
+	mlx_string_put(mlx, win, 10, y += 35, c1, "     [down]");
 }
 
-void ft_change_projection(t_app *app)
+void	ft_change_projection(t_app *app)
 {
 	app->controller.projection = app->controller.status_prj;
 	if (app->controller.status_prj == 1)

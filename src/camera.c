@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   camera.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rpoetess <rpoetess@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/11/21 21:29:33 by rpoetess          #+#    #+#             */
+/*   Updated: 2019/11/21 21:29:46 by rpoetess         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 #include "math.h"
 
@@ -27,23 +39,22 @@ t_mat	projection_perspective(double n, double w, double h, double f)
 			0, 0, -1, 0};
 }
 
-void t_cam_init_projection(t_cam *c)
+void	t_cam_init_projection(t_cam *c)
 {
 	double tg;
 	double near;
 	double ze;
 
-	ze = exp(c->zoom/100);
+	ze = exp(c->zoom / 100);
 	tg = ft_sin(radians(FOV / 2)) / ft_cos(radians(FOV / 2)) * ze;
 	near = 10.;
-
 	if (c->projection_type == PROJ_PERSPECTIVE)
 		c->proj = projection_perspective(near, tg * near,
-							   tg * near * WIN_H / WIN_W,
-							   9999.);
+							tg * near * WIN_H / WIN_W,
+							9999.);
 	else
 		c->proj = projection_isometric((double)WIN_W * ze,
-							 (double)WIN_H * ze);
+							(double)WIN_H * ze);
 }
 
 void	t_cam_init(t_cam *c, t_point display_res)

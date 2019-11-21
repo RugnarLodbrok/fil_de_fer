@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   app.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rpoetess <rpoetess@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/11/21 21:41:50 by rpoetess          #+#    #+#             */
+/*   Updated: 2019/11/21 21:43:32 by rpoetess         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 #include "mlx.h"
 
 /*
- * https://github.com/keuhdall/images_example
-**/
+**https://github.com/keuhdall/images_example
+*/
 
 void	t_framebuffer_init(t_framebuffer *fb, void *mlx, int w, int h)
 {
@@ -25,18 +37,18 @@ void	t_framebuffer_clear(t_framebuffer *fb)
 	ft_bzero(fb->data, fb->row_len * WIN_H * sizeof(int));
 }
 
-void t_framebuffer_upscale(t_framebuffer *fb, int scale)
+void	t_framebuffer_upscale(t_framebuffer *fb, int scale)
 {
 	int i;
 	int j;
 
 	i = fb->w;
-	while(--i >= 0)
+	while (--i >= 0)
 	{
 		j = fb->h;
-		while(--j >= 0)
+		while (--j >= 0)
 		{
-			fb->data[fb->row_len*j + i] = fb->data[fb->row_len*(j/scale) + i/scale];
+			fb->data[fb->row_len * j + i] = fb->data[fb->row_len * (j / scale) + i / scale];
 		}
 	}
 }
