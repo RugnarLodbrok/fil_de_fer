@@ -1,6 +1,10 @@
 #include "fdf.h"
 #include "mlx.h"
 
+/*
+ * https://github.com/keuhdall/images_example
+**/
+
 void	t_framebuffer_init(t_framebuffer *fb, void *mlx, int w, int h)
 {
 	fb->image = mlx_new_image(mlx, WIN_W, WIN_H);
@@ -39,27 +43,18 @@ void t_framebuffer_upscale(t_framebuffer *fb, int scale)
 
 void	t_app_init(t_app *app)
 {
-	char *map_name = "maps/pylone.fdf";
-	const double tg = ft_sin(radians(FOV / 2)) / ft_cos(radians(FOV / 2));
-	const double near = 10.;
-
 	ft_bzero(app, sizeof(t_app));
-	app->map_name = map_name;
+	app->map_name = "maps/pylone.fdf";
 	app->w = WIN_W;
 	app->h = WIN_H;
+	app->sidebar_w = 200;
 	app->M = mlx_init();
-	app->win = mlx_new_window(app->M, WIN_W + 200, WIN_H, "fdf");
-//	mlx_string_put(app->M, app->win, 150, 150, 255 * GREEN, "wake up, Neo!");
-	t_vec_normalize(&(app->momentum));
+	app->win = mlx_new_window(app->M, app->sidebar_w + app->w, app->h, "fdf");
 	t_framebuffer_init(&app->framebuffer, app->M, app->w, app->h);
 	app->objs = malloc(sizeof(t_mesh *) * 2);
 	app->objs[0] = malloc(sizeof(t_mesh));
 	app->objs[1] = 0;
-	*(app->objs[0]) = t_mesh_landscape_from_file(map_name);
-//	*(app->objs[0]) = t_mesh_landscape_from_file("test.txt");
-//	*(app->objs[0]) = t_mesh_cube(50);
+	*(app->objs[0]) = t_mesh_landscape_from_file(app->map_name);
 	app->controller.projection = 1;
-	t_cam_init(&app->cam_prspctv, (t_point){WIN_W, WIN_H});
-	t_cam_init(&app->cam_iso, (t_point){WIN_W, WIN_H});
-	app->cam = app->cam_prspctv;
+	t_cam_init(&app->cam, (t_point){WIN_W, WIN_H});
 }

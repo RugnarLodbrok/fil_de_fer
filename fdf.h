@@ -108,6 +108,7 @@ typedef struct
 	char			*map_name;
 	int				w;
 	int				h;
+	int				sidebar_w;
 	void			*M;
 	void			*win;
 	t_framebuffer	framebuffer;
@@ -115,11 +116,7 @@ typedef struct
 	time_t			time;
 	time_t			frame_time;
 	t_controller	controller;
-	float			size;
 	t_cam			cam;
-	t_cam			cam_iso;
-	t_cam			cam_prspctv;
-	t_vec			momentum;
 }					t_app;
 
 void	t_app_init(t_app *app);
