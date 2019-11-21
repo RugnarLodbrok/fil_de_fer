@@ -67,22 +67,16 @@ void	ft_change_projection(t_app *app)
 		{
 			(line) ? free(line) : 0;
 			ft_free_area(app, 10, 60, 150, 100);
-			//ft_bzero(&app->framebuffer.data[10 * 4 + 55 * WIN_W * 4], 100000);
 			(app->controller.status_prj == 1) ?
 			(line = ft_strdup("perspective")) : (line = ft_strdup("isometric"));
 			mlx_string_put(app->M, app->win, 10, 55, 0xFFFFFF, line);
-			//free(app->cam);
 			app->controller.projection = app->controller.status_prj;
 			if (app->controller.status_prj == 1)
-				t_cam_init(&app->cam, projection_perspective(near, tg * near,
-					tg * near * WIN_H / WIN_W, 9999.), (t_point){WIN_W, WIN_H});
+				app->cam = app->cam_prspctv;
 			else
-				t_cam_init(&app->cam,
-					projection_isometric((double)WIN_W / 1, (double)WIN_H / 1),
-					(t_point){WIN_W, WIN_H});
+				app->cam = app->cam_iso;
 		}
 	free(line);
-	//ft_putnbr(app->controller.status_prj);
 }
 
 void	update(t_app *app, double dt)

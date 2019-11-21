@@ -104,8 +104,10 @@ typedef struct
 	time_t			time;
 	time_t			frame_time;
 	t_controller	controller;
-	t_cam 			cam;
-	t_vec 			momentum;
+	t_cam			cam;
+	t_cam			cam_iso;
+	t_cam			cam_prspctv;
+	t_vec			momentum;
 }					t_app;
 
 void	t_app_init(t_app *app);
@@ -119,8 +121,8 @@ void	t_mesh_init(t_mesh *m);
 t_mesh	t_mesh_landscape_from_file(const char *f_name);
 int		t_mesh_push_vertex(t_mesh *m, t_vertex v);
 int		t_mesh_push_edge(t_mesh *m, t_point e);
-//void 	mlx_bind_keys(t_app *app);
-void 	mlx_bind_keys(void *win, t_controller *c);
+//void	mlx_bind_keys(t_app *app);
+void	mlx_bind_keys(void *win, t_controller *c);
 void	line(t_app *app, t_vec p1, t_vec p2, uint color);
 //void	line_wu(t_app *app, t_vec p1, t_vec p2, uint color);
 void	t_framebuffer_clear(t_framebuffer *fb);
