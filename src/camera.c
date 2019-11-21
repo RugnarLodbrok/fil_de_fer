@@ -3,8 +3,8 @@
 
 t_mat	projection_isometric(double fov_width, double fov_height)
 {
-	return ((t_mat){-2. / fov_width, 0, 0, 0,
-					0, -2. / fov_height, 0, 0,
+	return ((t_mat){2. / fov_width, 0, 0, 0,
+					0, 2. / fov_height, 0, 0,
 					0, 0, 0, 0,
 					0, 0, 0, 1});
 }
@@ -61,7 +61,7 @@ void	t_cam_init(t_cam *c, t_point display_res)
 					0, 0, 0, 1};
 	t_mat_reset(&c->v2);
 	c->disp = (t_mat){.5 * w, 0, 0, .5 * w,
-					0, -.5 * h, 0, .5 * h,
+					0, .5 * h, 0, .5 * h,
 					0, 0, 0, 0,
 					0, 0, 0, 1};
 	c->zoom = 0;
@@ -95,7 +95,7 @@ void	t_cam_draw(t_cam *cam, void *p, t_mesh *mesh)
 			continue;
 		p1 = t_vec_transform(p1, cam->disp);
 		p2 = t_vec_transform(p2, cam->disp);
-		line(p, p1, p2, (uint)(uint)(255 * GREEN));
+		line(p, p1, p2, (uint)(255 * GREEN));
 	}
 }
 

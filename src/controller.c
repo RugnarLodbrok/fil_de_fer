@@ -6,7 +6,7 @@ void	t_controller_update_state(t_controller *c)
 	c->v.z = 10 * (c->keyboard[KEY_W] - c->keyboard[KEY_S]);
 	c->d_tilt = 1 * (c->keyboard[KEY_Q] - c->keyboard[KEY_E]);
 	c->d_yaw = 1 * (c->keyboard[KEY_RIGHT] - c->keyboard[KEY_LEFT]);
-	c->d_pitch = -1 * (c->keyboard[KEY_UP] - c->keyboard[KEY_DOWN]);
+	c->d_pitch = 1 * (c->keyboard[KEY_UP] - c->keyboard[KEY_DOWN]);
 	c->status_prj = c->keyboard[KEY_P] - c->keyboard[KEY_I];
 	c->d_zoom = c->keyboard[KEY_PLUS] - c->keyboard[KEY_MINUS];
 }
