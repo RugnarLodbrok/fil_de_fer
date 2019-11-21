@@ -48,8 +48,8 @@ void	t_app_init(t_app *app)
 	app->w = WIN_W;
 	app->h = WIN_H;
 	app->M = mlx_init();
-	app->win = mlx_new_window(app->M, WIN_W + 150, WIN_H, "fdf");
-	mlx_string_put(app->M, app->win, 150, 150, 255 * GREEN, "wake up, Neo!");
+	app->win = mlx_new_window(app->M, WIN_W + 200, WIN_H, "fdf");
+//	mlx_string_put(app->M, app->win, 150, 150, 255 * GREEN, "wake up, Neo!");
 	t_vec_normalize(&(app->momentum));
 	t_framebuffer_init(&app->framebuffer, app->M, app->w, app->h);
 	app->objs = malloc(sizeof(t_mesh *) * 2);

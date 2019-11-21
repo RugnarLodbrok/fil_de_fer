@@ -23,7 +23,7 @@ void ft_free_area(t_app *app, int x_s, int y_s, int x_e, int y_e)
 	{
 		while (i < x_e)
 		{
-			mlx_pixel_put(app->M, app->win, i, j, 0x000000);
+			mlx_pixel_put(app->M, app->win, i, j, GRAYSCALE*64);
 			i++;
 		}
 		i = x_s;
@@ -37,26 +37,30 @@ void print_info(t_app *app)
 	void *win;
 	int y;
 	char *pers;
+	uint c1;
 
-//	ft_free_area(app, 10, 60, 150, 100);
-	ft_free_area(app, 0, 0, 150, WIN_H);
+	c1 = GRAYSCALE * 192;
+	ft_free_area(app, 0, 0, 200, WIN_H);
 	y = 0;
 	mlx = app->M;
 	win = app->win;
 	mlx_string_put(mlx, win, 10, y += 15, 0xa140c7, app->map_name);
-	mlx_string_put(mlx, win, 10, y += 25, 0xFFFFFF, "projection:");
+	mlx_string_put(mlx, win, 10, y += 25, c1, "projection:");
 	if (app->cam.projection_type == PROJ_PERSPECTIVE)
 		pers = "perspective";
 	else
 		pers = "isometic";
-	mlx_string_put(mlx, win, 10, y += 15, 0xFFFFFF, pers);
+	mlx_string_put(mlx, win, 10, y += 15, c1, pers);
 //	printf("%d\n", y);
-	mlx_string_put(mlx, win, 10, y += 45, 0xab4444, "FAQ:");
-	mlx_string_put(mlx, win, 10, y += 25, 0xFFFFFF, "isometric:   i");
-	mlx_string_put(mlx, win, 10, y += 20, 0xFFFFFF, "perspective: p");
-	mlx_string_put(mlx, win, 10, y += 20, 0xFFFFFF, "x-axis:    L/R");
-	mlx_string_put(mlx, win, 10, y += 20, 0xFFFFFF, "y-axis:    U/D");
-	mlx_string_put(mlx, win, 10, y += 20, 0xFFFFFF, "  exit:    ESC");
+	mlx_string_put(mlx, win, 10, y += 45, 0xab4444, "controls:");
+	mlx_string_put(mlx, win, 10, y += 20, c1, "  exit:    ESC");
+	mlx_string_put(mlx, win, 10, y += 25, c1, "isometric:   [I]");
+	mlx_string_put(mlx, win, 10, y += 20, c1, "perspective: [P]");
+	mlx_string_put(mlx, win, 10, y += 20, c1, "");
+	mlx_string_put(mlx, win, 10, y += 20, c1, "      look:");
+	mlx_string_put(mlx, win, 10, y += 20, c1, "      [up]");
+	mlx_string_put(mlx, win, 10, y += 20, c1, "[left]    [right]");
+	mlx_string_put(mlx, win, 10, y += 20, c1, "     [down]");
 }
 
 
@@ -123,7 +127,7 @@ void update(t_app *app, double dt)
 	{
 		t_cam_draw(&app->cam, app, obj);
 	}
-	mlx_put_image_to_window(app->M, app->win, app->framebuffer.image, 150, 0);
+	mlx_put_image_to_window(app->M, app->win, app->framebuffer.image, 200, 0);
 }
 
 int loop_hook(void *p)
