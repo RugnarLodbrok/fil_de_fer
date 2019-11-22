@@ -42,11 +42,11 @@ static void	ft_free_area(t_app *app)
 	}
 }
 
-static void sidebar_draw_controls(t_app *app, int y)
+static void	sidebar_draw_controls(t_app *app, int y)
 {
 	uint c1;
-	c1 = GRAYSCALE * 192;
 
+	c1 = GRAYSCALE * 192;
 	mlx_string_put(app->M, app->win, 10, y += 45, 0xab4444, "controls:");
 	mlx_string_put(app->M, app->win, 10, y += 20, c1, "exit:         [ESC]");
 	mlx_string_put(app->M, app->win, 10, y += 20, c1, "projection:   [I/P]");

@@ -12,7 +12,7 @@
 
 CC = gcc
 NAME = fdf
-FLAGS = #-Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror
 SRC_ASCII = \
 		ascii/main.c \
 		ascii/line.c \
@@ -53,7 +53,7 @@ minilibx_macos/libmlx.a :
 	make -C minilibx_macos
 
 run : $(NAME)
-	@./$(NAME)
+	@./$(NAME) maps/pylone.fdf
 
 clean :
 	rm -f $(OBJ)
