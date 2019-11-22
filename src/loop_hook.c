@@ -59,19 +59,15 @@ void	update_debug(t_app *app)
 
 void	t_map_scroll(t_app *app)
 {
-	int	i;
-	double	scale;
+	int		i;
 	t_mesh	*obj;
 
 	i = -1;
 	if (app->controller.d_scroll != 0)
 	{
 		app->z_scale += app->controller.d_scroll;
-		scale = exp(app->z_scale / 100);
 		while ((obj = app->objs[++i]))
-		{
-			obj->m.data[2][2] = scale;
-		}
+			obj->m.data[2][2] = exp(app->z_scale / 100);
 	}
 }
 
