@@ -6,7 +6,7 @@
 /*   By: rpoetess <rpoetess@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 22:00:07 by rpoetess          #+#    #+#             */
-/*   Updated: 2019/11/21 22:03:22 by rpoetess         ###   ########.fr       */
+/*   Updated: 2019/11/22 16:11:56 by rpoetess         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int		close_hook(void *param)
 	exit(0);
 }
 
-void	update_debug(t_app *app, double dt)
+void	update_debug(t_app *app)
 {
 	int				i;
 	static double	a;
@@ -35,7 +35,6 @@ void	update_debug(t_app *app, double dt)
 	double			dy;
 
 	a = 0.0002;
-	(void)dt;
 	t_framebuffer_clear(&app->framebuffer);
 	line(app,
 		(t_vec){1., 1., 0},
