@@ -54,7 +54,7 @@ static void	center_mesh(t_mesh *m, t_vec size)
 	{
 		m->vertices[i].v.x /= size.x - 1;
 		m->vertices[i].v.y /= size.y - 1;
-		m->vertices[i].v = t_vec_sub(m->vertices[i].v, (t_vec){.5, .5});
+		m->vertices[i].v = t_vec_sub(m->vertices[i].v, (t_vec){.5, .5, 0});
 		m->vertices[i].v.y *= size.y - 1;
 		m->vertices[i].v.y /= size.x - 1;
 		m->vertices[i].v.x *= 500;

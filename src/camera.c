@@ -40,15 +40,17 @@ void	t_cam_init(t_cam *c, t_point display_res)
 	h = display_res.y;
 	t_mat_reset(&c->v3);
 	t_mat_translate(&c->v3, (t_vec){0, 0, -400});
-	c->v1 = (t_mat){1, 0, 0, 0,
-					0, 0, -1, 0,
-					0, 1, 0, 0,
-					0, 0, 0, 1};
+	c->v1 = (t_mat){{
+		{1, 0, 0, 0},
+		{0, 0, -1, 0},
+		{0, 1, 0, 0},
+		{0, 0, 0, 1}}};
 	t_mat_reset(&c->v2);
-	c->disp = (t_mat){.5 * w, 0, 0, .5 * w,
-					0, .5 * h, 0, .5 * h,
-					0, 0, 0, 0,
-					0, 0, 0, 1};
+	c->disp = (t_mat){{
+		{.5 * w, 0, 0, .5 * w},
+		{0, .5 * h, 0, .5 * h},
+		{0, 0, 0, 0},
+		{0, 0, 0, 1}}};
 	c->zoom = 0;
 	c->projection_type = PROJ_PERSPECTIVE;
 	t_cam_init_projection(c);
@@ -56,7 +58,7 @@ void	t_cam_init(t_cam *c, t_point display_res)
 
 void	t_cam_draw(t_cam *cam, void *p, t_mesh *mesh)
 {
-	uint	i;
+	int	i;
 	t_vec	p1;
 	t_vec	p2;
 	t_mat	m;
@@ -66,11 +68,11 @@ void	t_cam_draw(t_cam *cam, void *p, t_mesh *mesh)
 	m = t_mat_mul(cam->v2, m);
 	m = t_mat_mul(cam->v3, m);
 	m = t_mat_mul(cam->proj, m);
-	i = 0;
-	while (i < mesh->n_edges)
+	i = -1;
+	while (++i < mesh->n_edges)
 	{
 		p1 = mesh->vertices[mesh->edges[i].x].v;
-		p2 = mesh->vertices[mesh->edges[i++].y].v;
+		p2 = mesh->vertices[mesh->edges[i].y].v;
 		p1 = t_vec_transform4(p1, m);
 		if (p1.z < -1. || p1.z > 1.)
 			continue ;
