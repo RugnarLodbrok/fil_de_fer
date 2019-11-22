@@ -62,10 +62,10 @@ void	t_map_scroll(t_app *app)
 	int		i;
 	t_mesh	*obj;
 
-	i = -1;
-	if (app->controller.d_scroll != 0)
+	if (app->controller.d_scroll)
 	{
 		app->z_scale += app->controller.d_scroll;
+		i = -1;
 		while ((obj = app->objs[++i]))
 			obj->m.data[2][2] = exp(app->z_scale / 100);
 	}
