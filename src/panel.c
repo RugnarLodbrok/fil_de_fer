@@ -14,7 +14,7 @@
 #include "libft.h"
 #include "fdf.h"
 
-void	t_init_se(t_se *se)
+static void	t_init_se(t_se *se)
 {
 	se->start_x = 0;
 	se->start_y = 0;
@@ -22,7 +22,7 @@ void	t_init_se(t_se *se)
 	se->end_y = WIN_H;
 }
 
-void	ft_free_area(t_app *app)
+static void	ft_free_area(t_app *app)
 {
 	int		i;
 	int		j;
@@ -42,7 +42,20 @@ void	ft_free_area(t_app *app)
 	}
 }
 
-void	print_info(t_app *app)
+static void sidebar_draw_controls(t_app *app, int y)
+{
+	uint c1;
+	c1 = GRAYSCALE * 192;
+
+	mlx_string_put(app->M, app->win, 10, y += 45, 0xab4444, "controls:");
+	mlx_string_put(app->M, app->win, 10, y += 20, c1, "exit:         [ESC]");
+	mlx_string_put(app->M, app->win, 10, y += 20, c1, "projection:   [I/P]");
+	mlx_string_put(app->M, app->win, 10, y += 20, c1, "zoom:         [+/-]");
+	mlx_string_put(app->M, app->win, 10, y += 20, c1, "z-scale: [home/end]");
+	mlx_string_put(app->M, app->win, 10, y += 20, c1, "look:      [arrows]");
+}
+
+void		print_info(t_app *app)
 {
 	int		y;
 	char	*pers;
@@ -58,18 +71,10 @@ void	print_info(t_app *app)
 	else
 		pers = "isometic";
 	mlx_string_put(app->M, app->win, 10, y += 15, c1, pers);
-	mlx_string_put(app->M, app->win, 10, y += 45, 0xab4444, "controls:");
-	mlx_string_put(app->M, app->win, 10, y += 20, c1, "  exit:     [ESC]");
-	mlx_string_put(app->M, app->win, 10, y += 20, c1, "isometric:   [I]");
-	mlx_string_put(app->M, app->win, 10, y += 20, c1, "perspective: [P]");
-	mlx_string_put(app->M, app->win, 10, y += 20, c1, "");
-	mlx_string_put(app->M, app->win, 10, y += 20, c1, "      look:");
-	mlx_string_put(app->M, app->win, 10, y += 20, c1, "      [up]");
-	mlx_string_put(app->M, app->win, 10, y += 35, c1, "[left]    [right]");
-	mlx_string_put(app->M, app->win, 10, y += 35, c1, "     [down]");
+	sidebar_draw_controls(app, y);
 }
 
-void	ft_change_projection(t_app *app)
+void		ft_change_projection(t_app *app)
 {
 	app->controller.projection = app->controller.status_prj;
 	if (app->controller.status_prj == 1)

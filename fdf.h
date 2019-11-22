@@ -93,7 +93,6 @@ typedef struct
 	int		end_y;
 }			t_se;
 
-
 typedef struct
 {
 	t_vertex	*vertices;
