@@ -26,7 +26,7 @@ t_vec		read_landscape_data(int buff[SIZE][SIZE], const char *f_name)
 
 	ft_bzero(&r, sizeof(r));
 	if ((fd = open(f_name, O_RDONLY)) <= 0)
-		ft_error_exit("can't open file");
+		ft_error_exit("can't open file `%s`", f_name);
 	while ((status = get_next_line(fd, &line)) > 0)
 	{
 		split_values = ft_strsplit(line, ' ');
@@ -41,7 +41,7 @@ t_vec		read_landscape_data(int buff[SIZE][SIZE], const char *f_name)
 		r.y++;
 	}
 	if (status < 0)
-		ft_error_exit("can't read file");
+		ft_error_exit("can't read file `%s`", f_name);
 	return (t_vec){r.x, r.y, 10};
 }
 
