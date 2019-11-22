@@ -31,6 +31,8 @@
 # define KEY_P 35
 # define KEY_PLUS 69
 # define KEY_MINUS 78
+# define KEY_HOME 115
+# define KEY_END 119
 
 # define FRAME_RATE 120
 # define FRAME_TIME 1./FRAME_RATE
@@ -69,6 +71,7 @@ typedef struct
 	double	d_yaw;
 	double	d_pitch;
 	double	d_tilt;
+	int		d_scroll;
 	int		status_prj;
 	int		d_zoom;
 	int		projection;
@@ -120,6 +123,7 @@ typedef struct
 	int				sidebar_w;
 	void			*M;
 	void			*win;
+	double			z_scale;
 	t_framebuffer	framebuffer;
 	t_mesh			**objs;
 	time_t			time;

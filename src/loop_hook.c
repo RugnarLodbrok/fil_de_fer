@@ -6,10 +6,11 @@
 /*   By: rpoetess <rpoetess@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 22:00:07 by rpoetess          #+#    #+#             */
-/*   Updated: 2019/11/22 16:11:56 by rpoetess         ###   ########.fr       */
+/*   Updated: 2019/11/22 17:14:03 by rpoetess         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <math.h>
 #include "mlx.h"
 #include "fdf.h"
 
@@ -56,6 +57,24 @@ void	update_debug(t_app *app)
 	mlx_put_image_to_window(app->M, app->win, app->framebuffer.image, 0, 0);
 }
 
+void	t_map_scroll(t_app *app)
+{
+	int	i;
+	double	scale;
+	t_mesh	*obj;
+
+	i = -1;
+	if (app->controller.d_scroll != 0)
+	{
+		app->z_scale += app->controller.d_scroll;
+		scale = exp(app->z_scale / 100);
+		while ((obj = app->objs[++i]))
+		{
+			obj->m.data[2][2] = scale;
+		}
+	}
+}
+
 void	update(t_app *app, double dt)
 {
 	int		i;
@@ -68,6 +87,7 @@ void	update(t_app *app, double dt)
 		app->controller.status_prj != app->controller.projection)
 		ft_change_projection(app);
 	t_cam_move(&app->cam, &app->controller);
+	t_map_scroll(app);
 	while ((obj = app->objs[++i]))
 	{
 		t_cam_draw(&app->cam, app, obj);

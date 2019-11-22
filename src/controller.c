@@ -6,7 +6,7 @@
 /*   By: rpoetess <rpoetess@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 21:45:11 by rpoetess          #+#    #+#             */
-/*   Updated: 2019/11/22 16:11:56 by rpoetess         ###   ########.fr       */
+/*   Updated: 2019/11/22 16:46:46 by rpoetess         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	t_controller_update_state(t_controller *c)
 	c->d_pitch = 1 * (c->keyboard[KEY_UP] - c->keyboard[KEY_DOWN]);
 	c->status_prj = c->keyboard[KEY_P] - c->keyboard[KEY_I];
 	c->d_zoom = c->keyboard[KEY_MINUS] - c->keyboard[KEY_PLUS];
+	c->d_scroll = c->keyboard[KEY_HOME] - c->keyboard[KEY_END];
 }
 
 int		t_controller_key_press(int keycode, void *p)
