@@ -161,8 +161,7 @@ void		line(t_app *app, t_vec p1, t_vec p2, uint color)
 	slope = (p2.y - p1.y) / (p2.x - p1.x);
 	p.x = (int)(p1.x + 2.5) - 2;
 	p.y = p1.y - (p1.x - p.x) * slope;
-	put_wu_pixel(app, p, ft_fpow(.5 - p1.x + p.x, 1), color);
-	p.x++;
+	put_wu_pixel(app, p, ft_fpow(.5 - p1.x++ + p.x, 1), color);
 	p.y += slope;
 	while (p.x < p2.x - .5)
 	{

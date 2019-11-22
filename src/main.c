@@ -16,11 +16,13 @@
 #include <time.h>
 #include "ft_linalg.h"
 
-int		main(int argc, char **argv)
+int		main(int ac, char **av)
 {
 	t_app	app;
 
-	t_app_init(&app);
+	if (ac != 2)
+		ft_error_exit("Usage: ./fdf [FILE]");
+	t_app_init(&app, av[1]);
 	print_info(&app);
 	app.time = clock();
 	app.frame_time = clock();

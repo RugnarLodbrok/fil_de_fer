@@ -15,17 +15,6 @@
 #include "ft_linalg.h"
 #include "get_next_line.h"
 #include "fdf.h"
-#include <stdio.h>
-
-static void	error_exit(char *msg)
-{
-	if (!msg)
-		msg = "error";
-	ft_putendl(msg);
-	exit(1);
-}
-
-#define SIZE 1024
 
 t_vec		read_landscape_data(int buff[SIZE][SIZE], const char *f_name)
 {
@@ -37,7 +26,7 @@ t_vec		read_landscape_data(int buff[SIZE][SIZE], const char *f_name)
 
 	ft_bzero(&r, sizeof(r));
 	if ((fd = open(f_name, O_RDONLY)) <= 0)
-		error_exit("can't open file");
+		ft_error_exit("can't open file `%s`", f_name);
 	while ((status = get_next_line(fd, &line)) > 0)
 	{
 		split_values = ft_strsplit(line, ' ');
@@ -52,8 +41,26 @@ t_vec		read_landscape_data(int buff[SIZE][SIZE], const char *f_name)
 		r.y++;
 	}
 	if (status < 0)
-		error_exit("can't read file");
+		ft_error_exit("can't read file `%s`", f_name);
 	return (t_vec){r.x, r.y, 10};
+}
+
+static void	center_mesh(t_mesh *m, t_vec size)
+{
+	int i;
+
+	i = -1;
+	while (++i < (*m).n_vertices)
+	{
+		m->vertices[i].v.x /= size.x - 1;
+		m->vertices[i].v.y /= size.y - 1;
+		m->vertices[i].v = t_vec_sub(m->vertices[i].v, (t_vec){.5, .5});
+		m->vertices[i].v.y *= size.y - 1;
+		m->vertices[i].v.y /= size.x - 1;
+		m->vertices[i].v.x *= 500;
+		m->vertices[i].v.y *= 500;
+		m->vertices[i].v.z *= 10;
+	}
 }
 
 t_mesh		t_mesh_landscape_from_file(const char *f_name)
@@ -80,17 +87,6 @@ t_mesh		t_mesh_landscape_from_file(const char *f_name)
 				t_mesh_push_edge(&m, (t_point){d[i][j - 1], d[i][j]});
 		}
 	}
-	i = -1;
-	while (++i < m.n_vertices)
-	{
-		m.vertices[i].v.x /= size.x - 1;
-		m.vertices[i].v.y /= size.y - 1;
-		m.vertices[i].v = t_vec_sub(m.vertices[i].v, (t_vec){.5, .5});
-		m.vertices[i].v.y *= size.y - 1;
-		m.vertices[i].v.y /= size.x - 1;
-		m.vertices[i].v.x *= 500;
-		m.vertices[i].v.y *= 500;
-		m.vertices[i].v.z *= 10;
-	}
+	center_mesh(&m, size);
 	return (m);
 }

@@ -26,8 +26,10 @@ add_executable(fdf
 		src/panel.c
 		src/app.c
 		src/controller.c
+		src/loop_hook.c
 		src/mesh_read.c
 		src/mesh.c
+		src/init_projection.c
 
 		libft/src/string/ft_atoi.c
 		libft/src/string/ft_bzero.c
@@ -108,6 +110,7 @@ add_executable(fdf
 		libft/src/get_next_line.c
 		libft/src/t_buff.c
 		libft/src/endian.c
+		libft/src/ft_error_exit.c
 
 		libft/src/printf/ft_printf.c
 		libft/src/printf/spec_parse.c

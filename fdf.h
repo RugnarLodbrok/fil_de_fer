@@ -41,6 +41,7 @@
 # define PROJ_ISOMETRIC 0
 
 # define STEP 0.05
+# define SIZE 1024
 
 #include <time.h>
 #include "libft.h"
@@ -132,7 +133,7 @@ typedef struct
 	t_cam			cam;
 }					t_app;
 
-void	t_app_init(t_app *app);
+void	t_app_init(t_app *app, const char *f_name);
 void	t_cam_init(t_cam *c, t_point display_res);
 void	t_cam_init_projection(t_cam *c);
 void	t_cam_draw(t_cam *cam, void *p, t_mesh *mesh);
