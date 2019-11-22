@@ -61,23 +61,22 @@ void	t_cam_draw(t_cam *cam, void *p, t_mesh *mesh)
 	t_vec	p2;
 	t_mat	m;
 
-	i = 0;
 	m = mesh->m;
 	m = t_mat_mul(cam->v1, m);
 	m = t_mat_mul(cam->v2, m);
 	m = t_mat_mul(cam->v3, m);
 	m = t_mat_mul(cam->proj, m);
+	i = 0;
 	while (i < mesh->n_edges)
 	{
 		p1 = mesh->vertices[mesh->edges[i].x].v;
-		p2 = mesh->vertices[mesh->edges[i].y].v;
-		++i;
+		p2 = mesh->vertices[mesh->edges[i++].y].v;
 		p1 = t_vec_transform4(p1, m);
 		if (p1.z < -1. || p1.z > 1.)
-			continue;
+			continue ;
 		p2 = t_vec_transform4(p2, m);
 		if (p2.z < -1. || p2.z > 1.)
-			continue;
+			continue ;
 		p1 = t_vec_transform(p1, cam->disp);
 		p2 = t_vec_transform(p2, cam->disp);
 		line(p, p1, p2, (uint)(255 * GREEN));

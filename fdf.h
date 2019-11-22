@@ -39,6 +39,7 @@
 # define PROJ_ISOMETRIC 0
 
 # define STEP 0.05
+# define SIZE 1024
 
 #include <time.h>
 #include "libft.h"
