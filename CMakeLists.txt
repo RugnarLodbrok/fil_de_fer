@@ -116,9 +116,11 @@ add_executable(fdf
 		libft/src/ft_swap.c
 		libft/src/get_next_line.c
 		libft/src/t_buff.c
-		libft/src/array.c
 		libft/src/endian.c
 		libft/src/ft_error_exit.c
+
+		libft/src/array/array.c
+		libft/src/array/arrayi.c
 
 		libft/src/printf/ft_printf.c
 		libft/src/printf/spec_parse.c

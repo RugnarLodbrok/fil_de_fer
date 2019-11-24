@@ -64,6 +64,7 @@ void	t_app_init(t_app *app, const char *f_name)
 	app->objs[0] = malloc(sizeof(t_mesh));
 	app->objs[1] = 0;
 	*(app->objs[0]) = t_mesh_landscape_from_file(app->map_name);
+//	*(app->objs[0]) = t_mesh_cube(50);
 	app->controller.projection = 1;
 	t_cam_init(&app->cam, (t_point){WIN_W, WIN_H});
 	app->M = mlx_init();

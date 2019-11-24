@@ -52,7 +52,6 @@
 #include <time.h>
 #include "libft.h"
 #include "ft_linalg.h"
-//#include "ascii.h"
 
 typedef struct
 {

@@ -16,36 +16,65 @@
 #include "get_next_line.h"
 #include "fdf.h"
 
-t_vec		read_landscape_data(int buff[SIZE][SIZE], const char *f_name)
+t_array read_2d_int_array(int fd)
 {
-	t_point	r;
-	int		status;
-	char	*line;
-	int		fd;
-	char	**split_values;
+	char *line;
+	t_array rows;
+	t_arrayi row;
+	char **split_values;
+	int i;
+	int j;
 
-	ft_bzero(&r, sizeof(r));
-	if ((fd = open(f_name, O_RDONLY)) <= 0)
-		ft_error_exit("can't open file `%s`", f_name);
-	while ((status = get_next_line(fd, &line)) > 0)
+	t_array_init(&rows, sizeof(t_arrayi));
+	while ((i = get_next_line(fd, &line)) > 0)
 	{
 		split_values = ft_strsplit(line, ' ');
-		r.x = -1;
-		while (split_values[++r.x])
+		t_arrayi_init(&row);
+		i = -1;
+		while (split_values[++i])
 		{
-			buff[r.x][r.y] = ft_atoi(split_values[r.x]);
-			free(split_values[r.x]);
+			j = ft_atoi(split_values[i]);
+			t_arrayi_push(&row, j);
 		}
-		free(split_values);
+		ft_strsplit_clear(split_values);
 		free(line);
-		r.y++;
+		t_array_push(&rows, &row);
 	}
-	if (status < 0)
-		ft_error_exit("can't read file `%s`", f_name);
-	return (t_vec){r.x, r.y, 10};
+	if (i < 0)
+		ft_error_exit("can't read file");
+	return rows;
 }
 
-static void	center_mesh(t_mesh *m, t_vec size)
+t_point read_landscape_data(int **data, const char *f_name)
+{
+	t_point shape;
+	t_array rows;
+	t_arrayi row;
+	int fd;
+	int i;
+
+	if ((fd = open(f_name, O_RDONLY)) <= 0)
+		ft_error_exit("can't open file `%s`", f_name);
+	rows = read_2d_int_array(fd);
+	shape.x = -1;
+	shape.y = rows.count;
+	i = -1;
+	while (++i < rows.count)
+		if (shape.x < (int)(((t_arrayi *)rows.data)[i].count))
+			shape.x = ((t_arrayi *)rows.data)[i].count;
+	*data = ft_memalloc(sizeof(int) * shape.x * shape.y);
+	i = -1;
+	while (++i < rows.count)
+	{
+		row = ((t_arrayi *)rows.data)[i];
+		ft_memcpy(*data + shape.y * i, row.data, sizeof(int) * row.count);
+		t_arrayi_del(&row);
+	}
+	t_array_del(&rows);
+	return shape;
+}
+
+static void center_mesh(t_mesh *m, t_vec size)
 {
 	int i;
 
@@ -63,30 +92,36 @@ static void	center_mesh(t_mesh *m, t_vec size)
 	}
 }
 
-t_mesh		t_mesh_landscape_from_file(const char *f_name)
+t_mesh t_mesh_landscape_from_file(const char *f_name)
 {
-	int		d[SIZE][SIZE];
-	t_vec	size;
-	int		j;
-	int		i;
-	t_mesh	m;
+	int *data;
+	int i;
+	int j;
+	t_mesh m;
+	t_point shape;
 
 	j = -1;
 	t_mesh_init(&m);
-	size = read_landscape_data(d, f_name);
-	while (++j < size.y)
+	shape = read_landscape_data(&data, f_name);
+	while (++j < shape.y)
 	{
 		i = -1;
-		while (++i < size.x)
+		while (++i < shape.x)
 		{
-			d[i][j] = t_mesh_push_vertex(&m,
-			(t_vertex){(t_vec){i, j, d[i][j]}, 255 * GREEN}) - 1;
+			data[shape.y * i + j] = t_mesh_push_vertex(
+					&m,
+					(t_vertex){
+							(t_vec){i, j, data[shape.y * i + j]},
+							255 * GREEN}
+			) - 1;
 			if (i > 0)
-				t_mesh_push_edge(&m, (t_point){d[i - 1][j], d[i][j]});
+				t_mesh_push_edge(&m, (t_point){data[shape.y * (i - 1) + j],
+											   data[shape.y * i + j]});
 			if (j > 0)
-				t_mesh_push_edge(&m, (t_point){d[i][j - 1], d[i][j]});
+				t_mesh_push_edge(&m, (t_point){data[shape.y * i + j - 1],
+											   data[shape.y * i + j]});
 		}
 	}
-	center_mesh(&m, size);
+	center_mesh(&m, (t_vec){shape.x, shape.y, 10.});
 	return (m);
 }
