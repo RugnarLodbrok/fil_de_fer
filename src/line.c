@@ -61,7 +61,7 @@ static void	put_pixel(t_app *app, int x, int y, uint color)
 	if (x < 0 || y < 0 || x >= app->w || y >= app->h)
 		return ;
 	a = color >> 24;
-	d = &app->framebuffer.data[y * app->framebuffer.row_len + x];
+	d = &app->framebuffer.data[y * app->framebuffer.w + x];
 	*d = blend_alpha(*d, color, a);
 }
 

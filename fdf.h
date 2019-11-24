@@ -9,12 +9,18 @@
 # define MLX_EVEN_KEY_RELEASE 3
 # define MLX_EVENT_EXIT 17
 
-# define BLUE 1
-# define GREEN 256
-# define RED (256*256)
-# define ALPHA (256*256*256)
-# define GRAYSCALE (RED + GREEN + BLUE)
-# define WHITE (255 * GRAYSCALE)
+#ifdef _WIN32
+# define RED 0x1
+# define GREEN 0x100
+# define BLUE 0x10000
+#else
+# define RED 0x10000
+# define GREEN 0x100
+# define BLUE 0x1
+#endif
+# define ALPHA 0x1000000
+# define GRAYSCALE 0x010101
+# define WHITE 0xffffff
 
 # define KEY_LEFT 123
 # define KEY_RIGHT 124
@@ -41,7 +47,7 @@
 # define PROJ_ISOMETRIC 0
 
 # define STEP 0.05
-# define SIZE 1024
+# define SIZE 256
 
 #include <time.h>
 #include "libft.h"

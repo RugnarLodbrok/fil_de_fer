@@ -33,8 +33,7 @@ void	t_framebuffer_init(t_framebuffer *fb, void *mlx, int w, int h)
 
 void	t_framebuffer_clear(t_framebuffer *fb)
 {
-	(void)fb;
-	ft_bzero(fb->data, fb->row_len * WIN_H * sizeof(int));
+	ft_bzero(fb->data, fb->w * fb->h * sizeof(uint));
 }
 
 void	t_framebuffer_upscale(t_framebuffer *fb, int scale)
@@ -48,8 +47,8 @@ void	t_framebuffer_upscale(t_framebuffer *fb, int scale)
 		j = fb->h;
 		while (--j >= 0)
 		{
-			fb->data[fb->row_len * j + i] =
-				fb->data[fb->row_len * (j / scale) + i / scale];
+			fb->data[fb->w * j + i] =
+				fb->data[fb->w * (j / scale) + i / scale];
 		}
 	}
 }
