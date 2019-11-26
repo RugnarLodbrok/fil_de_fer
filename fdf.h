@@ -5,8 +5,12 @@
 # define WIN_H 600
 # define FOV 120.
 
-# define MLX_EVEN_KEY_PRESS 2
-# define MLX_EVEN_KEY_RELEASE 3
+# define MLX_EVENT_KEY_PRESS 2
+# define MLX_EVENT_KEY_RELEASE 3
+# define MLX_EVENT_MOUSE_PRESS 4
+# define MLX_EVENT_MOUSE_RELEASE 5
+# define MLX_EVENT_MOUSE_MOVE 6
+# define MLX_EVENT_EXPOSE 12
 # define MLX_EVENT_EXIT 17
 
 #ifdef _WIN32
@@ -73,7 +77,16 @@ typedef struct
 
 typedef struct
 {
+	int buttons[8];
+	t_point pos;
+	t_point click_pos[8];
+	t_point release_pos[8];
+} t_mouse;
+
+typedef struct
+{
 	int		keyboard[128];
+	t_mouse	mouse;
 	double	d_yaw;
 	double	d_pitch;
 	double	d_tilt;

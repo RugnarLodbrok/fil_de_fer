@@ -13,7 +13,7 @@
 #include "mlx.h"
 #include "fdf.h"
 
-void	t_controller_update_state(t_controller *c)
+void		t_controller_update_state(t_controller *c)
 {
 	c->v.z = 10 * (c->keyboard[KEY_W] - c->keyboard[KEY_S]);
 	c->d_tilt = 1 * (c->keyboard[KEY_Q] - c->keyboard[KEY_E]);
@@ -24,7 +24,27 @@ void	t_controller_update_state(t_controller *c)
 	c->d_scroll = c->keyboard[KEY_HOME] - c->keyboard[KEY_END];
 }
 
-int		t_controller_key_press(int keycode, void *p)
+static int	t_controller_mouse_press(int button, int x, int y, t_controller *c)
+{
+	c->mouse.buttons[button] = 1;
+	c->mouse.click_pos[button] = (t_point){x, y};
+	return (0);
+}
+
+static int	t_controller_mouse_release(int button, int x, int y, t_controller *c)
+{
+	c->mouse.buttons[button] = 0;
+	c->mouse.release_pos[button] = (t_point){x, y};
+	return (0);
+}
+
+static int	t_controller_mouse_move(int x, int y, t_controller *c)
+{
+	c->mouse.pos = (t_point){x, y};
+	return (0);
+}
+
+static int	t_controller_key_press(int keycode, void *p)
 {
 	t_controller *c;
 
@@ -36,7 +56,7 @@ int		t_controller_key_press(int keycode, void *p)
 	return (0);
 }
 
-int		t_controller_key_release(int keycode, void *p)
+static int	t_controller_key_release(int keycode, void *p)
 {
 	t_controller *c;
 
@@ -48,6 +68,9 @@ int		t_controller_key_release(int keycode, void *p)
 
 void	mlx_bind_keys(void *win, t_controller *c)
 {
-	mlx_hook(win, MLX_EVEN_KEY_PRESS, 0, t_controller_key_press, c);
-	mlx_hook(win, MLX_EVEN_KEY_RELEASE, 0, t_controller_key_release, c);
+	mlx_hook(win, MLX_EVENT_KEY_PRESS, 0, t_controller_key_press, c);
+	mlx_hook(win, MLX_EVENT_KEY_RELEASE, 0, t_controller_key_release, c);
+	mlx_hook(win, MLX_EVENT_MOUSE_PRESS, 0, t_controller_mouse_press, c);
+	mlx_hook(win, MLX_EVENT_MOUSE_RELEASE, 0, t_controller_mouse_release, c);
+	mlx_hook(win, MLX_EVENT_MOUSE_MOVE, 0, t_controller_mouse_move, c);
 }
