@@ -22,7 +22,7 @@ int			ft_sign(int a)
 	c = a < 0;
 	return (b - c);
 }
-
+/*
 static uint	blend(uint c1, uint c2, uint a)
 {
 	uint rb;
@@ -32,7 +32,7 @@ static uint	blend(uint c1, uint c2, uint a)
 	g = (c1 & 0x00FF00) + ((a * (c2 & 0x00FF00)) >> 8);
 	return (rb & 0xFF00FF) + (g & 0x00FF00);
 }
-
+*/
 uint		blend_alpha(uint c1, uint c2, uint a)
 {
 	uint c;

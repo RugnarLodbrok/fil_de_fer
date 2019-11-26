@@ -13,23 +13,17 @@
 CC = gcc
 NAME = fdf
 FLAGS = -Wall -Wextra -Werror
-SRC_ASCII = \
-		ascii/main.c \
-		ascii/line.c \
-		ascii/ascii.c
-
-SRC_MLX = \
-		src/main.c \
-		src/line.c
 
 SRC = $(SRC_MLX) \
+		src/main.c \
+		src/line.c \
 		src/app.c \
 		src/controller.c \
 		src/camera.c \
 		src/mesh_read.c \
 		src/mesh.c \
-		src/panel.c \
-		src/loop_hook.c \
+		src/sidebar.c \
+		src/update.c \
 		src/init_projection.c \
 
 OPTION = -I. -Ilibft -Iminilibx_macos

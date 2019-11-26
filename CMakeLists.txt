@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.6.2)
 #set(CMAKE_C_COMPILER /cygdrive/s/program_files/cygwin/bin/gcc.exe CACHE PATH "" FORCE)
 #set(CMAKE_CXX_COMPILER /cygdrive/s/program_files/cygwin/bin/g++.exe CACHE PATH "" FORCE)
-project(libft_run C)
+project(fdf C)
 set(CMAKE_C_STANDARD 90)
 include_directories(.)
 include_directories(libft)
@@ -18,10 +18,10 @@ add_executable(fdf
 		src/line.c
 
 		src/camera.c
-		src/panel.c
+		src/sidebar.c
 		src/app.c
 		src/controller.c
-		src/loop_hook.c
+		src/update.c
 		src/mesh_read.c
 		src/mesh.c
 		src/init_projection.c

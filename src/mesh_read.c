@@ -59,12 +59,12 @@ t_point read_landscape_data(int **data, const char *f_name)
 	shape.x = -1;
 	shape.y = rows.count;
 	i = -1;
-	while (++i < rows.count)
+	while (++i < (int)rows.count)
 		if (shape.x < (int)(((t_arrayi *)rows.data)[i].count))
 			shape.x = ((t_arrayi *)rows.data)[i].count;
 	*data = ft_memalloc(sizeof(int) * shape.x * shape.y);
 	i = -1;
-	while (++i < rows.count)
+	while (++i < (int)rows.count)
 	{
 		row = ((t_arrayi *)rows.data)[i];
 		ft_memcpy(*data + shape.y * i, row.data, sizeof(int) * row.count);
