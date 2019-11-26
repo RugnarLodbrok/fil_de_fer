@@ -44,9 +44,9 @@
 # define KEY_HOME 115
 # define KEY_END 119
 
-# define MOUSE_BUTTON_LEFT  1
-# define MOUSE_BUTTON_RIGHT  2
-# define MOUSE_BUTTON_MIDDLE  3
+# define MOUSE_B_LEFT  1
+# define MOUSE_B_RIGHT  2
+# define MOUSE_B_MIDDLE  3
 # define MOUSE_SCROLL_UP  4
 # define MOUSE_SCROLL_DOWN  5
 # define MOUSE_SCROLL_LEFT  6
