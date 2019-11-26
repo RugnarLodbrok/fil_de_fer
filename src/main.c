@@ -27,7 +27,7 @@ int		main(int ac, char **av)
 	app.time = clock();
 	app.frame_time = clock();
 	mlx_loop_hook(app.M, loop_hook, &app);
-	mlx_bind_keys(app.win, &app.controller);
+	bind_keys(app.win, &app.controller);
 	mlx_hook(app.win, MLX_EVENT_EXIT, 0, &close_hook, 0);
 	mlx_loop(app.M);
 	return (0);

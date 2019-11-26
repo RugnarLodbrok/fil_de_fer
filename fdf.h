@@ -162,7 +162,7 @@ void	t_mesh_init(t_mesh *m);
 t_mesh	t_mesh_landscape_from_file(const char *f_name);
 int		t_mesh_push_vertex(t_mesh *m, t_vertex v);
 int		t_mesh_push_edge(t_mesh *m, t_point e);
-void	mlx_bind_keys(void *win, t_controller *c);
+void	bind_keys(void *win, t_controller *c);
 void	line(t_app *app, t_vec p1, t_vec p2, uint color);
 void	t_framebuffer_clear(t_framebuffer *fb);
 void	t_framebuffer_upscale(t_framebuffer *fb, int scale);
