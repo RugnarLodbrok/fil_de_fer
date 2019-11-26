@@ -87,6 +87,9 @@ void	t_cam_draw(t_cam *cam, void *p, t_mesh *mesh)
 
 void	t_cam_move(t_cam *cam, t_controller *ctrl)
 {
+	int mouse_dx;
+	int mouse_dy;
+
 	if (ctrl->d_yaw)
 	{
 		cam->v1 = t_mat_mul(cam->v1, t_mat_rot(
@@ -107,5 +110,16 @@ void	t_cam_move(t_cam *cam, t_controller *ctrl)
 	{
 		cam->zoom += ctrl->d_zoom;
 		t_cam_init_projection(cam);
+	}
+	if (ctrl->mouse.buttons[MOUSE_BUTTON_LEFT])
+	{
+		mouse_dx = ctrl->mouse.click_pos[MOUSE_BUTTON_LEFT].x - ctrl->mouse.pos.x;
+		mouse_dy = ctrl->mouse.click_pos[MOUSE_BUTTON_LEFT].y - ctrl->mouse.pos.y;
+		cam->v1 = t_mat_mul(cam->v1, t_mat_rot(
+				(t_vec){0, 0, 1},
+				radians((double)mouse_dx/100)));
+		cam->v2 = t_mat_mul(cam->v2, t_mat_rot(
+				(t_vec){1, 0, 0},
+				radians((double)mouse_dy/100)));
 	}
 }

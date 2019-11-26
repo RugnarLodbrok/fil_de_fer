@@ -44,6 +44,14 @@
 # define KEY_HOME 115
 # define KEY_END 119
 
+# define MOUSE_BUTTON_LEFT  1
+# define MOUSE_BUTTON_RIGHT  2
+# define MOUSE_BUTTON_MIDDLE  3
+# define MOUSE_SCROLL_UP  4
+# define MOUSE_SCROLL_DOWN  5
+# define MOUSE_SCROLL_LEFT  6
+# define MOUSE_SCROLL_RIGHT  7
+
 # define FRAME_RATE 120
 # define FRAME_TIME 1./FRAME_RATE
 
